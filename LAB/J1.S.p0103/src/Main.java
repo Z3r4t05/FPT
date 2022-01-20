@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 /**
  *
  * @author An Thanh Long
- * @loc 20
+ * loc 20
  */
 public class Main {
 
