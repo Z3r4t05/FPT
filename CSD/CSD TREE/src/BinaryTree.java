@@ -75,18 +75,20 @@ public class BinaryTree {
         System.out.print(p.info + " ");
     }
 
-    void postOrder() {
+    public void postOrder() {
         postOrder(root);
     }
 
-    void inOrder() {
+    public void inOrder() {
         inOrder(root);
     }
 
-    void preOrder() {
+    public void preOrder() {
         preOrder(root);
     }
-
+    public void BFS(Node p) {
+        
+    }
     public Node search(Node p, int x) {
         if (p == null) {
             return null;
