@@ -3,9 +3,8 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 /**
- *
+ * @loc 20
  * @author An Thanh Long
- * loc 20
  */
 public class Main {
 
@@ -76,9 +75,9 @@ public class Main {
                     + "[dd/mm/yyyy]");
             return false;
         } else if (!isExisted) {//Check if the date doesn't exist
-            System.err.println("Date is not existed!");
+            System.err.println("No such day in calendar!");
             return false;
-        } else { //If the input satisfied 2 patterns then it is valid
+        } else {//If the input satisfied 2 patterns then it is valid
             return true;
         }
     }
