@@ -2,10 +2,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -67,21 +64,6 @@ public class ManageEastAsiaCountries {
     }
 
     /**
-     * Take an input from user (default from 1 to 5) and validate it
-     *
-     * @param message message to user
-     * @return the input value
-     */
-    public int selectOption(String message) {
-        try {
-            return selectOption(message, 1, 5);
-        } catch (Exception ex) {
-            System.err.println(ex.getMessage());
-            return selectOption(message);
-        }
-    }
-
-    /**
      * Take an input (an integer from min to max)
      *
      * @param message message to user
@@ -99,7 +81,12 @@ public class ManageEastAsiaCountries {
         if (input.isEmpty()) {
             throw new Exception("Empty input");
         }
-        int num = Integer.parseInt(input);
+        int num;
+        try {
+            num = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("Not a valid number");
+        }
         //Throw exception if the input is out of range
         if (num < min || num > max) {
             throw new Exception("Please enter an integer in range [1-5]");
@@ -121,7 +108,7 @@ public class ManageEastAsiaCountries {
                                 Utility.COUNTRY_CODE)));
                 break;
             } catch (Exception e) {
-                System.err.println(e.getMessage());
+                System.out.println(e.getMessage());
             }
         }
         //Keep asking for name if the program catches an exception
@@ -133,7 +120,7 @@ public class ManageEastAsiaCountries {
                                 Utility.COUNTRY_NAME)));
                 break;
             } catch (Exception e) {
-                System.err.println(e.getMessage());
+                System.out.println(e.getMessage());
             }
         }
         //Keep asking for area if the program catches an exception
@@ -144,10 +131,10 @@ public class ManageEastAsiaCountries {
                 break;
             } catch (Exception e) {
                 if (e instanceof NumberFormatException) {
-                    System.err.println("Invalid input. Area must be "
+                    System.out.println("Invalid input. Area must be "
                             + "a positive float or integer!");
                 } else {
-                    System.err.println(e.getMessage());
+                    System.out.println(e.getMessage());
                 }
             }
         }
@@ -158,7 +145,7 @@ public class ManageEastAsiaCountries {
                         "Enter terrain of country: "));
                 break;
             } catch (Exception e) {
-                System.err.println(e.getMessage());
+                System.out.println(e.getMessage());
             }
         }
         addCountryInformation(country);
@@ -176,9 +163,9 @@ public class ManageEastAsiaCountries {
         } catch (Exception e) {
             //Change the message of the exception
             if (e instanceof IndexOutOfBoundsException) {
-                System.err.println("Index out of range");
+                System.out.println("Index out of range");
             } else {
-                System.err.println(e.getMessage());
+                System.out.println(e.getMessage());
             }
         }
     }
