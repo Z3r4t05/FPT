@@ -12,22 +12,52 @@ public class Main {
      * Pattern using to check if the date is existed
      */
     private static final Pattern DATE_EXISTED = Pattern.compile(
-        "^" //start of line
-        + "((29/(02|2)/" //date start with 29/2 or 29/02
-        + "((([13579][26]|[2468][048]|0?[48])00)" //year that divisible by 400
-        //or years that are divisible by 4 but not divisible by 100
+        //start of line
+        "^" 
+        //29th February
+        + "((29/(02|2)/" 
+        //leap years that divisible by 400
+        + "((([13579][26]|[2468][048]|0?[48])00)" 
+        //or leap years that are divisible by 4 but not divisible by 100
         + "|([\\d]{0,2}?([13579][26]|[2468][048]|0?[48]))))"
-        //Checking normal February dates in non-leap years
-        + "|((0?[\\d]|1[\\d]|2[0-8])/(02|2)/([\\d]{1,4}))"
-        //Checking dates of 31-day months
-        + "|((0?[\\d]|[12][\\d]|3[01])/(0?[13578]|1[02])/([\\d]{1,4}))"
-        //Checking dates of 30-day months
-        + "|((0?[\\d]|[12][\\d]|30)/(0?[469]|11)/([\\d]{1,4})))$");
+                
+        //Day from 1st to 28th
+        + "|((0?[\\d]|1[\\d]|2[0-8])"
+        //February 
+        + "/(02|2)/"
+        //non-leap year from 1 to 9999
+        + "([\\d]{1,4}))"
+                
+        //Day from 1st to 31st
+        + "|((0?[\\d]|[12][\\d]|3[01])/"
+        //Months with 31 days        
+        + "(0?[13578]|1[02])/"
+        //Any year from 1 to 9999       
+        + "([\\d]{1,4}))"
+                
+        //Day from 1st to 30th
+        + "|((0?[\\d]|[12][\\d]|30)/"
+        //Months with 30 days
+        + "(0?[469]|11)/"
+        //Any year from 1 to 9999
+        + "([\\d]{1,4})))"
+        //End of line
+        + "$");
+    
     /**
      * Pattern using to check if the input is in the correct format
      */
     private static final Pattern DATE_FORMAT = Pattern.compile(
-            "[\\d]{1,2}/[\\d]{1,2}/[\\d]{1,4}"); //format [dd/mm/yyyy]
+            //Start of line
+            "^"
+            //Any 1 or 2 digits
+            + "[\\d]{1,2}"
+            //"/" follow by any 1 or 2 digits
+            + "/[\\d]{1,2}"
+            //"/" follow by any 1 to 4 digits        
+            + "/[\\d]{1,4}"
+            //end of line
+            + "$"); 
 
     /**
      * @param args the command line arguments
@@ -101,19 +131,19 @@ public class Main {
         int day2 = Integer.parseInt(a2[0]);
         System.out.println("");
 
-        //First, we check if the years are different
+        //Check if year1 is after year2 or otherwise
         if (year1 > year2) {
             System.out.println("Date1 is after Date2");
         } else if (year1 < year2) {
             System.out.println("Date1 is before Date2");
         } else {
-            //If the years are equal, compare month1 with month2
+            //If the years are equal, compare month1 with month2 
             if (month1 > month2) {
                 System.out.println("Date1 is after Date2");
             } else if (month1 < month2) {
                 System.out.println("Date1 is before Date2");
             } else {
-                //If the months are equal, compare the days
+                //If the months are equal, compare day1 with day2
                 if (day1 > day2) {
                     System.out.println("Date1 is after Date2");
                 } else if (day1 < day2) {
