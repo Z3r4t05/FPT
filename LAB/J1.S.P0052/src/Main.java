@@ -14,13 +14,13 @@ public class Main {
             //step 3. Perform function based on the selected option
             switch (choice) {
                 case 1: //add information of 11 countries
-                    for (int i = 0; i < 11; i++) {
+                    for (int i = 0; i < 1; i++) {
                         m.addCountryInformation();
                     }
                     break;
                 case 2: //display information of country user has just entered
                     try {
-                        System.out.println(m.getRecentlyEnteredInformation());
+                        m.getRecentlyEnteredInformation().display();
                     } catch (Exception ex) {
                         System.err.println(ex.getMessage());
                     }
@@ -30,13 +30,13 @@ public class Main {
                         //search information of country by user-entered name
                         m.displayList(m.searchInformationByName());
                     } catch (Exception ex) {
-                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                        System.err.println(ex.getMessage());
                     }
 
                     break;
                 case 4:
                     try {
-                        //display country by ascending order of name
+                        //display country by ascen1ding order of name
                         m.displayList(m.sortInformationByAscendingOrder());
                     } catch (Exception ex) {
                         Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);

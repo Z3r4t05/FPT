@@ -3,8 +3,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,7 +16,7 @@ import java.util.logging.Logger;
 public class ManageEastAsiaCountries {
 
     private ArrayList<EastAsiaCountries> countryList = new ArrayList<>();
-    private EastAsiaCountries lastCountryInput = null;
+    private EastAsiaCountries lastCountryInput;
 
     public static final Scanner sc = new Scanner(System.in);
 
@@ -37,7 +35,7 @@ public class ManageEastAsiaCountries {
     public void setLastCountryInput(EastAsiaCountries lastCountryInput) {
         this.lastCountryInput = lastCountryInput;
     }
-
+    
     /**
      * Display the menu to the screen
      */
@@ -92,6 +90,7 @@ public class ManageEastAsiaCountries {
             if (input < min || input > max) {
                 throw new Exception("Input out of range!");
             }
+            System.out.println("");
             return input;
         } catch (Exception e) {
             if (e instanceof NumberFormatException) {
@@ -156,7 +155,7 @@ public class ManageEastAsiaCountries {
     public void addCountryInformation(EastAsiaCountries country) {
         try {
             countryList.add(country);
-            this.setLastCountryInput(lastCountryInput);
+            this.setLastCountryInput(country);
             Utility.printGreen("Added Successfully!");
         } catch (Exception e) {
             if (e instanceof IndexOutOfBoundsException) {
@@ -178,26 +177,24 @@ public class ManageEastAsiaCountries {
     public EastAsiaCountries[] searchInformationByName()
             throws Exception {
         ArrayList<EastAsiaCountries> database = this.getCountryList();
-        ArrayList<EastAsiaCountries> searching = new ArrayList<>();
-        String input = Utility.getNonBlankStr("Search name of country: ");
+        ArrayList<EastAsiaCountries> result = new ArrayList<>();
+        String input = Utility.getNonBlankStr("Search name of country: ").toLowerCase();
 
         if (!Utility.isValid(input, Utility.COUNTRY_NAME)) {
             throw new Exception("Not a valid name!");
         }
 
         for (EastAsiaCountries c : database) {
-            if (c.getCountryName().contains(input)) {
-                searching.add(c);
+            if (c.getCountryName().toLowerCase().contains(input)) {
+                result.add(c);
             }
         }
 
-        if (searching.isEmpty()) {
+        if (result.isEmpty()) {
             throw new Exception("Not found");
         }
 
-        EastAsiaCountries[] result = {};
-        searching.toArray(result);
-        return result;
+        return result.toArray(new EastAsiaCountries[result.size()]);
     }
 
     public void displayList(EastAsiaCountries[] list) {
@@ -215,18 +212,4 @@ public class ManageEastAsiaCountries {
         Collections.sort(this.getCountryList());
         return this.getCountryList().toArray(country);
     }
-
-    public static void main(String[] args) throws Exception {
-        ManageEastAsiaCountries mn = new ManageEastAsiaCountries();
-        for (int i = 0; i < 2; i++) {
-            mn.addCountryInformation();
-        }
-        try {
-            mn.displayList(mn.sortInformationByAscendingOrder());
-        } catch (Exception ex) {
-            Logger.getLogger(ManageEastAsiaCountries.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
 }

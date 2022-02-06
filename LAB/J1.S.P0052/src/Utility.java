@@ -59,7 +59,6 @@ public class Utility {
 
     public static String inputCode(String message, Pattern p) throws Exception {
         String code;
-        System.out.print(message);
         code = getNonBlankStr(message);
         if (!isValid(code, p)) {
             throw new Exception("Not a valid code. It must consist of "
@@ -71,7 +70,6 @@ public class Utility {
 
     public static String inputName(String msg, Pattern p) throws Exception {
         String name;
-        System.out.print(msg);
         name = getNonBlankStr(msg);
         if (!isValid(name, p)) {
             throw new Exception("Not a valid name. Name must consist of at "
@@ -82,7 +80,6 @@ public class Utility {
 
     public static int inputTotalArea(String msg) throws Exception {
         int area;
-        System.out.print(msg);
         String input = getNonBlankStr(msg);
         area = Integer.parseInt(input);
         if (area <= 0) {
@@ -113,11 +110,8 @@ public class Utility {
     
     public static String inputTerrain(String msg) throws Exception {
         String terrain;
-        System.out.print(msg);
-        terrain = sc.nextLine();
-        if (terrain.isEmpty()) {
-            throw new Exception("Empty input");
-        } else if (!Utility.isValid(terrain, Utility.TERRAIN)) {
+        terrain = getNonBlankStr(msg);
+         if (!Utility.isValid(terrain, Utility.TERRAIN)) {
             throw new Exception("Not a valid terrain");
         }
         return terrain;
