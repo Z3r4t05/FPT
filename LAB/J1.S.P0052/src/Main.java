@@ -2,15 +2,6 @@
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author ADMIN
- */
 public class Main {
 
     public static void main(String[] args) {
@@ -22,10 +13,12 @@ public class Main {
             int choice = m.selectOption("Enter your choice: ");
             //step 3. Perform function based on the selected option
             switch (choice) {
-                case 1:
-                    m.addCountryInformation();
+                case 1: //add information of 11 countries
+                    for (int i = 0; i < 11; i++) {
+                        m.addCountryInformation();
+                    }
                     break;
-                case 2: 
+                case 2: //display information of country user has just entered
                     try {
                         System.out.println(m.getRecentlyEnteredInformation());
                     } catch (Exception ex) {
@@ -33,16 +26,26 @@ public class Main {
                     }
                     break;
                 case 3:
-                    m.displayList(m.searchInformationByName());
+                    try {
+                        //search information of country by user-entered name
+                        m.displayList(m.searchInformationByName());
+                    } catch (Exception ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
                     break;
                 case 4:
-                    m.displayList(m.sortInformationByAscendingOrder());
+                    try {
+                        //display country by ascending order of name
+                        m.displayList(m.sortInformationByAscendingOrder());
+                    } catch (Exception ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
                     break;
-                case 5:
+                case 5: //exit
                     System.exit(0);
             }
         }
-
     }
-
 }
