@@ -53,6 +53,7 @@ public class ManageEastAsiaCountries {
         System.out.println("==================================================="
                 + "=======================");
         int totalOption = listOptions.size();
+        //print all options start with index from 1 to the end
         for (int i = 0; i < totalOption; i++) {
             System.out.println((i + 1) + ". " + listOptions.get(i));
         }
@@ -76,7 +77,7 @@ public class ManageEastAsiaCountries {
     }
 
     /**
-     * Take an input (an integer from min to max) and validate it
+     * Take an input (an integer from min to max)
      *
      * @param message message to user
      * @param min minimum value
@@ -88,58 +89,68 @@ public class ManageEastAsiaCountries {
         try {
             System.out.println(message);
             input = Integer.parseInt(sc.nextLine());
+            //Throw exception if the input is out of range
             if (input < min || input > max) {
                 throw new Exception("Input out of range!");
             }
             return input;
         } catch (Exception e) {
+            //Change the message of NumberFormatException
             if (e instanceof NumberFormatException) {
                 System.err.println("Not a valid number");
             } else {
                 System.err.println(e.getMessage());
             }
-            System.err.println("Please enter a valid integer [" + min + "-" + max + "]");
+            System.err.println("Please enter a valid integer "
+                    + "[" + min + "-" + max + "]");
             return selectOption(message, min, max);
         }
     }
-
+    /**
+     * Ask user to enter information of country then add it to the list
+     */
     public void addCountryInformation() {
-//        Country c = new Country();
         EastAsiaCountries country = new EastAsiaCountries();
+        //Keep asking for code if the program catches an exception
         while (true) {
             try {
                 country.setCountryCode(Utility.findExistedCode(
                         countryList, Utility.inputCode(
-                                "Enter code of country: ", Utility.COUNTRY_CODE)));
+                                "Enter code of country: ", 
+                                Utility.COUNTRY_CODE)));
                 break;
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
         }
+        //Keep asking for name if the program catches an exception
         while (true) {
             try {
                 country.setCountryName(Utility.findExistedName(
                         countryList, Utility.inputName(
-                                "Enter name of country: ", Utility.COUNTRY_NAME)));
+                                "Enter name of country: ",
+                                Utility.COUNTRY_NAME)));
                 break;
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
         }
+        //Keep asking for area if the program catches an exception
         while (true) {
             try {
                 country.setTotalArea(Utility.inputTotalArea(
                         "Enter total Area: "));
                 break;
-
             } catch (Exception e) {
                 if (e instanceof NumberFormatException) {
-                    System.err.println("Invalid input. Area must be a positive float or integer!");
+                    System.err.println("Invalid input. Area must be "
+                            + "a positive float or integer!");
                 } else {
                     System.err.println(e.getMessage());
                 }
             }
         }
+        //Keep asking for terrain if program catches an exception
         while (true) {
             try {
                 country.setCountryTerrain(Utility.inputTerrain(
@@ -151,12 +162,16 @@ public class ManageEastAsiaCountries {
         }
         addCountryInformation(country);
     }
-
+    /**
+     * add country to the list
+     * @param country to be added
+     */
     public void addCountryInformation(EastAsiaCountries country) {
         try {
             countryList.add(country);
             this.setLastCountryInput(country);
         } catch (Exception e) {
+            //Change the message of the exception
             if (e instanceof IndexOutOfBoundsException) {
                 System.err.println("Index out of range");
             } else {
@@ -164,34 +179,51 @@ public class ManageEastAsiaCountries {
             }
         }
     }
-
+    /**
+     * Display information of countries you have just inputted.
+     * @return the country that you've recently inputted
+     * @throws Exception if you haven't entered anything
+     */
     public EastAsiaCountries getRecentlyEnteredInformation() throws Exception {
         EastAsiaCountries country = this.getLastCountryInput();
+        //Check if user has entered input at least 1 time or not
         if (country == null) {
             throw new Exception("You haven't entered anything");
         }
-        System.out.printf("%-16s%-16s%-16s%-16s\n", "ID", "NAME", "Total Area", "Terrain");
+        System.out.printf("%-16s%-16s%-16s%-16s\n"
+                , "ID", "NAME", "Total Area", "Terrain");
         return country;
     }
-
+    /**
+     * Search information of countries by user-entered name
+     * @return array of countries that matches a part of the name
+     * @throws Exception if the list is empty or not found any country or the 
+     * input name is invalid
+     */
     public EastAsiaCountries[] searchInformationByName()
             throws Exception {
-        ArrayList<EastAsiaCountries> database = this.getCountryList();
+        ArrayList<EastAsiaCountries> data = this.getCountryList();
         ArrayList<EastAsiaCountries> result = new ArrayList<>();
-        if (database.isEmpty()) {
+        //If the data is empty throw new exception
+        if (data.isEmpty()) {
             throw new Exception("Empty country list!");
         }
-        String input = Utility.getNonBlankStr("Enter the name you want to search for: ").toLowerCase();
+        String input = Utility
+                .getNonBlankStr("Enter the name you want to search for: ")
+                .toLowerCase();
+        //If the input is not valid then throw new exception
         if (!Utility.isValid(input, Utility.COUNTRY_NAME)) {
             throw new Exception("Not a valid name!");
         }
-
-        for (EastAsiaCountries c : database) {
+        //Searching for name in data that matches the input ignoring case
+        for (EastAsiaCountries c : data) {
+            //add the country in data that matches the input to the result list
             if (c.getCountryName().toLowerCase().contains(input)) {
                 result.add(c);
             }
         }
-
+        
+        //If it doesn't found any country then throw new exception
         if (result.isEmpty()) {
             throw new Exception("Not found");
         }
@@ -199,20 +231,19 @@ public class ManageEastAsiaCountries {
         return result.toArray(new EastAsiaCountries[result.size()]);
     }
 
-    public void displayList(EastAsiaCountries[] list) {
-        System.out.printf("%-16s%-16s%-16s%-16s\n", "ID", "NAME", "Total Area", "Terrain");
-        for (EastAsiaCountries list1 : list) {
-            list1.display();
-        }
-    }
-
+    /**
+     * Sort information of countries by ascending order of names
+     * @return the sorted array of countries
+     * @throws Exception if the array is empty
+     */
     public EastAsiaCountries[] sortInformationByAscendingOrder()
             throws Exception {
+        //throw exception if the list is empty
         if (this.getCountryList().isEmpty()) {
             throw new Exception("Empty list!");
         }
-        EastAsiaCountries[] country = {};
         Collections.sort(this.getCountryList());
-        return this.getCountryList().toArray(country);
+        return this.getCountryList()
+                .toArray(new EastAsiaCountries[this.getCountryList().size()]);
     }
 }

@@ -17,22 +17,22 @@ public class Utility {
 
     public static final Scanner sc = new Scanner(System.in);
     public static final Pattern COUNTRY_CODE = Pattern.compile(
-            "^"            //Start of line
-            + "\\s*"       //0 or many space token
+            "^" //Start of line
+            + "\\s*" //0 or many space token
             + "[A-Z]{2,3}" //2 or 3 Uppercase alphabet char
-            + "\\s*"       //0 or many space token
+            + "\\s*" //0 or many space token
             + "$");        //end of line
     public static final Pattern COUNTRY_NAME = Pattern.compile(
-            "^"                  //Start of line
-            + "\\s*"             //0 or many space
+            "^" //Start of line
+            + "\\s*" //0 or many space
             + "([A-Za-z]+\\s?)*" //0 or many word that separate by 0 or 1 space
-            + "\\s*"             //0 or many space
+            + "\\s*" //0 or many space
             + "$");              //end of line
     public static final Pattern TERRAIN = Pattern.compile(
-            "^"                  //Start of line
-            + "\\s*"             //0 or many space
+            "^" //Start of line
+            + "\\s*" //0 or many space
             + "([A-Za-z]+\\s?)*" //0 or many word that separate by 0 or 1 space
-            + "\\s*"             //0 or many space
+            + "\\s*" //0 or many space
             + "$");              //end of line
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_RESET = "\u001B[0m";
@@ -230,5 +230,18 @@ public class Utility {
             return str;
         }
         return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
+    /**
+     * Display a array of East Asia Countries
+     *
+     * @param arr array of EA countries
+     */
+    public static void displayArray(EastAsiaCountries[] arr) {
+        System.out.printf("%-16s%-16s%-16s%-16s\n",
+                 "ID", "Name", "Total Area", "Terrain");
+        for (EastAsiaCountries c : arr) {
+            c.display();
+        }
     }
 }

@@ -26,14 +26,14 @@ public class Main {
                     break;
                 case 3://Search information of country by user-entered name
                     try {
-                        m.displayList(m.searchInformationByName());
+                        Utility.displayArray(m.searchInformationByName());
                     } catch (Exception ex) {
                         System.err.println(ex.getMessage());
                     }
                     break;
                 case 4://Display country by ascen1ding order of name
                     try {
-                        m.displayList(m.sortInformationByAscendingOrder());
+                        Utility.displayArray(m.sortInformationByAscendingOrder());
                     } catch (Exception ex) {
                         System.err.println(ex.getMessage());
                     }

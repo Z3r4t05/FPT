@@ -1,11 +1,3 @@
-
-import java.util.Formatter;
-
-
-
-
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,7 +7,8 @@ import java.util.Formatter;
  *
  * @author ADMIN
  */
-public class EastAsiaCountries extends Country implements Comparable<EastAsiaCountries> {
+public class EastAsiaCountries extends Country 
+        implements Comparable<EastAsiaCountries> {
 
     private String countryTerrain;
 
@@ -39,8 +32,14 @@ public class EastAsiaCountries extends Country implements Comparable<EastAsiaCou
 
     @Override
     public void display() {
-        String areaFormat = ((this.getTotalArea() % 1.0f) == 0) ? "%-16.1f" : "%-16.16s";
-        System.out.printf("%-16.16s%-16.16s" + areaFormat + "%-16.16s\n\n", this.getCountryCode(), this.getCountryName(), this.getTotalArea(), this.getCountryTerrain());
+        String areaFormat = ((this.getTotalArea() % 1.0f) == 0) 
+            ? "%-16.1f" //Display 1 zero after radix point if it is integer
+            : "%-16.16s"; //Display full fraction
+        System.out.printf("%-16.16s%-16.16s" + areaFormat + "%-16.16s\n\n", 
+                this.getCountryCode(), 
+                this.getCountryName(), 
+                this.getTotalArea(), 
+                this.getCountryTerrain());
     }
 
     @Override
