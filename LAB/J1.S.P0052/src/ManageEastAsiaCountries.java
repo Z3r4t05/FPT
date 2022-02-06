@@ -2,7 +2,10 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -22,7 +25,6 @@ public class ManageEastAsiaCountries {
     public ManageEastAsiaCountries() {
     }
 
-
     public ArrayList<EastAsiaCountries> getCountryList() {
         return countryList;
     }
@@ -38,7 +40,7 @@ public class ManageEastAsiaCountries {
     public void setLastCountryInput(EastAsiaCountries lastCountryInput) {
         this.lastCountryInput = lastCountryInput;
     }
-    
+
     /**
      * Display the menu to the screen
      */
@@ -73,10 +75,10 @@ public class ManageEastAsiaCountries {
     public int selectOption(String message) {
         try {
             return selectOption(message, 1, 5);
-        } catch (Exception e) {
-            System.err.println(e);
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            return selectOption(message);
         }
-        return 0;
     }
 
     /**
@@ -86,29 +88,25 @@ public class ManageEastAsiaCountries {
      * @param min minimum value
      * @param max maximum value
      * @return the input value
+     * @throws java.lang.Exception
      */
-    public int selectOption(String message, int min, int max) {
-        int input;
-        try {
-            System.out.println(message);
-            input = Integer.parseInt(sc.nextLine());
-            //Throw exception if the input is out of range
-            if (input < min || input > max) {
-                throw new Exception("Input out of range!");
-            }
-            return input;
-        } catch (Exception e) {
-            //Change the message of NumberFormatException
-            if (e instanceof NumberFormatException) {
-                System.err.println("Not a valid number");
-            } else {
-                System.err.println(e.getMessage());
-            }
-            System.err.println("Please enter a valid integer "
-                    + "[" + min + "-" + max + "]");
-            return selectOption(message, min, max);
+    public int selectOption(String message, int min, int max) throws Exception {
+        String input;
+
+        System.out.println(message);
+        input = sc.nextLine();
+        //throw exception if input is empty
+        if (input.isEmpty()) {
+            throw new Exception("Empty input");
         }
+        int num = Integer.parseInt(input);
+        //Throw exception if the input is out of range
+        if (num < min || num > max) {
+            throw new Exception("Please enter an integer in range [1-5]");
+        }
+        return num;
     }
+
     /**
      * Ask user to enter information of country then add it to the list
      */
@@ -119,7 +117,7 @@ public class ManageEastAsiaCountries {
             try {
                 country.setCountryCode(Utility.findExistedCode(
                         countryList, Utility.inputCode(
-                                "Enter code of country: ", 
+                                "Enter code of country: ",
                                 Utility.COUNTRY_CODE)));
                 break;
             } catch (Exception e) {
@@ -165,8 +163,10 @@ public class ManageEastAsiaCountries {
         }
         addCountryInformation(country);
     }
+
     /**
      * add country to the list
+     *
      * @param country to be added
      */
     public void addCountryInformation(EastAsiaCountries country) {
@@ -182,8 +182,10 @@ public class ManageEastAsiaCountries {
             }
         }
     }
+
     /**
      * Display information of countries you have just inputted.
+     *
      * @return the country that you've recently inputted
      * @throws Exception if you haven't entered anything
      */
@@ -193,14 +195,16 @@ public class ManageEastAsiaCountries {
         if (country == null) {
             throw new Exception("You haven't entered anything");
         }
-        System.out.printf("%-16s%-16s%-16s%-16s\n"
-                , "ID", "NAME", "Total Area", "Terrain");
+        System.out.printf("%-16s%-16s%-16s%-16s\n",
+                "ID", "NAME", "Total Area", "Terrain");
         return country;
     }
+
     /**
      * Search information of countries by user-entered name
+     *
      * @return array of countries that matches a part of the name
-     * @throws Exception if the list is empty or not found any country or the 
+     * @throws Exception if the list is empty or not found any country or the
      * input name is invalid
      */
     public EastAsiaCountries[] searchInformationByName()
@@ -225,7 +229,7 @@ public class ManageEastAsiaCountries {
                 result.add(c);
             }
         }
-        
+
         //If it doesn't found any country then throw new exception
         if (result.isEmpty()) {
             throw new Exception("Not found");
@@ -236,6 +240,7 @@ public class ManageEastAsiaCountries {
 
     /**
      * Sort information of countries by ascending order of names
+     *
      * @return the sorted array of countries
      * @throws Exception if the array is empty
      */

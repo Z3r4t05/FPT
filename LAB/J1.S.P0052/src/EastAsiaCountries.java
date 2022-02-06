@@ -41,7 +41,20 @@ public class EastAsiaCountries extends Country
                 this.getTotalArea(), 
                 this.getCountryTerrain());
     }
-
+    /**
+     * Special display for searching option
+     */
+    public void displaySearch() {
+        String areaFormat = ((this.getTotalArea() % 1.0f) == 0) 
+            ? "%-17.1f" //Display 1 zero after radix point if it is integer
+            : "%-17.17s"; //Display full fraction
+        System.out.printf("%-16.16s%-16.16s" + areaFormat + "%-16.16s\n\n", 
+                this.getCountryCode(), 
+                this.getCountryName(), 
+                this.getTotalArea(), 
+                this.getCountryTerrain());
+    }
+    
     @Override
     public int compareTo(EastAsiaCountries t) {
         return this.getCountryName().compareTo(t.getCountryName());

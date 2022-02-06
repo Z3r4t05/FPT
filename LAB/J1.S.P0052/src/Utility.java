@@ -239,7 +239,7 @@ public class Utility {
      */
     public static void displayArray(EastAsiaCountries[] arr) {
         System.out.printf("%-16s%-16s%-16s%-16s\n",
-                 "ID", "Name", "Total Area", "Terrain");
+                "ID", "Name", "Total Area", "Terrain");
         for (EastAsiaCountries c : arr) {
             c.display();
         }
