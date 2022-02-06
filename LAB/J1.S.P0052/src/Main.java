@@ -3,25 +3,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
+
 public class Main {
 
     public static void main(String[] args) {
         ManageEastAsiaCountries m = new ManageEastAsiaCountries();
         int choice = 0;
         do {//Return to main screen after each after each option
-            
+
             //step 1. Display the menu
             m.displayMenu();
             //step 2. Ask user to select option
-            do {                
+            do {
                 try {
                     choice = m.selectOption("Enter your choice : ", 1, 5);
                     break;
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
-                }               
-            } while(true);
-            
+                }
+            } while (true);
+
             //step 3. Perform function based on the selected option
             switch (choice) {
                 case 1://Add information of 11 countries
