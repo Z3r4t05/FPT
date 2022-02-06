@@ -48,6 +48,7 @@ public class ManageEastAsiaCountries {
                 + "order",
                 "Exit"
         ));
+        System.out.println("");
         System.out.println("                               Menu");
         System.out.println("==================================================="
                 + "=======================");
@@ -85,12 +86,11 @@ public class ManageEastAsiaCountries {
     public int selectOption(String message, int min, int max) {
         int input;
         try {
-            System.out.print(message);
+            System.out.println(message);
             input = Integer.parseInt(sc.nextLine());
             if (input < min || input > max) {
                 throw new Exception("Input out of range!");
             }
-            System.out.println("");
             return input;
         } catch (Exception e) {
             if (e instanceof NumberFormatException) {
@@ -98,7 +98,7 @@ public class ManageEastAsiaCountries {
             } else {
                 System.err.println(e.getMessage());
             }
-            System.err.println("Please enter a valid integer [1-5]");
+            System.err.println("Please enter a valid integer [" + min + "-" + max + "]");
             return selectOption(message, min, max);
         }
     }
@@ -134,7 +134,7 @@ public class ManageEastAsiaCountries {
 
             } catch (Exception e) {
                 if (e instanceof NumberFormatException) {
-                    System.err.println("Invalid input. Area must be a positive integer!");
+                    System.err.println("Invalid input. Area must be a positive float or integer!");
                 } else {
                     System.err.println(e.getMessage());
                 }
@@ -156,7 +156,6 @@ public class ManageEastAsiaCountries {
         try {
             countryList.add(country);
             this.setLastCountryInput(country);
-            Utility.printGreen("Added Successfully!");
         } catch (Exception e) {
             if (e instanceof IndexOutOfBoundsException) {
                 System.err.println("Index out of range");
@@ -171,6 +170,7 @@ public class ManageEastAsiaCountries {
         if (country == null) {
             throw new Exception("You haven't entered anything");
         }
+        System.out.printf("%-16s%-16s%-16s%-16s\n", "ID", "NAME", "Total Area", "Terrain");
         return country;
     }
 
@@ -181,7 +181,7 @@ public class ManageEastAsiaCountries {
         if (database.isEmpty()) {
             throw new Exception("Empty country list!");
         }
-        String input = Utility.getNonBlankStr("Search name of country: ").toLowerCase();
+        String input = Utility.getNonBlankStr("Enter the name you want to search for: ").toLowerCase();
         if (!Utility.isValid(input, Utility.COUNTRY_NAME)) {
             throw new Exception("Not a valid name!");
         }
@@ -200,8 +200,9 @@ public class ManageEastAsiaCountries {
     }
 
     public void displayList(EastAsiaCountries[] list) {
+        System.out.printf("%-16s%-16s%-16s%-16s\n", "ID", "NAME", "Total Area", "Terrain");
         for (EastAsiaCountries list1 : list) {
-            System.out.println(list1.getCountryName());
+            list1.display();
         }
     }
 

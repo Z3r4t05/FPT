@@ -52,7 +52,8 @@ public class Country {
     }
 
     public void display() {
-
+        String areaFormat = ((this.getTotalArea() % 1.0f) == 0) ? "%-16.1f" : "%-16.16s";
+        System.out.printf("%-16.16s%-16.16s\n" + areaFormat, this.getCountryCode(), this.getCountryName(), this.getTotalArea());
     }
 
 }

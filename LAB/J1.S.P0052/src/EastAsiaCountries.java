@@ -3,6 +3,9 @@ import java.util.Formatter;
 
 
 
+
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -36,14 +39,10 @@ public class EastAsiaCountries extends Country implements Comparable<EastAsiaCou
 
     @Override
     public void display() {
-        Formatter formatter = new Formatter();
-        System.out.println(formatter.format("%s", "bjh"));
-        System.out.println("ID              Name            Total Area      Terrain");
-        System.out.println("");
+        String areaFormat = ((this.getTotalArea() % 1.0f) == 0) ? "%-16.1f" : "%-16.16s";
+        System.out.printf("%-16.16s%-16.16s" + areaFormat + "%-16.16s\n\n", this.getCountryCode(), this.getCountryName(), this.getTotalArea(), this.getCountryTerrain());
     }
-    public static void main(String[] args) {
-        display();
-    }
+
     @Override
     public int compareTo(EastAsiaCountries t) {
         return this.getCountryName().compareTo(t.getCountryName());

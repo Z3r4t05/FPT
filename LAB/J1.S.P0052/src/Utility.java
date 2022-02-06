@@ -1,5 +1,4 @@
 
-
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -27,15 +26,15 @@ public class Utility {
     public static void printGreen(String s) {
         System.out.println(ANSI_GREEN + s + ANSI_RESET);
     }
-    
-    public static String normalize(String S) {
+
+    public static String normalizeAndRecapitalize(String S) {
         if (S.length() == 0) {
             return S;
         }
         StringTokenizer stk = new StringTokenizer(S, " ");
-        String result = stk.nextToken();
+        String result = capitalizeFirstChar(stk.nextToken().toLowerCase());
         while (stk.hasMoreElements()) {
-            result += " " + stk.nextToken();
+            result += " " + capitalizeFirstChar(stk.nextToken().toLowerCase());
         }
         return result;
     }
@@ -44,8 +43,8 @@ public class Utility {
         // get a non blank string
         String result;
         do {
-            System.out.print(msg);
-            result = normalize(sc.nextLine()); //normalizing
+            System.out.println(msg);
+            result = normalizeAndRecapitalize(sc.nextLine()); //normalizing
             if (result.isEmpty()) {
                 throw new Exception("Empty input!");
             }
@@ -59,13 +58,13 @@ public class Utility {
 
     public static String inputCode(String message, Pattern p) throws Exception {
         String code;
-        code = getNonBlankStr(message);
+        code = getNonBlankStr(message).toUpperCase();
         if (!isValid(code, p)) {
             throw new Exception("Not a valid code. It must consist of "
                     + "exactly 2 "
                     + "or 3 uppercase alphabet characters");
         }
-        return Utility.normalize(code);
+        return code;
     }
 
     public static String inputName(String msg, Pattern p) throws Exception {
@@ -75,23 +74,25 @@ public class Utility {
             throw new Exception("Not a valid name. Name must consist of at "
                     + "least 2 alphabet characters");
         }
-        return Utility.normalize(name);
+        return name;
     }
 
     public static float inputTotalArea(String msg) throws Exception {
         float area;
-        String input = getNonBlankStr(msg);
+        String input = getNonBlankStr(msg) + "f";
         try {
-            area = Float.parseFloat(input);           
+            area = Float.parseFloat(input);
         } catch (NumberFormatException e) {
             throw new Exception("Area must be an integer or a float number");
-        }       
+        }
         if (area <= 0) {
             throw new Exception("Area must be greater than 0");
-        }       
+        } else if (area >= 17098242) {
+            throw new Exception("Largest country in the world is only 17098242 km2");
+        }
         return area;
     }
-    
+
     public static String findExistedCode(ArrayList<EastAsiaCountries> list,
             String code) throws Exception {
         for (EastAsiaCountries c : list) {
@@ -111,14 +112,21 @@ public class Utility {
         }
         return name;
     }
-    
+
     public static String inputTerrain(String msg) throws Exception {
         String terrain;
         terrain = getNonBlankStr(msg);
-         if (!Utility.isValid(terrain, Utility.TERRAIN)) {
+        if (!Utility.isValid(terrain, Utility.TERRAIN)) {
             throw new Exception("Not a valid terrain");
         }
         return terrain;
     }
 
+    public static String capitalizeFirstChar(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
 }
