@@ -17,11 +17,11 @@ public class ManageEastAsiaCountries {
 
     private ArrayList<EastAsiaCountries> countryList = new ArrayList<>();
     private EastAsiaCountries lastCountryInput;
+    public static final Scanner sc = new Scanner(System.in);
 
     public ManageEastAsiaCountries() {
     }
 
-    public static final Scanner sc = new Scanner(System.in);
 
     public ArrayList<EastAsiaCountries> getCountryList() {
         return countryList;
