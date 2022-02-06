@@ -111,7 +111,7 @@ public class Utility {
         if (!isValid(code, p)) {
             throw new Exception("Not a valid code. It must consist of "
                     + "exactly 2 "
-                    + "or 3 uppercase alphabet characters");
+                    + "or 3 alphabet characters");
         }
         return code;
     }
@@ -171,14 +171,15 @@ public class Utility {
      */
     public static String findExistedCode(ArrayList<EastAsiaCountries> list,
             String code) throws Exception {
+        code = code.toLowerCase();
         //Loop through the list to check if the code is existed
         for (EastAsiaCountries c : list) {
             //Throw new exception if it's equal to the code of any country
-            if (c != null && c.getCountryCode().equals(code)) {
+            if (c != null && c.getCountryCode().toLowerCase().equals(code)) {
                 throw new Exception("Code is already existed in the list");
             }
         }
-        return code;
+        return code.toUpperCase();
     }
 
     /**
@@ -194,7 +195,7 @@ public class Utility {
         //Loop through the list to check if the name is existed
         for (EastAsiaCountries c : list) {
             //If it's equal to one country in the list, throw new exception
-            if (c != null && c.getCountryName().equals(name)) {
+            if (c != null && c.getCountryName().toLowerCase().equals(name.toLowerCase())) {
                 throw new Exception("Name is already existed in the list");
             }
         }

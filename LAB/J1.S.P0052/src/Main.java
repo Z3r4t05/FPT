@@ -41,7 +41,7 @@ public class Main {
                         System.out.println(ex.getMessage());
                     }
                     break;
-                case 4://Display country by ascen1ding order of name
+                case 4://Display country by ascending order of name
                     try {
                         Utility.displayArray(m.sortInformationByAscendingOrder());
                     } catch (Exception ex) {

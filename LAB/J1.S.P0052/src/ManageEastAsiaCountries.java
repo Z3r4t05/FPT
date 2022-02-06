@@ -75,8 +75,8 @@ public class ManageEastAsiaCountries {
     public int selectOption(String message, int min, int max) throws Exception {
         String input;
 
-        System.out.println(message);
-        input = sc.nextLine();
+        
+        input = Utility.getNonBlankStr(message);
         //throw exception if input is empty
         if (input.isEmpty()) {
             throw new Exception("Empty input");
