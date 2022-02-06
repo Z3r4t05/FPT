@@ -12,16 +12,17 @@ public class Main {
      * Pattern using to check if the date is existed
      */
     private static final Pattern DATE_EXISTED = Pattern.compile(
-            //Check all the leap years that are divisible by 400
-            "^((29/(02|2)/((([13579][26]|[2468][048]|0?[48])00)"
-            //Leap years that are divisible by 4 but not divisible by 100
-            + "|([\\d]{0,2}?([13579][26]|[2468][048]|0?[48]))))"
-            //Checking normal February dates in non-leap years
-            + "|((0?[\\d]|1[\\d]|2[0-8])/(02|2)/([\\d]{1,4}))"
-            //Checking dates of 31-day months
-            + "|((0?[\\d]|[12][\\d]|3[01])/(0?[13578]|1[02])/([\\d]{1,4}))"
-            //Checking dates of 30-day months
-            + "|((0?[\\d]|[12][\\d]|30)/(0?[469]|11)/([\\d]{1,4})))$");
+        "^" //start of line
+        + "((29/(02|2)/" //date start with 29/2 or 29/02
+        + "((([13579][26]|[2468][048]|0?[48])00)" //year that divisible by 400
+        //or years that are divisible by 4 but not divisible by 100
+        + "|([\\d]{0,2}?([13579][26]|[2468][048]|0?[48]))))"
+        //Checking normal February dates in non-leap years
+        + "|((0?[\\d]|1[\\d]|2[0-8])/(02|2)/([\\d]{1,4}))"
+        //Checking dates of 31-day months
+        + "|((0?[\\d]|[12][\\d]|3[01])/(0?[13578]|1[02])/([\\d]{1,4}))"
+        //Checking dates of 30-day months
+        + "|((0?[\\d]|[12][\\d]|30)/(0?[469]|11)/([\\d]{1,4})))$");
     /**
      * Pattern using to check if the input is in the correct format
      */
