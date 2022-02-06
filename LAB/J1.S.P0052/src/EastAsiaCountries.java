@@ -1,4 +1,7 @@
 
+import java.util.Formatter;
+
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -33,9 +36,14 @@ public class EastAsiaCountries extends Country implements Comparable<EastAsiaCou
 
     @Override
     public void display() {
-        System.out.println(this.getCountryCode() + "\n" + this.getCountryName());
+        Formatter formatter = new Formatter();
+        System.out.println(formatter.format("%s", "bjh"));
+        System.out.println("ID              Name            Total Area      Terrain");
+        System.out.println("");
     }
-
+    public static void main(String[] args) {
+        display();
+    }
     @Override
     public int compareTo(EastAsiaCountries t) {
         return this.getCountryName().compareTo(t.getCountryName());

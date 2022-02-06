@@ -39,7 +39,7 @@ public class Main {
                         //display country by ascen1ding order of name
                         m.displayList(m.sortInformationByAscendingOrder());
                     } catch (Exception ex) {
-                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                        System.err.println(ex.getMessage());
                     }
 
                     break;

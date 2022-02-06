@@ -178,8 +178,10 @@ public class ManageEastAsiaCountries {
             throws Exception {
         ArrayList<EastAsiaCountries> database = this.getCountryList();
         ArrayList<EastAsiaCountries> result = new ArrayList<>();
+        if (database.isEmpty()) {
+            throw new Exception("Empty country list!");
+        }
         String input = Utility.getNonBlankStr("Search name of country: ").toLowerCase();
-
         if (!Utility.isValid(input, Utility.COUNTRY_NAME)) {
             throw new Exception("Not a valid name!");
         }
@@ -205,7 +207,7 @@ public class ManageEastAsiaCountries {
 
     public EastAsiaCountries[] sortInformationByAscendingOrder()
             throws Exception {
-        if (this.getCountryList() == null) {
+        if (this.getCountryList().isEmpty()) {
             throw new Exception("Empty list!");
         }
         EastAsiaCountries[] country = {};

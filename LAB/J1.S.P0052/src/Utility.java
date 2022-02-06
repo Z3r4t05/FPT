@@ -78,13 +78,17 @@ public class Utility {
         return Utility.normalize(name);
     }
 
-    public static int inputTotalArea(String msg) throws Exception {
-        int area;
+    public static float inputTotalArea(String msg) throws Exception {
+        float area;
         String input = getNonBlankStr(msg);
-        area = Integer.parseInt(input);
+        try {
+            area = Float.parseFloat(input);           
+        } catch (NumberFormatException e) {
+            throw new Exception("Area must be an integer or a float number");
+        }       
         if (area <= 0) {
             throw new Exception("Area must be greater than 0");
-        }
+        }       
         return area;
     }
     
