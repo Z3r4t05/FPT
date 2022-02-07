@@ -43,7 +43,9 @@ public class Main {
         + "([\\d]{1,4})))"
         //End of line
         + "$");
-    
+    /**
+     * Pattern using to check if the year is zero
+     */
     private static final Pattern YEAR_ZERO = Pattern.compile(
             //Start of line
             "^"
@@ -138,7 +140,6 @@ public class Main {
     private static void compareAndDisplay(String date1, String date2) {
         String[] a1 = date1.split("/");
         String[] a2 = date2.split("/");
-
         int year1 = Integer.parseInt(a1[2]);
         int year2 = Integer.parseInt(a2[2]);
         int month1 = Integer.parseInt(a1[1]);
