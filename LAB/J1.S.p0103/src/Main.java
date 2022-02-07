@@ -43,6 +43,7 @@ public class Main {
         + "([\\d]{1,4})))"
         //End of line
         + "$");
+    
     /**
      * Pattern using to check if the year is zero
      */
@@ -57,6 +58,7 @@ public class Main {
             + "/[0]{1,4}"
             //end of line
             + "$"); 
+    
     /**
      * Pattern using to check if the input is in the correct format
      */
@@ -77,10 +79,10 @@ public class Main {
      */
     public static void main(String[] args) {
         String date1, date2;
-        //Step 1: Input and validate the first date, format [dd/mm/yyyy]
-        date1 = inputAndValidateDate("Please enter the first date: ");
-        //Step 2: Input and validate the second date, format [dd/mm/yyyy]
-        date2 = inputAndValidateDate("Please enter the second date: ");
+        //Step 1: Input the first date, format [dd/mm/yyyy]
+        date1 = inputDate("Please enter the first date: ");
+        //Step 2: Input the second date, format [dd/mm/yyyy]
+        date2 = inputDate("Please enter the second date: ");
         //Step 3: Compare the dates and display the result
         compareAndDisplay(date1, date2);
     }
@@ -91,7 +93,7 @@ public class Main {
      * @param msg the message for user
      * @return the input date which is valid
      */
-    private static String inputAndValidateDate(String msg) {
+    private static String inputDate(String msg) {
         Scanner sc = new Scanner(System.in);
         String input;
         //Keep asking until the input received is valid
