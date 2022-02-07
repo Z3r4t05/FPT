@@ -131,22 +131,22 @@ public class Main {
         int day2 = Integer.parseInt(a2[0]);
         System.out.println("");
 
-        //Check if year1 is after year2 or otherwise
+        //Check if year1 is after year2 
         if (year1 > year2) {
             System.out.println("Date1 is after Date2");
-        } else if (year1 < year2) {
+        } else if (year1 < year2) {//Check if year1 if before year2
             System.out.println("Date1 is before Date2");
         } else {
             //If the years are equal, compare month1 with month2 
             if (month1 > month2) {
                 System.out.println("Date1 is after Date2");
-            } else if (month1 < month2) {
+            } else if (month1 < month2) {//Check if month1 is before month 2
                 System.out.println("Date1 is before Date2");
             } else {
                 //If the months are equal, compare day1 with day2
                 if (day1 > day2) {
                     System.out.println("Date1 is after Date2");
-                } else if (day1 < day2) {
+                } else if (day1 < day2) {//Check if day1 is before day 2
                     System.out.println("Date1 is before Date2");
                 } else {
                     System.out.println("Date1 is equal to Date2");

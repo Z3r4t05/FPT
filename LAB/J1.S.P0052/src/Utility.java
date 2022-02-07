@@ -71,16 +71,15 @@ public class Utility {
      *
      * @param msg message to user
      * @return the inputted string (which is re-capitalize)
-     * @throws Exception if the input is empty
      */
-    public static String getNonBlankStr(String msg) throws Exception {
-
+    public static String getNonBlankStr(String msg) {
         String result;
         System.out.println(msg);
         result = normalizeAndRecapitalize(sc.nextLine());
         //throw new exception for empty input
         if (result.isEmpty()) {
-            throw new Exception("Empty input!");
+            System.out.print("Empty input!\n");
+            return getNonBlankStr(msg);
         }
         return result;
     }

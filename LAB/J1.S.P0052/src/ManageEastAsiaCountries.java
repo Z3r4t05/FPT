@@ -70,28 +70,30 @@ public class ManageEastAsiaCountries {
      * @param min minimum value
      * @param max maximum value
      * @return the input value
-     * @throws java.lang.Exception
      */
-    public int selectOption(String message, int min, int max) throws Exception {
+    public int selectOption(String message, int min, int max) {
         String input;
-
-        
         input = Utility.getNonBlankStr(message);
-        //throw exception if input is empty
-        if (input.isEmpty()) {
-            throw new Exception("Empty input");
-        }
-        int num;
         try {
-            num = Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException("Not a valid number");
+            //throw exception if input is empty
+            if (input.isEmpty()) {
+                throw new Exception("Empty input");
+            }
+            int num;
+            try {
+                num = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                throw new NumberFormatException("Not a valid number");
+            }
+            //Throw exception if the input is out of range
+            if (num < min || num > max) {
+                throw new Exception("Please enter an integer in range [1-5]");
+            }         
+            return num;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return selectOption(message, min, max);
         }
-        //Throw exception if the input is out of range
-        if (num < min || num > max) {
-            throw new Exception("Please enter an integer in range [1-5]");
-        }
-        return num;
     }
 
     /**

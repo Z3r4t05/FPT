@@ -58,7 +58,7 @@ class Tree {
     }
 
     public static int maxHeight(Node node) {
-        if (node.l == node.r && node.l == null) return 0;
+        if (node.l == null && node.r == null) return 0;
         else {
             return 1 + Math.max(maxHeight(node.l), maxHeight(node.r));
         }
@@ -160,7 +160,7 @@ public class Main {
   
         System.out.println("depth of tree is : " +
                                       Tree.maxDepth(tree.root));
-        System.out.println("heith " + Tree.maxHeight(tree.root));
+        System.out.println("height " + Tree.maxHeight(tree.root));
     }
 
     public static int gcd(int m, int n) {
