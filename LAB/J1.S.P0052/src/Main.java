@@ -12,9 +12,9 @@ public class Main {
         do {//Return to main screen after each after each option
 
             //step 1. Display the menu
-            m.displayMenu();
+            Utility.displayMenu();
             //step 2. Ask user to select option
-            choice = m.selectOption("Enter your choice : ", 1, 5);
+            choice = Utility.selectOption("Enter your choice : ", 1, 5);
             //step 3. Perform function based on the selected option
             switch (choice) {
                 case 1://Add information of 11 countries

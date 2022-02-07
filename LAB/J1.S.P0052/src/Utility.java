@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
@@ -242,6 +243,64 @@ public class Utility {
                 "ID", "Name", "Total Area", "Terrain");
         for (EastAsiaCountries c : arr) {
             c.display();
+        }
+    }
+    
+     /**
+     * Display the menu to the screen
+     */
+    public static void displayMenu() {
+        ArrayList<String> listOptions = new ArrayList<>(Arrays.asList(
+                "Input the information of 11 countries in East Asia",
+                "Display the information of country you've just input",
+                "Search the information of country by user-entered name",
+                "Display the information of countries sorted name in ascending "
+                + "order",
+                "Exit"
+        ));
+        System.out.println("");
+        System.out.println("                               Menu");
+        System.out.println("==================================================="
+                + "=======================");
+        int totalOption = listOptions.size();
+        //print all options start with index from 1 to the end
+        for (int i = 0; i < totalOption; i++) {
+            System.out.println((i + 1) + ". " + listOptions.get(i));
+        }
+        System.out.println("=================================================="
+                + "========================");
+    }
+
+    /**
+     * Take an input (an integer from min to max)
+     *
+     * @param message message to user
+     * @param min minimum value
+     * @param max maximum value
+     * @return the input value
+     */
+    public static int selectOption(String message, int min, int max) {
+        String input;
+        input = Utility.getNonBlankStr(message);
+        try {
+            //throw exception if input is empty
+            if (input.isEmpty()) {
+                throw new Exception("Empty input");
+            }
+            int num;
+            try {
+                num = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                throw new NumberFormatException("Not a valid number");
+            }
+            //Throw exception if the input is out of range
+            if (num < min || num > max) {
+                throw new Exception("Please enter an integer in range [1-5]");
+            }         
+            return num;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return selectOption(message, min, max);
         }
     }
 }
