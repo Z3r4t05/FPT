@@ -44,6 +44,17 @@ public class Main {
         //End of line
         + "$");
     
+    private static final Pattern YEAR_ZERO = Pattern.compile(
+            //Start of line
+            "^"
+            //Any 1 or 2 digits
+            + "[\\d]{1,2}"
+            //"/" follow by any 1 or 2 digits
+            + "/[\\d]{1,2}"
+            //"/" follow by 1 to 4 ZERO digits        
+            + "/[0]{1,4}"
+            //end of line
+            + "$"); 
     /**
      * Pattern using to check if the input is in the correct format
      */
@@ -98,6 +109,7 @@ public class Main {
     private static boolean isValid(String input) {
         boolean correctFormatted = DATE_FORMAT.matcher(input).matches();
         boolean isExisted = DATE_EXISTED.matcher(input).matches();
+        boolean isYearZero = YEAR_ZERO.matcher(input).matches();
         if (input.isEmpty()) {//Check if the input is empty
             System.err.println("Empty input!");
             return false;
@@ -107,8 +119,12 @@ public class Main {
             return false;
         } else if (!isExisted) {//Check if the date doesn't exist
             System.err.println("No such day in calendar!");
+            return false;    
+        } else if (isYearZero) {
+            System.err.println("Year 0 doesn't exist!");
             return false;
-        } else {//If the input satisfied 2 patterns then it is valid
+        } 
+        else {//If the input satisfied 2 patterns then it is valid
             return true;
         }
     }
