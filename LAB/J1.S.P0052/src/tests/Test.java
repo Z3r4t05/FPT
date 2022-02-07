@@ -3,23 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package tests;
 
 /**
  *
  * @author ADMIN
  */
-public class Node {
+public class Test implements Update{
 
-    int info;
-    Node left, right;
+    private boolean b;
 
-    Node(int x, Node p, Node q) {
-        this.info = x;
-        this.left = p;
-        this.right = q;
+    public boolean isB() {
+        return b;
     }
 
-    Node(int x) {
-        this(x, null, null);
+    @Override
+    public void setB(boolean newVal) {
+        this.b = newVal;
     }
+
 }

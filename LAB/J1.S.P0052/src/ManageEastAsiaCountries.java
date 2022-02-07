@@ -2,7 +2,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Scanner;
 
 /**
  *
@@ -10,29 +9,9 @@ import java.util.Scanner;
  */
 public class ManageEastAsiaCountries {
 
-    private ArrayList<EastAsiaCountries> countryList = new ArrayList<>();
-    private EastAsiaCountries lastCountryInput;
-    public static final Scanner sc = new Scanner(System.in);
-
     public ManageEastAsiaCountries() {
     }
-
-    public ArrayList<EastAsiaCountries> getCountryList() {
-        return countryList;
-    }
-
-    public void setCountryList(ArrayList<EastAsiaCountries> countryList) {
-        this.countryList = countryList;
-    }
-
-    public EastAsiaCountries getLastCountryInput() {
-        return lastCountryInput;
-    }
-
-    public void setLastCountryInput(EastAsiaCountries lastCountryInput) {
-        this.lastCountryInput = lastCountryInput;
-    }
-
+    
     /**
      * Display the menu to the screen
      */
@@ -93,8 +72,10 @@ public class ManageEastAsiaCountries {
 
     /**
      * Ask user to enter information of country then add it to the list
+     * @param countryList list of countries
+     * @return 
      */
-    public void addCountryInformation() {
+    public EastAsiaCountries addCountryInformation(ArrayList<EastAsiaCountries> countryList) {
         EastAsiaCountries country = new EastAsiaCountries();
         //Keep asking for code if the program catches an exception
         while (true) {
@@ -145,18 +126,19 @@ public class ManageEastAsiaCountries {
                 System.out.println(e.getMessage());
             }
         }
-        addCountryInformation(country);
+        return addCountryInformation(country, countryList);
     }
 
     /**
      * add country to the list
      *
      * @param country to be added
+     * @param countryList
+     * @return 
      */
-    public void addCountryInformation(EastAsiaCountries country) {
+    public EastAsiaCountries addCountryInformation(EastAsiaCountries country, ArrayList<EastAsiaCountries> countryList) {
         try {
             countryList.add(country);
-            this.setLastCountryInput(country);
         } catch (Exception e) {
             //Change the message of the exception
             if (e instanceof IndexOutOfBoundsException) {
@@ -165,16 +147,17 @@ public class ManageEastAsiaCountries {
                 System.out.println(e.getMessage());
             }
         }
+        return country;
     }
 
     /**
      * Display information of countries you have just inputted.
      *
+     * @param country
      * @return the country that you've recently inputted
      * @throws Exception if you haven't entered anything
      */
-    public EastAsiaCountries getRecentlyEnteredInformation() throws Exception {
-        EastAsiaCountries country = this.getLastCountryInput();
+    public EastAsiaCountries getRecentlyEnteredInformation(EastAsiaCountries country) throws Exception {
         //Check if user has entered input at least 1 time or not
         if (country == null) {
             throw new Exception("You haven't entered anything");
@@ -187,16 +170,16 @@ public class ManageEastAsiaCountries {
     /**
      * Search information of countries by user-entered name
      *
+     * @param countryList
      * @return array of countries that matches a part of the name
      * @throws Exception if the list is empty or not found any country or the
      * input name is invalid
      */
-    public EastAsiaCountries[] searchInformationByName()
+    public EastAsiaCountries[] searchInformationByName(ArrayList<EastAsiaCountries> countryList)
             throws Exception {
-        ArrayList<EastAsiaCountries> data = this.getCountryList();
         ArrayList<EastAsiaCountries> result = new ArrayList<>();
         //If the data is empty throw new exception
-        if (data.isEmpty()) {
+        if (countryList.isEmpty()) {
             throw new Exception("Empty country list!");
         }
         String input = Utility
@@ -207,7 +190,7 @@ public class ManageEastAsiaCountries {
             throw new Exception("Not a valid name!");
         }
         //Searching for name in data that matches the input ignoring case
-        for (EastAsiaCountries c : data) {
+        for (EastAsiaCountries c : countryList) {
             //add the country in data that matches the input to the result list
             if (c.getCountryName().toLowerCase().contains(input)) {
                 result.add(c);
@@ -221,21 +204,21 @@ public class ManageEastAsiaCountries {
 
         return result.toArray(new EastAsiaCountries[result.size()]);
     }
-
+    
     /**
      * Sort information of countries by ascending order of names
      *
+     * @param countryList
      * @return the sorted array of countries
      * @throws Exception if the array is empty
      */
-    public EastAsiaCountries[] sortInformationByAscendingOrder()
+    public EastAsiaCountries[] sortInformationByAscendingOrder(ArrayList<EastAsiaCountries> countryList)
             throws Exception {
         //throw exception if the list is empty
-        if (this.getCountryList().isEmpty()) {
+        if (countryList.isEmpty()) {
             throw new Exception("Empty list!");
         }
-        Collections.sort(this.getCountryList());
-        return this.getCountryList()
-                .toArray(new EastAsiaCountries[this.getCountryList().size()]);
+        Collections.sort(countryList);
+        return countryList.toArray(new EastAsiaCountries[countryList.size()]);
     }
 }
