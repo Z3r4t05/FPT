@@ -17,9 +17,10 @@ public class ManageEastAsiaCountries {
      * @param countryList list of countries
      * @return
      */
-    public EastAsiaCountries addCountryInformation(ArrayList<EastAsiaCountries> countryList) {
+    public EastAsiaCountries addCountryInformation
+        (ArrayList<EastAsiaCountries> countryList) {
         EastAsiaCountries country = new EastAsiaCountries();
-        //Keep asking for code if the program catches an exception
+        //Ask user again if the input is not valid
         while (true) {
             try {
                 country.setCountryCode(Utility.findExistedCode(
@@ -31,7 +32,7 @@ public class ManageEastAsiaCountries {
                 System.out.println(e.getMessage());
             }
         }
-        //Keep asking for name if the program catches an exception
+        //ask user again if the input is not valid
         while (true) {
             try {
                 country.setCountryName(Utility.findExistedName(
@@ -50,6 +51,7 @@ public class ManageEastAsiaCountries {
                         "Enter total Area: "));
                 break;
             } catch (Exception e) {
+                //Tell user to enter an float if the input is not a number
                 if (e instanceof NumberFormatException) {
                     System.out.println("Invalid input. Area must be "
                             + "a positive float or integer!");
@@ -78,7 +80,8 @@ public class ManageEastAsiaCountries {
      * @param countryList
      * @return
      */
-    public EastAsiaCountries addCountryInformation(EastAsiaCountries country, ArrayList<EastAsiaCountries> countryList) {
+    public EastAsiaCountries addCountryInformation
+        (EastAsiaCountries country, ArrayList<EastAsiaCountries> countryList) {
         try {
             countryList.add(country);
         } catch (Exception e) {
@@ -99,7 +102,8 @@ public class ManageEastAsiaCountries {
      * @return the country that you've recently inputted
      * @throws Exception if you haven't entered anything
      */
-    public EastAsiaCountries getRecentlyEnteredInformation(EastAsiaCountries country) throws Exception {
+    public EastAsiaCountries getRecentlyEnteredInformation(
+            EastAsiaCountries country) throws Exception {
         //Check if user has entered input at least 1 time or not
         if (country == null) {
             throw new Exception("You haven't entered anything");
@@ -117,7 +121,8 @@ public class ManageEastAsiaCountries {
      * @throws Exception if the list is empty or not found any country or the
      * input name is invalid
      */
-    public EastAsiaCountries[] searchInformationByName(ArrayList<EastAsiaCountries> countryList)
+    public EastAsiaCountries[] searchInformationByName(
+            ArrayList<EastAsiaCountries> countryList)
             throws Exception {
         ArrayList<EastAsiaCountries> result = new ArrayList<>();
         //If the data is empty throw new exception
@@ -153,7 +158,8 @@ public class ManageEastAsiaCountries {
      * @return the sorted array of countries
      * @throws Exception if the array is empty
      */
-    public EastAsiaCountries[] sortInformationByAscendingOrder(ArrayList<EastAsiaCountries> countryList)
+    public EastAsiaCountries[] sortInformationByAscendingOrder(
+            ArrayList<EastAsiaCountries> countryList)
             throws Exception {
         //throw exception if the list is empty
         if (countryList.isEmpty()) {
