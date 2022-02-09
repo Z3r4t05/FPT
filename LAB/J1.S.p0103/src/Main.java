@@ -1,4 +1,7 @@
 
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -142,14 +145,14 @@ public class Main {
      * @param date2 The second formatted date
      */
     private static void compareAndDisplay(String date1, String date2) {
-        String[] a1 = date1.split("/");
-        String[] a2 = date2.split("/");
-        int year1 = Integer.parseInt(a1[2]);
-        int year2 = Integer.parseInt(a2[2]);
-        int month1 = Integer.parseInt(a1[1]);
-        int month2 = Integer.parseInt(a2[1]);
-        int day1 = Integer.parseInt(a1[0]);
-        int day2 = Integer.parseInt(a2[0]);
+        String[] dateParts1 = date1.split("/");
+        String[] dateParts2 = date2.split("/");
+        int year1 = Integer.parseInt(dateParts1[2]);
+        int year2 = Integer.parseInt(dateParts2[2]);
+        int month1 = Integer.parseInt(dateParts1[1]);
+        int month2 = Integer.parseInt(dateParts2[1]);
+        int day1 = Integer.parseInt(dateParts1[0]);
+        int day2 = Integer.parseInt(dateParts2[0]);
         System.out.println("");
 
         //Check if year1 is after year2 
