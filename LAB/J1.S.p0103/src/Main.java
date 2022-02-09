@@ -88,10 +88,12 @@ public class Main {
     }
 
     /**
-     * Take the input and validate it using the regEx pattern.
-     *
+     * Get the date from user. Only return the date-string when the input 
+     * is valid. The function isValid() is called during the process for 
+     * date-validation.
+     * 
      * @param msg the message for user
-     * @return the input date which is valid
+     * @return string date with format [dd/mm/yyyy]
      */
     private static String inputDate(String msg) {
         Scanner sc = new Scanner(System.in);
@@ -124,7 +126,7 @@ public class Main {
         } else if (!isExisted) {//Check if the date doesn't exist
             System.err.println("No such day in calendar!");
             return false;    
-        } else if (isYearZero) {
+        } else if (isYearZero) {//Check if the year is zero
             System.err.println("Year 0 doesn't exist!");
             return false;
         } 
