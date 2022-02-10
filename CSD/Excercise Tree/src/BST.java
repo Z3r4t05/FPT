@@ -265,16 +265,45 @@ public class BST {
 
     public static void main(String[] args) {
         BST tree = new BST();
-        tree.insert(8);
-        tree.insert(15);
-        tree.insert(5);
-        tree.insert(3);
-        tree.insert(7);
-        tree.insert(6);
+        int[] arr = {40,30,50,25,35,45,55,33,32,34,20,36};
+        for (int i = 0; i < arr.length; i++) {
+            int j = arr[i];
+            tree.insert(j);
+        }
+        /*
+                         40
+                    30        50
+                 25   35    45   55
+             20     33
+                32     34   
+        */
+        System.out.println("inorder: ");
+        tree.inorder(tree.root);
+        System.out.println("\npost");
+        tree.postorder(tree.root);
+        System.out.println("\npre");
+        tree.preorder(tree.root);
+        System.out.println("\nbreadth");
         tree.breathth();
-        tree.prettyPrint(tree.root, tree.maxheight(tree.root), tree.maxCostPath(tree.root));
-        tree.del(3);
-        System.out.println("\n");
+        tree.del(35);
+        /*
+                         40
+                    30        50
+                 /     \
+                25     34   45   55
+               /     /     \         
+            20      33     36
+                   /   \ 
+                32     null  
+        */
+        System.out.println("-");
+        System.out.println("\ninorder: ");
+        tree.inorder(tree.root);
+        System.out.println("\npost");
+        tree.postorder(tree.root);
+        System.out.println("\npre");
+        tree.preorder(tree.root);
+        System.out.println("\nbreadth");
         tree.breathth();
     }
 
@@ -292,9 +321,17 @@ public class BST {
         }
         p.info = rm.info;
         if (parentRm == p) {
+            /*
+                delete
+              /        \
+       skip this        *
+        /
+        *    
+            */
             p.left = rm.left;
         } else {
-            parentRm.right = rm.left;
+            
+            parentRm.right = null;
         }
         /*
               p=parent  ->         p=rm
@@ -303,7 +340,7 @@ public class BST {
         
    *    * 
         
-           p   ->                         p= rm
+                    p   ->      ->                 p= rm
       p.l =parent       p.r             p.l = parent      p.r
         
   p.l.l        p.l.r = rm        p.l.l    p.l.r=rm
