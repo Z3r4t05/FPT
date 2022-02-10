@@ -4,40 +4,38 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
-        ManageEastAsiaCountries m = new ManageEastAsiaCountries();
-        ArrayList<EastAsiaCountries> list = new ArrayList<>();
+        ManageEastAsiaCountries manager = new ManageEastAsiaCountries();
+        ArrayList<EastAsiaCountries> listOfCountries = new ArrayList<>();
         EastAsiaCountries newCountry = null;
         int choice;
         do {//Return to main screen after each after finishing the function
 
             //step 1. Display the menu
-            Utility.displayMenu();
+            manager.displayMenu();
             //step 2. Ask user to select option
-            choice = Utility.selectOption("Enter your choice : ", 1, 5);
+            choice = manager.selectOption("Enter your choice : ", 1, 5);
             //step 3. Perform function based on the selected option
             switch (choice) {
                 case 1://Add information of 11 countries
-                    newCountry = m.addCountryInformation(list);
+                    newCountry = manager.addCountryInformation(listOfCountries);
                     break;
                 case 2://Display information of country user has just entered
                     try {
-                        m.getRecentlyEnteredInformation(newCountry).display();
+                        manager.getRecentlyEnteredInformation(newCountry).display();
                     } catch (Exception ex) {
                         System.out.println(ex.getMessage());
                     }
                     break;
                 case 3://Search information of country by user-entered name
                     try {
-                        Utility.displayArray(
-                                m.searchInformationByName(list));
+                        Utility.displayTableOfCountries(manager.searchInformationByName(listOfCountries));
                     } catch (Exception ex) {
                         System.out.println(ex.getMessage());
                     }
                     break;
                 case 4://Display country by ascending order of name
                     try {
-                        Utility.displayArray(
-                            m.sortInformationByAscendingOrder(list));
+                        Utility.displayTableOfCountries(manager.sortInformationByAscendingOrder(listOfCountries));
                     } catch (Exception ex) {
                         System.out.println(ex.getMessage());
                     }
