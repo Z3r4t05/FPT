@@ -116,13 +116,13 @@ public class Main {
      * @return true if the input date is valid, false otherwise.
      */
     private static boolean isValid(String input) {
-        boolean correctFormatted = DATE_FORMAT.matcher(input).matches();
+        boolean isCorrectFormatted = DATE_FORMAT.matcher(input).matches();
         boolean isExisted = DATE_EXISTED.matcher(input).matches();
         boolean isYearZero = YEAR_ZERO.matcher(input).matches();
         if (input.isEmpty()) {//Check if the input is empty
             System.err.println("Empty input!");
             return false;
-        } else if (!correctFormatted) {//Check if the input is wrong in format
+        } else if (!isCorrectFormatted) {//Check if the input is wrong in format
             System.err.println("Wrong format! Please enter a date with format "
                     + "[dd/mm/yyyy]");
             return false;
@@ -133,7 +133,7 @@ public class Main {
             System.err.println("Year 0 doesn't exist!");
             return false;
         } 
-        else {//If the input satisfied 2 patterns then it is valid
+        else {
             return true;
         }
     }

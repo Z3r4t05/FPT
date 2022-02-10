@@ -1,4 +1,5 @@
 
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -78,17 +79,17 @@ public class BST {
             return;
         }
         MyQueue q = new MyQueue();
-        q.onqueue(root);
+        q.enqueue(root);
         Node p;
         while (!q.isEmpty()) {
             try {
                 p = (Node) q.dequeue();
                 System.out.print(p.info + " ");
                 if (p.left != null) {
-                    q.onqueue(p.left);
+                    q.enqueue(p.left);
                 }
                 if (p.right != null) {
-                    q.onqueue(p.right);
+                    q.enqueue(p.right);
                 }
             } catch (Exception ex) {
                 Logger.getLogger(BST.class.getName()).log(Level.SEVERE, null, ex);
@@ -168,46 +169,113 @@ public class BST {
             return righth + 1;
         }
     }
-    
+
     public int height(Node node) {
-        if(node == null) return 0;
+        if (node == null) {
+            return 0;
+        }
         return 1 + Math.max(height(node.left), height(node.right));
     }
-    
+
+    private static void printSpace(int count) {
+        for (int i = 0; i < count; i++) {
+            System.out.print(" ");
+        }
+    }
+
     public int maxCostPath(Node root) {
-        if(root == null) {
+        if (root == null) {
             return 0;
         } else if (root.left == null && root.right == null) {
             return root.info;
-        } 
+        }
         int left = maxCostPath(root.left);
         int right = maxCostPath(root.right);
         return ((left > right) ? left : right) + root.info;
     }
+
+
+
+
     public boolean isAVL(Node root) {
-        int l,r;
-        if(root == null) return true;
+        int l, r;
+        if (root == null) {
+            return true;
+        }
         l = height(root.left);
         r = height(root.right);
         return Math.abs(l - r) <= 1 && isAVL(root.left) && isAVL(root.right);
     }
-    
-//    public void del(int x) {
-//        del(root, x);
-//    }
+
+    public void del(int x) {
+        if (isEmpty()) {
+            return;
+        }
+        Node p = root;
+        Node parent = null;
+        //traverse
+        while (p != null) {
+            if (p.info == x) {
+                break;
+            }
+            parent = p;
+            if (p.info > x) {
+                p = p.left;
+            } else {
+                p = p.right;
+            }
+        }
+        //p=null, x not found
+        if (p == null) {
+            return;
+        }
+        //p==x
+        //if p has no leaf or p is a leaf
+        if (p.left == null && p.right == null) {
+            if (parent == null) {
+                root = null;
+            } else if (parent.left == p) {
+                parent.left = null;
+            } else {
+                parent.right = null;
+            }
+
+            //if p has only one child
+        } else if (p.left != null && p.right == null) {
+            if (parent == null) {
+                root = p.left;
+            } else if (parent.left == p) {
+                parent.left = p.left;
+            } else {
+                parent.right = p.left;
+            }
+        } else if (p.left == null && p.right != null) {
+            if (parent == null) {
+                root = p.right;
+            } else if (parent.left == p) {
+                parent.left = p.right;
+            } else {
+                parent.right = p.right;
+            }
+            //if p has 2 childs
+        } else {
+            delByCopying(p);
+        }
+    }
+
     public static void main(String[] args) {
         BST tree = new BST();
-        tree.insert(6);
-        tree.insert(4);
-        tree.insert(2);
+        tree.insert(8);
+        tree.insert(15);
         tree.insert(5);
-        tree.insert(1);
         tree.insert(3);
         tree.insert(7);
-        tree.insert(9);
-        System.out.println(tree.maxheight(tree.root));
-        System.out.println(tree.maxCostPath(tree.root));
-        tree.inorder(tree.root);
+        tree.insert(6);
+        tree.breathth();
+        tree.prettyPrint(tree.root, tree.maxheight(tree.root), tree.maxCostPath(tree.root));
+        tree.del(3);
+        System.out.println("\n");
+        tree.breathth();
     }
 
 //    private Node del(Node root, int x) {
@@ -215,4 +283,30 @@ public class BST {
 //            
 //        }
 //    }
+    public void delByCopying(Node p) {
+        Node rm = p.left;
+        Node parentRm = p;
+        while (rm.right != null) {
+            parentRm = rm;
+            rm = rm.right;
+        }
+        p.info = rm.info;
+        if (parentRm == p) {
+            p.left = rm.left;
+        } else {
+            parentRm.right = rm.left;
+        }
+        /*
+              p=parent  ->         p=rm
+          p.l=rm    p.r        *           p.r
+      *                    *     * 
+        
+   *    * 
+        
+           p   ->                         p= rm
+      p.l =parent       p.r             p.l = parent      p.r
+        
+  p.l.l        p.l.r = rm        p.l.l    p.l.r=rm
+         */
+    }
 }

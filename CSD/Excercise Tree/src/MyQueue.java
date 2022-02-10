@@ -8,33 +8,39 @@
  *
  * @author ADMIN
  */
+import java.util.LinkedList;
 
 public class MyQueue {
-    protected Nodeq head, tail;
-    public MyQueue() {
-        head = tail = null;
+
+    LinkedList<Node> t;
+
+    MyQueue() {
+        t = new LinkedList<>();
     }
-    public boolean isEmpty() {
-        return(head==null);
+
+    void clear() {
+        t.clear();
     }
-    Object front() throws Exception {
-        if(isEmpty()) 
-            throw new Exception("Empty");
-        return head;
+
+    boolean isEmpty() {
+        return (t.isEmpty());
     }
-    public Object dequeue() throws Exception {
-        if(isEmpty()) throw new Exception("Empty");
-        Object x = head.info;
-        head = head.next;
-        if(head == null) tail = null;
-        return(x);
+
+    void enqueue(Node p) {
+        t.addLast(p);
     }
-    public void onqueue(Object x) {
-        if(isEmpty()) {
-            head = tail = new Nodeq(x);
-        } else {
-            tail.next = new Nodeq(x);
-            tail = tail.next;
+
+    Node dequeue() {
+        if (isEmpty()) {
+            return (null);
         }
+        return (t.removeFirst());
+    }
+
+    Node front() {
+        if (isEmpty()) {
+            return (null);
+        }
+        return (t.getFirst());
     }
 }
