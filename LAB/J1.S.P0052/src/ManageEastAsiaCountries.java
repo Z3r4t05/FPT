@@ -19,11 +19,11 @@ public class ManageEastAsiaCountries {
      * @return
      */
     public EastAsiaCountries addCountryInformation(ArrayList<EastAsiaCountries> countryList) {
-        EastAsiaCountries country = new EastAsiaCountries();
+        EastAsiaCountries newCountry = new EastAsiaCountries();
         //Ask user again if the input is not valid
         while (true) {
             try {
-                country.setCountryCode(Utility.findExistedCode(
+                newCountry.setCountryCode(Utility.findExistedCode(
                         countryList, Utility.inputCode(
                                 "Enter code of country: ",
                                 Utility.COUNTRY_CODE)));
@@ -35,7 +35,7 @@ public class ManageEastAsiaCountries {
         //ask user again if the input is not valid
         while (true) {
             try {
-                country.setCountryName(Utility.findExistedName(
+                newCountry.setCountryName(Utility.findExistedName(
                         countryList, Utility.inputName(
                                 "Enter name of country: ",
                                 Utility.COUNTRY_NAME)));
@@ -47,7 +47,7 @@ public class ManageEastAsiaCountries {
         //Keep asking for area if the program catches an exception
         while (true) {
             try {
-                country.setTotalArea(Utility.inputTotalArea(
+                newCountry.setTotalArea(Utility.inputTotalArea(
                         "Enter total Area: "));
                 break;
             } catch (Exception e) {
@@ -63,14 +63,14 @@ public class ManageEastAsiaCountries {
         //Keep asking for terrain if program catches an exception
         while (true) {
             try {
-                country.setCountryTerrain(Utility.inputTerrain(
+                newCountry.setCountryTerrain(Utility.inputTerrain(
                         "Enter terrain of country: "));
                 break;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }
-        return addCountryInformation(country, countryList);
+        return addCountryInformation(newCountry, countryList);
     }
 
     /**
@@ -80,9 +80,9 @@ public class ManageEastAsiaCountries {
      * @param countryList
      * @return
      */
-    public EastAsiaCountries addCountryInformation(EastAsiaCountries country, ArrayList<EastAsiaCountries> countryList) {
+    public EastAsiaCountries addCountryInformation(EastAsiaCountries newCountry, ArrayList<EastAsiaCountries> countryList) {
         try {
-            countryList.add(country);
+            countryList.add(newCountry);
         } catch (Exception e) {
             //Change the message of the exception
             if (e instanceof IndexOutOfBoundsException) {
@@ -91,25 +91,25 @@ public class ManageEastAsiaCountries {
                 System.out.println(e.getMessage());
             }
         }
-        return country;
+        return newCountry;
     }
 
     /**
      * Display information of countries you have just inputted.
      *
-     * @param country
+     * @param lastInputCountry
      * @return the country that you've recently inputted
      * @throws Exception if you haven't entered anything
      */
     public EastAsiaCountries getRecentlyEnteredInformation(
-            EastAsiaCountries country) throws Exception {
+            EastAsiaCountries lastInputCountry) throws Exception {
         //Check if user has entered input at least 1 time or not
-        if (country == null) {
+        if (lastInputCountry == null) {
             throw new Exception("You haven't entered anything");
         }
         System.out.printf("%-16s%-16s%-16s%-16s\n",
                 "ID", "NAME", "Total Area", "Terrain");
-        return country;
+        return lastInputCountry;
     }
 
     /**
@@ -126,7 +126,7 @@ public class ManageEastAsiaCountries {
         ArrayList<EastAsiaCountries> result = new ArrayList<>();
         //If the data is empty throw new exception
         if (countryList.isEmpty()) {
-            throw new Exception("Empty country list!");
+            throw new Exception("List of countries is empty!");
         }
         String input = Utility
                 .getNonBlankStr("Enter the name you want to search for: ")
@@ -162,7 +162,7 @@ public class ManageEastAsiaCountries {
             throws Exception {
         //throw exception if the list is empty
         if (countryList.isEmpty()) {
-            throw new Exception("Empty list!");
+            throw new Exception("List of countries is empty!");
         }
         Collections.sort(countryList);
         return countryList.toArray(new EastAsiaCountries[countryList.size()]);
@@ -217,7 +217,7 @@ public class ManageEastAsiaCountries {
             }
             //Throw exception if the input is out of range
             if (num < min || num > max) {
-                throw new Exception("Please enter an integer in range [1-5]");
+                throw new Exception("Input out of range [1-5]");
             }
             return num;
         } catch (Exception e) {
