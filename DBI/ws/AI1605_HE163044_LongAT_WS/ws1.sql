@@ -120,12 +120,13 @@ select * from Mark
 select * from Subject
 select * from Class
 go
-
+/*
 ALTER TABLE student
 ADD CONSTRAINT [FK__Student__ClassCo]
 FOREIGN KEY (classcode)REFERENCES class(classcode)
 ON DELETE SET NULL
 GO
+*/
 delete from Class where Headteacher = 'Phan Dang'
 
 select count(*) as 'Total std has cf mark' from Mark where SubjectCode = 'CF'
