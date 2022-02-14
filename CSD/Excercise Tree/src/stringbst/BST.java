@@ -1,5 +1,5 @@
+package stringbst;
 
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,12 +36,12 @@ public class BST {
         root = null;
     }
 
-    public Node search(int x) {
+    public Node search(String x) {
         Node q = root;
         while (q != null) {
-            if (x > q.info) {
+            if (x.compareTo(q.info) > 0) {
                 q = q.right;
-            } else if (x < q.info) {
+            } else if (x.compareTo(q.info) < 0) {
                 q = q.left;
             } else {
                 return q;
@@ -50,7 +50,7 @@ public class BST {
         return null;
     }
 
-    public void insert(int x) {
+    public void insert(String x) {
         if (search(x) == null) {
             Node newnode = new Node(x);
             Node q = root;
@@ -58,7 +58,7 @@ public class BST {
             //traverse down
             while (q != null) {
                 parent = q;
-                if (q.info > x) {
+                if (x.compareTo(q.info) < 0) {
                     q = q.left;
                 } else {
                     q = q.right;
@@ -66,7 +66,7 @@ public class BST {
             }
             if (parent == null) {
                 root = newnode;
-            } else if (x < parent.info) {
+            } else if (x.compareTo(q.info) < 0) {
                 parent.left = newnode;
             } else {
                 parent.right = newnode;
@@ -145,17 +145,6 @@ public class BST {
         return max(p.right);
     }
 
-    public int sum(Node root) {
-        if (root == null) {
-            return 0;
-        }
-        return root.info + sum(root.left) + sum(root.right);
-    }
-
-    public int avg() {
-        return sum(root) / count(root);
-    }
-
     public int maxheight(Node root) {
         if (root == null) {
             return 0;
@@ -177,23 +166,6 @@ public class BST {
         return 1 + Math.max(height(node.left), height(node.right));
     }
 
-    private static void printSpace(int count) {
-        for (int i = 0; i < count; i++) {
-            System.out.print(" ");
-        }
-    }
-
-    public int maxCostPath(Node root) {
-        if (root == null) {
-            return 0;
-        } else if (root.left == null && root.right == null) {
-            return root.info;
-        }
-        int left = maxCostPath(root.left);
-        int right = maxCostPath(root.right);
-        return (Integer.max(left, right) + root.info);
-    }
-
     public boolean isAVL(Node root) {
         int l, r;
         if (root == null) {
@@ -204,7 +176,7 @@ public class BST {
         return Math.abs(l - r) <= 1 && isAVL(root.left) && isAVL(root.right);
     }
 
-    public void del(int x) {
+    public void del(String x) {
         if (isEmpty()) {
             return;
         }
@@ -212,11 +184,11 @@ public class BST {
         Node parent = null;
         //traverse
         while (p != null) {
-            if (p.info == x) {
+            if (p.info == null ? x == null : p.info.equals(x)) {
                 break;
             }
             parent = p;
-            if (p.info > x) {
+            if (x.compareTo(p.info) < 0) {
                 p = p.left;
             } else {
                 p = p.right;
@@ -262,47 +234,7 @@ public class BST {
 
     public static void main(String[] args) {
         BST tree = new BST();
-        int[] arr = {40, 30, 50, 25, 35, 45, 55, 33, 32, 34, 20, 36};
-        for (int i = 0; i < arr.length; i++) {
-            int j = arr[i];
-            tree.insert(j);
-        }
-        /*
-                         40
-                    30        50
-                 25   35    45   55
-             20     33
-                32     34   
-         */
-        System.out.println("inorder: ");
-        tree.inorder(tree.root);
-        System.out.println("\npost");
-        tree.postorder(tree.root);
-        System.out.println("\npre");
-        tree.preorder(tree.root);
-        System.out.println("\nbreadth");
-        tree.breathth();
-        System.out.println("\nheigh: " + tree.height(tree.root));
-        tree.del(35);
-        /*
-                         40
-                    30        50
-                 /     \
-                25     34   45   55
-               /     /     \         
-            20      33     36
-                   /   \ 
-                32     null  
-         */
-        System.out.println("-");
-        System.out.println("\ninorder: ");
-        tree.inorder(tree.root);
-        System.out.println("\npost");
-        tree.postorder(tree.root);
-        System.out.println("\npre");
-        tree.preorder(tree.root);
-        System.out.println("\nbreadth");
-        tree.breathth();
+        
     }
 
 //    private Node del(Node root, int x) {
@@ -345,20 +277,20 @@ public class BST {
          */
     }
 
-    public void deleteByMerge(Node root, int info) {
+    public void deleteByMerge(Node root, String info) {
         root = deleteMerge(root, info);
     }
 
-    public Node deleteMerge(Node node, int info) {
+    public Node deleteMerge(Node node, String info) {
         //node = null means that the node is not in the tree
         if (node == null) {
             return node;
         } //Now recursively traverse from root to the node that need to remove
         //the node as the root will be return;
-        else if (info < node.info) {
+        else if (info.compareTo(node.info) < 0) {
             node.left = deleteMerge(node.left, info);
             return node;
-        } else if (info > node.info) {
+        } else if (info.compareTo(node.info) > 0) {
             node.right = deleteMerge(node.right, info);
             return node;
         } //Now we find the node to remove
