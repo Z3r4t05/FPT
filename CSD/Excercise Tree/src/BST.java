@@ -384,4 +384,25 @@ public class BST {
             return node.left;
         }
     }
+    
+    /**
+     *
+     * @param data
+     * @param first
+     * @param last
+     */
+    public void balance(int data[], int first, int last) {
+        if(first<last) {
+            int middle = (first+last)/2;
+            this.insert(data[middle]);
+            balance(data,first,middle-1);
+            balance(data,middle+1,last);
+        }
+    }
+    
+    public void balance(int data[]) {
+        balance(data,0,data.length-1);
+    }
+    
+    
 }

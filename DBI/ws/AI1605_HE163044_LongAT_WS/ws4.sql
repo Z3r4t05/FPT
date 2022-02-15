@@ -158,6 +158,32 @@ values('B02','02',1,6)
 Insert into KetQua(MaSV,MaMH,LanThi,Diem)
 values('B02','04',1,10)
 
+ select * from DMSV
+ --9
+ select masv as 'Mã sinh viên', hosv as 'Họ sinh viên', tensv as 'Tên', hocbong as 'Học bổng'
+ from dmsv order by MaSV asc
+ --10
+ select masv as 'Mã sinh viên', hosv+' '+tensv as 'Họ tên sinh viên', Phai as 'Phái',
+ NgaySinh as 'Ngày sinh'
+ from dmsv order by phai asc
+ --11
+ select hosv+' '+tensv as 'Họ tên sinh viên',  NgaySinh as 'Ngày sinh', 
+  hocbong as 'Học bổng' from dmsv order by NgaySinh asc, HocBong desc
+  --12
+  select MaMH as 'ma mon', TenMH as 'ten mon', SoTiet as 'so tiet' from DMMH
+  where TenMH like 'T%'
+  --13
+  select hosv+' '+tensv as 'Họ tên sinh viên',
+ NgaySinh as 'Ngày sinh', Phai as 'Phái'  from dmsv where TenSV like '%t' or HoSV like '%t'
+ --14
+ select MaKhoa as 'ma khoa', TenKhoa as 'ten khoa' from DMKhoa where TenKhoa like '_N%'
+ --15
+ select * from DMSV where hoSV like N'%Thị%'
+ --16
+ select masv as 'ma sinh vien', hosv+' '+tensv as 'Họ tên sinh viên', phai, hocbong from DMSV 
+ where tensv like N'[a-m]%'
+
+/*
 Create Table SinhVien_KetQua
 (
 MaSV char(3) not null,
@@ -208,3 +234,4 @@ delete DMSV where HocBong = 0
 update DMSV set tensv = 'Kỳ', Phai = 'Nam' 
 where MaSV = 'b01'
 delete KetQua where LanThi = 2 and Diem < 5
+*/
