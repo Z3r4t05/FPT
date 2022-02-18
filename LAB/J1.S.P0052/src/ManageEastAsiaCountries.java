@@ -110,7 +110,7 @@ public class ManageEastAsiaCountries {
             throw new Exception("You haven't entered anything");
         }
         System.out.printf("%-16s%-16s%-16s%-16s\n",
-                "ID", "NAME", "Total Area", "Terrain");
+                "ID", "Name", "Total Area", "Terrain");
         return lastInputCountry;
     }
 
