@@ -13,10 +13,12 @@ public class ManageEastAsiaCountries {
     }
 
     /**
-     * Ask user to enter information of country then add it to the list
+     * Ask user to enter information of country. 
+     * A new country variable will be created to hold the input values. Then it 
+     * will become the parameter for the addCountryInformation function.
      *
      * @param countryList list of countries
-     * @return
+     * @return addCountryInformation(newCountry, countryList)
      */
     public EastAsiaCountries addCountryInformation(ArrayList<EastAsiaCountries> countryList) {
         EastAsiaCountries newCountry = new EastAsiaCountries();
@@ -76,7 +78,7 @@ public class ManageEastAsiaCountries {
     /**
      * add country to the list
      *
-     * @param country to be added
+     * @param newCountry
      * @param countryList
      * @return
      */
@@ -113,8 +115,8 @@ public class ManageEastAsiaCountries {
     }
 
     /**
-     * Search information of countries by user-entered name
-     *
+     * Search information of countries by user-entered name.
+     * Input will be automatically converted to lowercase
      * @param countryList
      * @return array of countries that matches a part of the name
      * @throws Exception if the list is empty or not found any country or the
@@ -194,7 +196,7 @@ public class ManageEastAsiaCountries {
     }
 
     /**
-     * Take an input (an integer from min to max)
+     * Ask user to select an option from min to max.
      *
      * @param message message to user
      * @param min minimum value

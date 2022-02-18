@@ -182,6 +182,32 @@ values('B02','04',1,10)
  --16
  select masv as 'ma sinh vien', hosv+' '+tensv as 'Họ tên sinh viên', phai, hocbong from DMSV 
  where tensv like N'[a-m]%'
+ --18
+ select masv, hosv+' '+tensv as 'Họ tên sinh viên', makhoa, hocbong from dmsv 
+ where hocbong > 100000 order by makhoa desc
+ --17
+ select  hosv+' '+tensv as 'Họ tên sinh viên', NgaySinh, NoiSinh, HocBong
+ from dmsv where tensv like N'%[a-m]%' order by HoSV + ' ' + TenSV asc
+
+ --19 
+ select  hosv+' '+tensv as 'Họ tên sinh viên', makhoa, noisinh, hocbong from dmsv
+ where noisinh = N'Hà Nội' and hocbong > 150000
+ --20
+ select MaSV, MaKhoa, Phai from dmsv where makhoa = 'vl' or makhoa = 'av'
+ --21
+ select masv, ngaysinh, NoiSinh, HocBong from dmsv
+ where NgaySinh >= '19910101' and ngaysinh <= '19920605'
+ --22
+ select MaSV, NgaySinh, Phai, MaKhoa from dmsv
+ where hocbong >= 80000 and hocbong <= 150000
+ --23
+ select MaMH, TenMH, SoTiet from DMMH where sotiet > 30 and sotiet < 45
+ --24
+ select masv, hosv, TenSV, MaKhoa, Phai from dmsv
+ where phai = 'nam' and (MaKhoa = 'av' or makhoa = 'th')
+ --25
+ select * from dmsv where phai = N'Nữ' and TenSV like N'%n%'
+ --26
 
 /*
 Create Table SinhVien_KetQua
