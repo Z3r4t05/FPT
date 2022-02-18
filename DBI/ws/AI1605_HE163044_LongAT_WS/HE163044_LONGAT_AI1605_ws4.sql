@@ -208,7 +208,29 @@ values('B02','04',1,10)
  --25
  select * from dmsv where phai = N'Nữ' and TenSV like N'%n%'
  --26
-
+ select HoSV, TenSV, NoiSinh, NgaySinh from dmsv  where noisinh = N'Hà Nội' and MONTH(NgaySinh) = 2 
+ --27
+ select hosv,TenSV, NgaySinh, Floor(datediff(day, NgaySinh, GETDATE())/365.25) as Tuoi from dmsv 
+ where Floor(datediff(day, NgaySinh, GETDATE())/365.25) > 20
+ /*
+  select hosv,TenSV, NgaySinh, datediff(hour, NgaySinh, GETDATE())/8766
+  AS AgeYearsIntTrunc, Floor(datediff(day, NgaySinh, GETDATE())/365.25) as Tuoi from dmsv 
+ where Floor(datediff(day, NgaySinh, GETDATE())/365.25) > 20
+ */
+ --28
+  select dmsv.hosv,dmsv.TenSV, Floor(datediff(day, NgaySinh, GETDATE())/365.25) as Tuoi, Dmkhoa.TenKhoa
+  from dmsv inner join DMKhoa on dmsv.MaKhoa = dmkhoa.MaKhoa
+ where Floor(datediff(day, NgaySinh, GETDATE())/365.25) > 20 and
+ Floor(datediff(day, NgaySinh, GETDATE())/365.25) < 25
+ --29
+ select hosv,tensv,NgaySinh from  DMSV where year(ngaysinh) = 1990 and month(ngaysinh) between 1 and 3
+ --30
+ select masv, phai, hocbong,
+ case when hocbong > 500000 then 'hoc bong cao'
+ when hocbong = 0 then null
+	else 'hocbong trung binh' 
+	end as 'muc hoc bong'
+ from dmsv
 /*
 Create Table SinhVien_KetQua
 (

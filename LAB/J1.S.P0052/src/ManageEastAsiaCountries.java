@@ -22,6 +22,15 @@ public class ManageEastAsiaCountries {
      */
     public EastAsiaCountries addCountryInformation(ArrayList<EastAsiaCountries> countryList) {
         EastAsiaCountries newCountry = new EastAsiaCountries();
+        //Only accept user to input 11 countries
+        if(countryList.size() == 11) {
+            try {
+                throw new Exception("There already 11 countries in the list. "
+                        + "Cannot input new country");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
         //Ask user again if the input is not valid
         while (true) {
             try {

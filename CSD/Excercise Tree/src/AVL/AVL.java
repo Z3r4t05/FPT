@@ -5,6 +5,7 @@
  */
 package AVL;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,7 +27,6 @@ public class AVL {
      * @return
      */
     public int height(Node n) {
-        System.out.println("get n.height = " + n.height);
         return n == null ? -1 : n.height;
     }
 
@@ -37,7 +37,6 @@ public class AVL {
      */
     public void updateHeight(Node n) {
         n.height = 1 + Math.max(height(n.left), height(n.right));
-        System.out.println("update height = " + n.height);
     }
 
     /**
@@ -267,7 +266,7 @@ public class AVL {
     }
 
     public static void main(String[] args) {
-        int[] arr = {3,2,1};
+        int[] arr = {7,8,4,0,1,-1,10,24};
         AVL avl = new AVL();
         for (int i : arr) {
             avl.root = avl.insert(avl.root, i);
@@ -282,17 +281,17 @@ public class AVL {
         System.out.print("\nbreadth ");
         avl.breathth();
 
-        System.out.println("\n\ndeleting");
-//        avl.deleteNode(avl.root, 32);
+//        System.out.println("\n\ndeleting");
+////        avl.deleteNode(avl.root, 32);
 //        avl.root = avl.del(avl.root, 32);
-        System.out.print("\npost ");
-        avl.postorder(avl.root);
-        System.out.print("\npre ");
-        avl.preorder(avl.root);
-        System.out.print("\nin ");
-        avl.inorder(avl.root);
-        System.out.print("\nbreadth ");
-        avl.breathth();
+//        System.out.print("\npost ");
+//        avl.postorder(avl.root);
+//        System.out.print("\npre ");
+//        avl.preorder(avl.root);
+//        System.out.print("\nin ");
+//        avl.inorder(avl.root);
+//        System.out.print("\nbreadth ");
+//        avl.breathth();
 
     }
 
@@ -319,6 +318,19 @@ public class AVL {
         }
     }
 
+    public ArrayList<Integer> toarr(Node p) {
+        ArrayList<Integer> arr = new ArrayList<>();
+        add2arr(p, arr);
+        return arr;
+    }
+    
+    public void add2arr(Node root, ArrayList<Integer> arr) {
+        if(root == null) return;
+        add2arr(root.left, arr);
+        arr.add(root.key);
+        add2arr(root.right,arr);
+        
+    }
     public void preorder(Node p) {
         if (p == null) {
             return;
@@ -346,10 +358,12 @@ public class AVL {
         System.out.print(p.key + " ");
     }
 
-    public void del(Node root, int x) {
+    public Node del(Node root, int x) {
         if (isEmpty()) {
-            return;
+            return null;
         }
+//        System.out.println(this.root.right.height);
+//        System.out.println(this.root.left.height);
         Node p = root;
         Node parent = null;
         //traverse
@@ -366,7 +380,7 @@ public class AVL {
         }
         //p=null, x not found
         if (p == null) {
-            return;
+            return this.root;
         }
         //p==x
         //if p has no leaf or p is a leaf
@@ -400,6 +414,45 @@ public class AVL {
         } else {
             delByCopying(p);
         }
+        System.out.println(p.key);
+        ArrayList<Integer> arr =  toarr(this.root);
+        AVL b = new AVL();
+        for(Integer i : arr) {
+            b.root = b.insert(b.root, i);
+        }
+
+        return b.root;
+//        System.out.println(parent.key + " " + this.getBalance(parent));
+//        System.out.println(parent.getParent(this.root).key +" " + this.getBalance((parent.getParent(this.root))));
+//        System.out.println(this.root.right.left.left.key.);
+//        System.out.println(this.root.left.height);
+////        if(p!=root) {
+////            
+////            Node back = parent;
+////            System.out.println(back.key);
+////            while(back != null) {
+////                this.rebalance(back);
+////                System.out.println(back.key);
+////                if(back.getParent(this.root)== null) {
+////                    break;
+////                }
+////                back = back.getParent(this.root);                  
+////                System.out.println(back.key + " " + this.getBalance(back));
+////            }
+////        }
+//        
+////        this.updateHeight(this.root);
+//        //  System.out.println(this.getBalance(this.root.left));
+////        System.out.println(this.getBalance(this.root.right));
+////        System.out.println(this.getBalance(this.root));
+////        this.updateHeight(this.root.left);
+////        this.updateHeight(this.root.right);
+////        
+////        System.out.println(this.getBalance(this.root.left));
+////        System.out.println(this.getBalance(this.root.right));
+////        System.out.println(this.getBalance(this.root));
+
+    
 
     }
 
