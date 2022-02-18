@@ -57,7 +57,9 @@ public class ManageEastAsiaCountries {
                 if (e instanceof NumberFormatException) {
                     System.out.println("Invalid input. Area must be "
                             + "a positive float or integer!");
-                } else {
+                } 
+                //else print error
+                else {
                     System.out.println(e.getMessage());
                 }
             }
@@ -82,13 +84,15 @@ public class ManageEastAsiaCountries {
      * @param countryList
      * @return
      */
-    public EastAsiaCountries addCountryInformation(EastAsiaCountries newCountry, ArrayList<EastAsiaCountries> countryList) {
+    public EastAsiaCountries addCountryInformation(EastAsiaCountries newCountry, 
+            ArrayList<EastAsiaCountries> countryList) {
         try {
             countryList.add(newCountry);
         } catch (Exception e) {
             //Change the message of the exception
             if (e instanceof IndexOutOfBoundsException) {
                 System.out.println("Index out of range");
+            //else print error    
             } else {
                 System.out.println(e.getMessage());
             }
