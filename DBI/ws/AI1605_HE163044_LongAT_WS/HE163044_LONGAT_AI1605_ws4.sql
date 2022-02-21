@@ -226,11 +226,17 @@ values('B02','04',1,10)
  select hosv,tensv,NgaySinh from  DMSV where year(ngaysinh) = 1990 and month(ngaysinh) between 1 and 3
  --30
  select masv, phai, hocbong,
- case when hocbong > 500000 then 'hoc bong cao'
+ case when hocbong > 80000 then 'hoc bong cao'
  when hocbong = 0 then null
 	else 'hocbong trung binh' 
 	end as 'muc hoc bong'
  from dmsv
+ /*
+  select masv, phai, hocbong, 
+  iif(hocbong>80000, 'cao', 'thap')
+ from dmsv
+ */
+
 /*
 Create Table SinhVien_KetQua
 (

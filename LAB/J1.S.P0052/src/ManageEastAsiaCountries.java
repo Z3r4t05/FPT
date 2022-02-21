@@ -19,17 +19,15 @@ public class ManageEastAsiaCountries {
      *
      * @param countryList list of countries
      * @return addCountryInformation(newCountry, countryList)
+     * @throws java.lang.Exception
      */
-    public EastAsiaCountries addCountryInformation(ArrayList<EastAsiaCountries> countryList) {
+    public EastAsiaCountries addCountryInformation(ArrayList<EastAsiaCountries> 
+            countryList) throws Exception {
         EastAsiaCountries newCountry = new EastAsiaCountries();
         //Only accept user to input 11 countries
         if(countryList.size() == 11) {
-            try {
-                throw new Exception("There already 11 countries in the list. "
-                        + "Cannot input new country");
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+            throw new Exception("There are already 11 countries in the list. "
+                    + "Cannot input new country");
         }
         //Ask user again if the input is not valid
         while (true) {
@@ -161,7 +159,12 @@ public class ManageEastAsiaCountries {
         if (result.isEmpty()) {
             throw new Exception("Not found");
         }
-
+        int count = result.size();
+        if(count == 1) System.out.println("Found 1 country");
+        else {
+            System.out.println("Found " + count + " countries");
+        }
+        Utility.displayTableOfCountries(result.toArray(new EastAsiaCountries[result.size()]));
         return result.toArray(new EastAsiaCountries[result.size()]);
     }
 
@@ -180,6 +183,7 @@ public class ManageEastAsiaCountries {
             throw new Exception("List of countries is empty!");
         }
         Collections.sort(countryList);
+        Utility.displayTableOfCountries(countryList.toArray(new EastAsiaCountries[countryList.size()]));
         return countryList.toArray(new EastAsiaCountries[countryList.size()]);
     }
 
@@ -204,7 +208,7 @@ public class ManageEastAsiaCountries {
         for (int i = 0; i < totalOption; i++) {
             System.out.println((i + 1) + ". " + listOptions.get(i));
         }
-        System.out.println("=================================================="
+        System.out.println("==================================================="
                 + "========================");
     }
 

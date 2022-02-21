@@ -1,5 +1,7 @@
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main {
 
@@ -16,8 +18,14 @@ public class Main {
             choice = manager.selectOption("Enter your choice : ", 1, 5);
             //step 3. Perform function based on the selected option
             switch (choice) {
-                case 1://Add information of 11 countries
+                case 1:{
+                try {
+                    //Add information of 11 countries
                     newCountry = manager.addCountryInformation(listOfCountries);
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
                     break;
                 case 2://Display information of country user has just entered
                     try {
@@ -28,14 +36,14 @@ public class Main {
                     break;
                 case 3://Search information of country by user-entered name
                     try {
-                        Utility.displayTableOfCountries(manager.searchInformationByName(listOfCountries));
+                        manager.searchInformationByName(listOfCountries);
                     } catch (Exception ex) {
                         System.out.println(ex.getMessage());
                     }
                     break;
                 case 4://Display country by ascending order of name
                     try {
-                        Utility.displayTableOfCountries(manager.sortInformationByAscendingOrder(listOfCountries));
+                        manager.sortInformationByAscendingOrder(listOfCountries);
                     } catch (Exception ex) {
                         System.out.println(ex.getMessage());
                     }

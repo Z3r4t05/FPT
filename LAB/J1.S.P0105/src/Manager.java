@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -14,7 +15,23 @@ import java.util.ArrayList;
 class Manager {
 
     void displayMenu() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<String> listOptions = new ArrayList<>(Arrays.asList(
+                "Add storekeeper",
+                "Add product",
+                "Update product",
+                "Search product",
+                "Sort product",
+                "Exit"
+        ));
+        System.out.println("");
+        System.out.println("                Menu");
+        System.out.println("=======================================");
+        int totalOption = listOptions.size();
+        //print all options start with index from 1 to the end
+        for (int i = 0; i < totalOption; i++) {
+            System.out.println((i + 1) + ". " + listOptions.get(i));
+        }
+        System.out.println("=======================================");
     }
 
     int select() {
@@ -22,7 +39,6 @@ class Manager {
     }
 
     void addStorekeeper(ArrayList<String> listStorekeeper) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     void addProduct(ArrayList<Product> listProduct) {
