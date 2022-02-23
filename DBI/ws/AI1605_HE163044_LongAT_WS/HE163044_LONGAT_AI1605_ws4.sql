@@ -231,6 +231,17 @@ values('B02','04',1,10)
 	else 'hocbong trung binh' 
 	end as 'muc hoc bong'
  from dmsv
+ --32
+ select COUNT(MaSV) as [tong so sinh vien] from DMSV
+ --33
+ select * from dmsv
+ select 
+ count(case when phai = 'nam' then 1 end) as [sv nam],
+ count(case when phai = N'nữ' then 1 end) as [sv nu],
+ count(*) as total
+ from dmsv 
+ --34
+ select * from DMSV
  /*
   select masv, phai, hocbong, 
   iif(hocbong>80000, 'cao', 'thap')

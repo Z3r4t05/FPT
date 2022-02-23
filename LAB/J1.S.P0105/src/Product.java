@@ -27,6 +27,18 @@ class Product {
         return id;
     }
 
+    public Product(String id, String name, String location, BigDecimal price, LocalDate expiryDate, LocalDate manufacturedDate, String category, String Storekeeper, LocalDate ReceiptDate) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        this.price = price;
+        this.expiryDate = expiryDate;
+        this.manufacturedDate = manufacturedDate;
+        this.category = category;
+        this.Storekeeper = Storekeeper;
+        this.ReceiptDate = ReceiptDate;
+    }
+
     public void setId(String id) {
         this.id = id;
     }

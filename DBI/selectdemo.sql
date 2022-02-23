@@ -44,3 +44,51 @@ select * from Products where ProductName like '[A-GTx]%'
 select * from Products where ProductName like '[A-GT-X]%'
 select * from Products where ProductName like '[^A-GT-X]%'
 
+--
+select * from Products 
+order by UnitPrice, UnitsInStock asc
+--sum
+select sum(UnitsInStock) from Products 
+--count: number of unit
+select count(UnitsInStock) as numberofunit from Products
+--
+select max(UnitsInStock) as maxvalueofunit from Products
+select min(UnitsInStock) as minvalueofunit from Products
+select avg(UnitsInStock) as avgvalueofunit from Products
+--
+--group by: nhom cac ham theo nhom cac 
+--ban ghi cung gia tri
+--foreign key, nulti value
+select * from Products
+select categoryid, sum(unitsinstock)
+as totalvalueofunitbycategory
+from Products
+group by CategoryID
+
+--cac truong co mat trong group by --> c
+--co mat torng select
+select SupplierID, sum(unitsinstock) 
+as totalbysupplier
+
+from Products
+group by supplierID
+--
+select CategoryID, SupplierID,
+sum(UnitsInStock) as totalvaludofunits
+from Products
+group by CategoryID,SupplierID
+order by CategoryID
+--
+select SupplierID, CategoryID, 
+sum(UnitsInStock) as totalvaludofunits
+from Products
+group by SupplierID,CategoryID
+order by SupplierID
+--
+select titleofcourtesy, Count(TitleOfCourtesy) 
+from Employees
+group by TitleOfCourtesy
+--
+select MONTH(birthdate) , count(BirthDate)
+from Employees
+group by month(birthdate)

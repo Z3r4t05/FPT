@@ -6,7 +6,6 @@ import java.util.ArrayList;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author ADMIN
@@ -19,35 +18,44 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<String> listStorekeeper = new ArrayList<>();
         ArrayList<Product> listProduct = new ArrayList<>();
-        Manager manager = new Manager(); // step 1: display menu
-        manager.displayMenu();
-        // step 2: ask user to select options from menu {
-        int choice = manager.select();
-        // step 3: perform function based on user's choice
-        switch (choice) {
-            //add new storekeeper by name
-            case 1:
-                manager.addStorekeeper(listStorekeeper);
-                break;
-            //add new product 
-            case 2:
-                manager.addProduct(listProduct);
-                break;
-            //update product
-            case 3:
-                manager.updateProduct(listProduct);
-                break;
-            //search product
-            case 4:
-                manager.searchProduct(listProduct);
-                break;
-            //sort product
-            case 5:
-                manager.sortProduct(listProduct);
-                break;
-                
-
-        }
+        Manager manager = new Manager();
+        int choice = 0;
+        do {
+            try {
+                // step 1: display menu
+                manager.displayMenu();
+                // step 2: ask user to select options from menu {
+                choice = manager.selectOption("Enter your choice: ", 1, 6);
+                // step 3: perform function based on user's choice
+                switch (choice) {
+                    //add new storekeeper by name
+                    case 1:
+                        manager.addStorekeeper(listStorekeeper);
+                        break;
+                    //add new product 
+                    case 2:
+                        manager.addProduct(listProduct, listStorekeeper);
+                        break;
+                    //update product
+                    case 3:
+                        manager.updateProduct(listProduct, listStorekeeper);
+                        break;
+                    //search product
+                    case 4:
+                        manager.searchProduct(listProduct);
+                        break;
+                    //sort product
+                    case 5:
+                        manager.sortProduct(listProduct);
+                        break;
+                    //Exit    
+                    case 6:
+                        System.exit(0);
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } while (choice != 6);
     }
 
 }
