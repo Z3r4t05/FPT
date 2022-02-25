@@ -1,6 +1,7 @@
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Comparator;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -37,6 +38,11 @@ class Product {
         this.category = category;
         this.Storekeeper = Storekeeper;
         this.ReceiptDate = ReceiptDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" + "id=" + id + ", name=" + name + ", location=" + location + ", price=" + price + ", expiryDate=" + expiryDate + ", manufacturedDate=" + manufacturedDate + ", category=" + category + ", Storekeeper=" + Storekeeper + ", ReceiptDate=" + ReceiptDate + '}';
     }
 
     public void setId(String id) {

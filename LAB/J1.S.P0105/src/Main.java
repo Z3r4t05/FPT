@@ -16,7 +16,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ArrayList<String> listStorekeeper = new ArrayList<>();
+        ArrayList<Storekeeper> listStorekeeper = new ArrayList<>();
         ArrayList<Product> listProduct = new ArrayList<>();
         Manager manager = new Manager();
         int choice = 0;

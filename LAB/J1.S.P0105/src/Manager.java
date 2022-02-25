@@ -1,9 +1,11 @@
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-
+import java.util.Comparator;
+import java.util.Locale;
 
 /**
  *
@@ -31,16 +33,18 @@ class Manager {
         System.out.println("=======================================");
     }
 
-    void addStorekeeper(ArrayList<String> listStorekeeper) {
+    void addStorekeeper(ArrayList<Storekeeper> listStorekeeper) {
         while (true) {
             try {
-                String newStorekeeper = Utility.inputStorekeeper("Please enter storekeeper name: ");
-                for (String storekeeper : listStorekeeper) {
-                    if (newStorekeeper.equals(storekeeper)) {
-                        throw new Exception("Input name is already existed in the list.");
+                String name = Utility.inputStorekeeper("Please enter "
+                        + "storekeeper name: ");
+                for (Storekeeper storekeeper : listStorekeeper) {
+                    if (name.equals(storekeeper.getName())) {
+                        throw new Exception("Input name is already existed "
+                                + "in the list.");
                     }
                 }
-                listStorekeeper.add(newStorekeeper);
+                listStorekeeper.add(new Storekeeper(listStorekeeper.size() + 1, name));
                 break;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -48,8 +52,10 @@ class Manager {
         }
     }
 
-
-    void addProduct(ArrayList<Product> listProduct, ArrayList<String> listStorekeeper) {
+    void addProduct(ArrayList<Product> listProduct, ArrayList<Storekeeper> listStorekeeper) throws Exception {
+        if (listStorekeeper.isEmpty()) {
+            throw new Exception("list of storekeeper is empty");
+        }
         String id;
         while (true) {
             try {
@@ -83,8 +89,8 @@ class Manager {
             try {
                 storekeeper = Utility.inputStorekeeper("Storekeeper: ");
                 boolean storekeeperExisted = false;
-                for (String storekeeperInList : listStorekeeper) {
-                    if (storekeeperInList.equals(storekeeper)) {
+                for (Storekeeper s : listStorekeeper) {
+                    if (s.getName().equals(storekeeper)) {
                         storekeeperExisted = true;
                         break;
                     }
@@ -98,22 +104,27 @@ class Manager {
             }
         }
         LocalDate receiptDate = Utility.inputDate("Receipt Date [dd/mm/yyyy]: ");
-        listProduct.add(new Product(id, name, location, price, expiryDate,
+        listProduct.add(new Product(Integer.toString(1 + listProduct.size()), name, location, price, expiryDate,
                 manufacturedDate, category, storekeeper, receiptDate));
     }
 
-    void updateProduct(ArrayList<Product> listProduct, ArrayList<String> listStorekeeper) throws Exception {
+    void updateProduct(ArrayList<Product> listProduct, ArrayList<Storekeeper> listStorekeeper) throws Exception {
+        if(listStorekeeper.isEmpty()) {
+            throw new Exception("List of Storekeeper is empty");
+        } else if(listProduct.isEmpty()) {
+            throw new Exception("List of Product is empty");
+        }
         String searchID = Utility.getNonBlankStr("Enter product's ID to update: ");
-        Product updateProduct = null;
+        Product updateTarget = null; //target product that user want to update
         boolean foundID = false;
-        for(Product p : listProduct) {
-            if(searchID == null ? p.getId() == null : searchID.equals(p.getId())) {
-                updateProduct = p;
+        for (Product p : listProduct) {
+            if (searchID == null ? p.getId() == null : searchID.equals(p.getId())) {
+                updateTarget = p;
                 foundID = true;
                 break;
             }
         }
-        if(!foundID) {
+        if (!foundID) {
             throw new Exception("Not found");
         }
         String id;
@@ -149,8 +160,8 @@ class Manager {
             try {
                 storekeeper = Utility.inputStorekeeper("Storekeeper: ");
                 boolean storekeeperExisted = false;
-                for (String storekeeperInList : listStorekeeper) {
-                    if (storekeeperInList.equals(storekeeper)) {
+                for (Storekeeper s : listStorekeeper) {
+                    if (s.getName().equals(storekeeper)) {
                         storekeeperExisted = true;
                         break;
                     }
@@ -164,18 +175,22 @@ class Manager {
             }
         }
         LocalDate receiptDate = Utility.inputDate("Receipt Date [dd/mm/yyyy]: ");
-        updateProduct.setId(id);
-        updateProduct.setName(name);
-        updateProduct.setLocation(location);
-        updateProduct.setCategory(category);
-        updateProduct.setExpiryDate(expiryDate);
-        updateProduct.setManufacturedDate(manufacturedDate);
-        updateProduct.setReceiptDate(receiptDate);
-        updateProduct.setPrice(price);
-        updateProduct.setPrice(price);
+        updateTarget.setId(id);
+        updateTarget.setName(name);
+        updateTarget.setLocation(location);
+        updateTarget.setCategory(category);
+        updateTarget.setExpiryDate(expiryDate);
+        updateTarget.setManufacturedDate(manufacturedDate);
+        updateTarget.setReceiptDate(receiptDate);
+        updateTarget.setPrice(price);
+        updateTarget.setPrice(price);
+        updateTarget.setStorekeeper(storekeeper);
     }
 
-    void searchProduct(ArrayList<Product> listProduct) {
+    void searchProduct(ArrayList<Product> listProduct) throws Exception {
+        if(listProduct.isEmpty()) {
+            throw new Exception("List of Product is empty");
+        }
         System.out.println("----Search by----");
         System.out.println("1. Name");
         System.out.println("2. Category");
@@ -184,22 +199,24 @@ class Manager {
         int choice = this.selectOption("Select option: ", 1, 4);
         switch (choice) {
             case 1:
-                this.searchByName();
+                this.searchByName(listProduct);
                 break;
             case 2:
-                this.searchByCategory();
+                this.searchByCategory(listProduct);
                 break;
             case 3:
-                this.searchByStorekeeper();
+                this.searchByStorekeeper(listProduct);
                 break;
             case 4:
-                this.searchByReceiptDate();
+                this.searchByReceiptDate(listProduct);
                 break;
         }
     }
 
     void sortProduct(ArrayList<Product> listProduct) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        listProduct.sort(Comparator.comparing(Product::getExpiryDate)
+                .thenComparing(Product::getManufacturedDate));
+        this.displayListProduct(listProduct);
     }
 
     /**
@@ -235,20 +252,110 @@ class Manager {
         }
     }
 
-    private void searchByName() {
-        Utilitysd
+    private void searchByName(ArrayList<Product> listProduct) throws Exception {
+        String nameToSearch = Utility.getNonBlankStr("Search name: ");
+        ArrayList<Product> searchResult = new ArrayList<>();
+        for (Product p : listProduct) {
+            if (p.getName().contains(nameToSearch)) {
+                searchResult.add(p);
+            }
+        }
+        if (searchResult.isEmpty()) {
+            throw new Exception("Not found");
+        } else if (searchResult.size() == 1) {
+            System.out.println("Found 1 product");
+        } else {
+            System.out.println("Found " + searchResult.size() + " products");
+        }
+        if (!listProduct.isEmpty()) {
+            displayListProduct(searchResult);
+        } else {
+            System.out.println("Not found");
+        }
     }
 
-    private void searchByCategory() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void searchByCategory(ArrayList<Product> listProduct) throws Exception {
+        String categoryToSearch = Utility.getNonBlankStr("Search category: ");
+        ArrayList<Product> searchResult = new ArrayList<>();
+        for (Product p : listProduct) {
+            if (p.getCategory().contains(categoryToSearch)) {
+                searchResult.add(p);
+            }
+        }
+        if (searchResult.isEmpty()) {
+            throw new Exception("Not found");
+        } else if (searchResult.size() == 1) {
+            System.out.println("Found 1 product");
+        } else {
+            System.out.println("Found " + searchResult.size() + " products");
+        }
+        if (!listProduct.isEmpty()) {
+            displayListProduct(searchResult);
+        } else {
+            System.out.println("Not found");
+        }
     }
 
-    private void searchByStorekeeper() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void searchByStorekeeper(ArrayList<Product> listProduct) throws Exception {
+        String storekeeper = Utility.getNonBlankStr("Search storekeeper: ");
+        ArrayList<Product> searchResult = new ArrayList<>();
+        for (Product p : listProduct) {
+            if (p.getCategory().contains(storekeeper)) {
+                searchResult.add(p);
+            }
+        }
+        if (searchResult.isEmpty()) {
+            throw new Exception("Not found");
+        } else if (searchResult.size() == 1) {
+            System.out.println("Found 1 product");
+        } else {
+            System.out.println("Found " + searchResult.size() + " products");
+        }
+        if (!listProduct.isEmpty()) {
+            displayListProduct(searchResult);
+        } else {
+            System.out.println("Not found");
+        }
     }
 
-    private void searchByReceiptDate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void searchByReceiptDate(ArrayList<Product> listProduct) throws Exception {
+        LocalDate date = Utility.inputDate("Search receipt date: ");
+        ArrayList<Product> searchResult = new ArrayList<>();
+        for (Product p : listProduct) {
+            if (p.getReceiptDate().isEqual(date)) {
+                searchResult.add(p);
+            }
+        }
+        if (searchResult.isEmpty()) {
+            throw new Exception("Not found");
+        } else if (searchResult.size() == 1) {
+            System.out.println("Found 1 product");
+        } else {
+            System.out.println("Found " + searchResult.size() + " products");
+        }
+        if (!listProduct.isEmpty()) {
+            displayListProduct(searchResult);
+        } else {
+            System.out.println("Not found");
+        }
+    }
+
+    private void displayListProduct(ArrayList<Product> listProduct) {
+        System.out.printf("%-16s%-16s%-16s%-16s%-16s%-16s%-16s%-16s%-16s\n",
+                "ID", "NAME", "LOCATION", "PRICE", "EXP DATE", "MF DATE", "CATEGORY",
+                "STOREKEEPER", "RECEIPTDATE");
+        for(Product p : listProduct) {            
+             System.out.printf("%-16.16s%-16.16s%-16.16s%-16.16s%-16.16s%-16.16s"
+                     + "%-16.16s%-16.16s%-16.16s\n",
+                p.getId(), p.getName(), p.getLocation(),
+                NumberFormat.getCurrencyInstance(Locale.US).format(p.getPrice()),
+                p.getExpiryDate(), p.getManufacturedDate(), p.getCategory(),
+                p.getStorekeeper(), p.getReceiptDate());
+        }
+    }
+    
+    private String displayString(LocalDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter
     }
 
 }

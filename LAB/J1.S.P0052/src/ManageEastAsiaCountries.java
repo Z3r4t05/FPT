@@ -13,19 +13,18 @@ public class ManageEastAsiaCountries {
     }
 
     /**
-     * Ask user to enter information of country. 
-     * A new country variable will be created to hold the input values. Then it 
-     * will become the parameter for the addCountryInformation function.
+     * Ask user to enter information of country. A new country variable will be
+     * created to hold the input values. Then it will become the parameter for
+     * the addCountryInformation function.
      *
      * @param countryList list of countries
      * @return addCountryInformation(newCountry, countryList)
      * @throws java.lang.Exception
      */
-    public EastAsiaCountries addCountryInformation(ArrayList<EastAsiaCountries> 
-            countryList) throws Exception {
+    public EastAsiaCountries addCountryInformation(ArrayList<EastAsiaCountries> countryList) throws Exception {
         EastAsiaCountries newCountry = new EastAsiaCountries();
         //Only accept user to input 11 countries
-        if(countryList.size() == 11) {
+        if (countryList.size() == 11) {
             throw new Exception("There are already 11 countries in the list. "
                     + "Cannot input new country");
         }
@@ -64,8 +63,7 @@ public class ManageEastAsiaCountries {
                 if (e instanceof NumberFormatException) {
                     System.out.println("Invalid input. Area must be "
                             + "a positive float or integer!");
-                } 
-                //else print error
+                } //else print error
                 else {
                     System.out.println(e.getMessage());
                 }
@@ -91,7 +89,7 @@ public class ManageEastAsiaCountries {
      * @param countryList
      * @return
      */
-    public EastAsiaCountries addCountryInformation(EastAsiaCountries newCountry, 
+    public EastAsiaCountries addCountryInformation(EastAsiaCountries newCountry,
             ArrayList<EastAsiaCountries> countryList) {
         try {
             countryList.add(newCountry);
@@ -99,7 +97,7 @@ public class ManageEastAsiaCountries {
             //Change the message of the exception
             if (e instanceof IndexOutOfBoundsException) {
                 System.out.println("Index out of range");
-            //else print error    
+                //else print error    
             } else {
                 System.out.println(e.getMessage());
             }
@@ -126,8 +124,9 @@ public class ManageEastAsiaCountries {
     }
 
     /**
-     * Search information of countries by user-entered name.
-     * Input will be automatically converted to lowercase
+     * Search information of countries by user-entered name. Input will be
+     * automatically converted to lowercase
+     *
      * @param countryList
      * @return array of countries that matches a part of the name
      * @throws Exception if the list is empty or not found any country or the
@@ -160,7 +159,11 @@ public class ManageEastAsiaCountries {
             throw new Exception("Not found");
         }
         int count = result.size();
-        if(count == 1) System.out.println("Found 1 country");
+        //Display the total number of countries that the search found
+        if (count == 1) {
+            System.out.println("Found 1 country");
+        } 
+        //If more than 1 search was found then we will tell user the total count
         else {
             System.out.println("Found " + count + " countries");
         }

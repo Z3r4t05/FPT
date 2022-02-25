@@ -231,6 +231,11 @@ values('B02','04',1,10)
 	else 'hocbong trung binh' 
 	end as 'muc hoc bong'
  from dmsv
+  /*
+  select masv, phai, hocbong, 
+  iif(hocbong>80000, 'cao', 'thap')
+ from dmsv
+ */
  --32
  select COUNT(MaSV) as [tong so sinh vien] from DMSV
  --33
@@ -241,12 +246,75 @@ values('B02','04',1,10)
  count(*) as total
  from dmsv 
  --34
- select * from DMSV
- /*
-  select masv, phai, hocbong, 
-  iif(hocbong>80000, 'cao', 'thap')
- from dmsv
- */
+ select makhoa,count(MaKhoa) as [so sv] from DMSV group by makhoa
+ --35
+select d.[so sv], d.[ma mon hoc],e.TenMH from
+(select count(c.masv) as [so sv], c.mamon as [ma mon hoc]
+from (select distinct b.MaSV as masv, b.MaMH as mamon, a.TenMH as ten
+from DMMH as a inner join KetQua as b on a.MaMH = b.MaMH) c
+group by c.mamon) d inner join DMMH as e on d.[ma mon hoc] = e.MaMH  
+--
+select tenmh 'ten mon hoc', count(distinct masv) 'ma sv'
+from KetQua kq, dmmh mh
+where kq.MaMH=mh.MaMH
+group by tenmh
+--36
+select count(distinct MaMH) 'tong so mon hoc'
+from KetQua
+--37
+select makhoa 'makhoa', sum(hocbong) 'tong hoc bong' from dmsv
+group by makhoa
+--38 hoc bong cao nhat moi khoa
+select MaKhoa , max(hocbong) 'hoc bong cao nhat'
+from DMSV
+group by MaKhoa
+--39 so sv nam nu moi khoa
+select makhoa, 'so sv nam' = sum(case phai when 'nam' then 1 else 0 end),
+'so sv nu' = sum(case phai when N'nữ' then 1 else 0 end)
+from DMSV group by MaKhoa
+--40 so luong sinh vien theo tung do tuoi
+select year(GETDATE()) - year(ngaysinh) 'tuoi', count(masv) 'so sinh vien'
+from DMSV group by year(Getdate()) - year(ngaysinh)
+--41 nam sinh nao co 2 sv hoc tai truong
+select year(ngaysinh) 'năm', count(masv)
+from dmsv group by year(ngaysinh)
+having count(masv)=2
+--having thay the cho where 
+--42 cho biet no nao co hon 2 sinh vien dng theo hoc tai truong
+select NoiSinh, count(masv) 'so sinh vien'
+from DMSV group by NoiSinh
+having count(masv) >= 2
+--43. Cho biết những môn nào có trên 3 sinh viên dự thi. 
+select mamh 'Mã môn học',count(masv)'Số Sinh viên'		
+from ketqua
+group by mamh
+having count(masv)>3
+--44. Cho biết những sinh viên thi lại trên 2 lần. 
+select masv,mamh,count(lanthi)'so lan thi lai'			
+from ketqua
+group by masv,mamh
+
+having count(lanthi)>2
+--45. Cho biết những sinh viên nam có điểm trung bình lần 1 trên 7.0 
+select Hosv+' '+tensv 'Họ tên sinh viên',phai,lanthi,avg(Diem)'diem trung binh'
+from ketqua kq,dmsv sv
+where  kq.masv=sv.masv and lanthi=1 and phai=N'nam'
+group by lanthi,phai, Hosv+' '+tensv 
+having avg(Diem)>7.0
+--46. Cho biết danh sách các sinh viên rớt trên 2 môn ở lần thi 1.
+select masv 'Mã sinh viên',count(mamh)'Số môn rớt'
+from ketqua
+where lanthi=1 and diem<5
+group by masv
+having count(mamh)>=2
+
+--47. Cho biết danh sách những khoa có nhiều hơn 2 sinh viên nam 
+select makhoa 'Mã khoa','Số sinh viên nam'=count(masv)
+from dmsv
+where phai=N'Nam'
+group by makhoa
+having count(masv)>=2
+
 
 /*
 Create Table SinhVien_KetQua
