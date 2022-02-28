@@ -20,6 +20,7 @@ public class Main {
         ArrayList<Product> listProduct = new ArrayList<>();
         Manager manager = new Manager();
         int choice = 0;
+        //Stop the program when user choose 6
         do {
             try {
                 // step 1: display menu

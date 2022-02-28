@@ -19,21 +19,37 @@ public class Graph {
     }
 
     public void visit(int i) {
-        System.out.println(vertex[i] + " ");
+        System.out.print(vertex[i] + " ");
     }
 
     public static void main(String[] args) {
         int[][] b = {
-            {0, 1, 1, 0, 0, 0}, //dinh 0(A) noi voi dinh 1,2
-            {1, 0, 0, 1, 0, 0}, //dinh 1(b) noi voi 0,3
-            {1, 0, 0, 0, 0, 0},
-            {0, 1, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 1}, //dinh 4 noi voi dinh 5
-            {0, 0, 0, 0, 1, 0} //dinh 5 noi voi dinh 4
+          // a b c d e f g h i
+//            {0,1,1,1,0,0,0,0,0},
+//            {1,0,1,1,0,0,0,0,0},
+//            {1,1,0,1,0,0,0,0,0},
+//            {1,1,1,0,0,1,0,0,0},
+//            {0,0,0,0,0,1,0,0,0},
+//            {0,0,0,1,1,0,0,0,0},
+//            {0,0,0,0,0,0,0,1,1},
+//            {0,0,0,0,0,0,1,0,0},
+//            {0,0,0,0,0,0,1,0,0}
+//            {0,1,1,1,0,0,1},
+//            {1,0,1,0,1,0,0},
+//            {1,1,0,0,1,0,0},
+//            {1,0,0,0,0,1,0},
+//            {0,1,1,0,0,1,1},
+//            {0,0,0,1,1,0,0},
+//            {1,0,0,0,1,0,0}
+            
         };
         Graph g = new Graph();
         g.setData(b);
         g.displayGraph();
+        System.out.println("");
+        g.DFT(2);
+        System.out.println("");
+        g.BFT(0);
     }
 
     private void setData(int[][] b) {
@@ -57,7 +73,15 @@ public class Graph {
             System.out.println("");
         }
     }
-
+    
+    //Breath first traversal
+    public void BFT(int u) {
+     boolean []c = new boolean[n];
+     BFT(u,c);
+     for (int i = 0; i < n; i++) {
+      if(!c[i]) BFT(i,c);
+     }
+    }
     //Breadth first traversal
     public void BFT(int u, boolean[] c) {
         MyQueue mq = new MyQueue();

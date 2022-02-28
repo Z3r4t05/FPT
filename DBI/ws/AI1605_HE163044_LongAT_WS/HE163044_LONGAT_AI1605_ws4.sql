@@ -314,7 +314,48 @@ from dmsv
 where phai=N'Nam'
 group by makhoa
 having count(masv)>=2
+--48 nhung khoa co sv dat hb tu 200k den 300k
+select makhoa 'Mã khoa','Số sinh viên'=count(masv)
+from dmsv
+where hocbong between 200000 and 300000
+group by makhoa
+having count(masv)>2
+--49 so sv dau va rot trong 1 lan thi
+select tenmh 'Tên môn học','Số sinh viên Đậu'=sum(case when diem>=5 then 1 else 0 end ),'Số sinh viên Rớt'=sum(case when diem<5 then 1 else 0 end )
+from ketqua kq,dmmh mh
+where kq.mamh=mh.mamh and lanthi=1
+group by tenmh
+--50 so luong sv nam va nu tung khoa
+select sv.MaKhoa,kh.TenKhoa,'Tổng sinh viên nam'=sum(case phai when  N'nam'then 1 else 0 end),
+'Tổng sinh viên nữ'=sum(case phai when  N'nữ'then 1 else 0 end)
+from dmsv sv join DMKhoa kh
+on sv.MaKhoa = kh.MaKhoa
+group by sv.makhoa,kh.TenKhoa
 
+--subquery
+--51 cho biet sv co max hoc bong
+select hosv+' '+tensv 'Họ tên sinh viên',hocbong
+from dmsv
+where hocbong=(select max(hocbong) from dmsv)
+--52 sinh vien co diem thi lan 1 mon co so du lieu cao nhat
+select hosv+' '+tensv 'Họ tên sinh viên',tenmh 'Tên môn học',lanthi,diem
+from ketqua kq inner join dmmh mh on kq.mamh=mh.mamh
+inner join dmsv sv on sv.masv=kq.masv where lanthi=1 and tenmh=N'cơ sở dữ liệu' 
+and diem=
+(
+	select max(diem) 
+	from ketqua kq join dmmh mh 
+	on kq.mamh=mh.mamh and tenmh=N'cơ sở dữ liệu' and lanthi=1
+)
+--53 sinh vien khoa anh van co tuoi lon nhat
+select hosv+' '+tensv 'Họ tên sinh viên',ngaysinh 'Ngày sinh',makhoa 'Mã khoa'
+from dmsv
+where makhoa='av' and ngaysinh=(
+				select min(ngaysinh)
+				from dmsv
+				where makhoa='av'
+)
+--54. Cho biết khoa nào có đông sinh viên nhất. 
 
 /*
 Create Table SinhVien_KetQua

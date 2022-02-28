@@ -1,7 +1,6 @@
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -18,9 +17,9 @@ import java.util.regex.Pattern;
  */
 public class Utility {
 
-    public static final Scanner sc = new Scanner(System.in);
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_RESET = "\u001B[0m";
+    private static final Scanner sc = new Scanner(System.in);
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_RESET = "\u001B[0m";
     /**
      * Pattern using to check if the date is existed
      */
@@ -218,7 +217,13 @@ public class Utility {
         int year = Integer.parseInt(dateParts[2]);
         return LocalDate.of(year,month,day);
     }
-    
+    public static LocalDate loadDate(String date) {
+        String[] dateParts = date.split("/");
+        int day = Integer.parseInt(dateParts[0]);
+        int month = Integer.parseInt(dateParts[1]);
+        int year = Integer.parseInt(dateParts[2]);
+        return LocalDate.of(year,month,day);
+    }
     public static void main(String[] args) {
         LocalDate date = Utility.inputDate("DFSDF: ");
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/YYYY");

@@ -92,3 +92,50 @@ group by TitleOfCourtesy
 select MONTH(birthdate) , count(BirthDate)
 from Employees
 group by month(birthdate)
+--
+
+select * from Products where 
+UnitPrice = (select max(UnitPrice) from Products)
+
+select top 2 * from Products order by UnitPrice desc
+
+--danh sach hang ban duoc -> pid co tren orderdetail
+select distinct ProductID from [Order Details]
+select * from Products
+where ProductID in (select distinct ProductID from [Order Details])
+select * from Products
+where ProductID not in (select distinct ProductID from [Order Details])
+--
+select EmployeeID, FirstName, LastName from Employees
+--danh sach cac quan ly --> id co trong report to
+--id co trong reportto
+--employee co id trong 1
+select distinct reportsto from Employees
+
+select EmployeeID, FirstName, LastName from Employees
+where EmployeeID in (select distinct reportsto from Employees)
+
+select a.CategoryID, a.CategoryName, count(b.CategoryID) 
+from Categories as a join Products as b on a.CategoryID = b.CategoryID
+group by a.CategoryID,a.CategoryName
+order by count(b.CategoryID) desc
+--category : count-amount = max
+
+select a.CategoryID, a.CategoryName, count(b.CategoryID) 
+from Categories as a join Products as b on a.CategoryID = b.CategoryID
+group by a.CategoryID,a.CategoryName
+having count(b.CategoryID)>=all(
+	select count(b.CategoryID) from Categories
+	as a join Products as b on a.CategoryID = b.CategoryID
+	group by a.CategoryID
+)
+
+--
+select a.CategoryID, a.CategoryName, count(b.CategoryID) 
+from Categories as a join Products as b on a.CategoryID = b.CategoryID
+group by a.CategoryID,a.CategoryName
+having count(b.CategoryID)<=all(
+	select count(b.CategoryID) from Categories
+	as a join Products as b on a.CategoryID = b.CategoryID
+	group by a.CategoryID
+)
