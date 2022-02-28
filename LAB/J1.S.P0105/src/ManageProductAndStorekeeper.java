@@ -1,8 +1,4 @@
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.time.LocalDate;
@@ -11,13 +7,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Locale;
-import java.util.StringTokenizer;
 
 /**
  *
  * @author ADMIN
  */
-class Manager {
+class ManageProductAndStorekeeper {
 
     void displayMenu() {
         ArrayList<String> listOptions = new ArrayList<>(Arrays.asList(

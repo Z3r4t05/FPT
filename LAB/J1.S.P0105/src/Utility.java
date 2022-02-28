@@ -217,13 +217,7 @@ public class Utility {
         int year = Integer.parseInt(dateParts[2]);
         return LocalDate.of(year,month,day);
     }
-    public static LocalDate loadDate(String date) {
-        String[] dateParts = date.split("/");
-        int day = Integer.parseInt(dateParts[0]);
-        int month = Integer.parseInt(dateParts[1]);
-        int year = Integer.parseInt(dateParts[2]);
-        return LocalDate.of(year,month,day);
-    }
+
     public static void main(String[] args) {
         LocalDate date = Utility.inputDate("DFSDF: ");
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/YYYY");
