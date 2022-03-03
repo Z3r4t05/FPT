@@ -356,7 +356,21 @@ where makhoa='av' and ngaysinh=(
 				where makhoa='av'
 )
 --54. Cho biết khoa nào có đông sinh viên nhất. 
-
+select tenkhoa from dmsv sv inner join dmkhoa kh
+on sv.MaKhoa = kh.MaKhoa
+group by TenKhoa
+having count(tenkhoa) >= all(select count(MaSV) from dmsv 
+group by makhoa)
+--55 cho biet khoa co so nu dong nhat
+select tenkhoa from dmsv sv join DMKhoa kh
+on sv.MaKhoa = kh.MaKhoa 
+where phai = N'nữ'
+group by TenKhoa
+having count(TenKhoa) >= all(
+select count(MaSV) from dmsv where phai = N'nữ'
+group by MaKhoa
+)
+--56 cho biet mon nao co nhieu sinh vien rot lan 1 nhieu nhat
 /*
 Create Table SinhVien_KetQua
 (

@@ -54,6 +54,8 @@ class ManageProductAndStorekeeper {
                 System.out.println(e.getMessage());
             }
         }
+        this.displayListStorekeeper(listStorekeeper);
+        
     }
 
     void addProduct(ArrayList<Product> listProduct, ArrayList<Storekeeper> listStorekeeper) throws Exception {
@@ -441,7 +443,18 @@ class ManageProductAndStorekeeper {
                     + "----------------+----------------+----------------+");
         }
     }
-
+    
+    private void displayListStorekeeper(ArrayList<Storekeeper> listStorekeeper) {
+        System.out.println("+--------+----------------+");
+        System.out.printf("|%-8.8s|%-16.16s|\n", "ID", "NAME");
+        System.out.println("+--------+----------------+");
+        //loop through the list to display each storekeeper
+        for(Storekeeper s : listStorekeeper) {
+            System.out.printf("|%-8s|%-16s|\n", s.getId(), s.getName());
+            System.out.println("+--------+----------------+");
+        }
+    }
+    
     private String displayDate(LocalDate date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return date.format(formatter);

@@ -278,11 +278,14 @@ public class LinkedList {
         l.loadFromFile("src\\songs.txt");
         l.traverse();
         l.avgRated();
-        System.out.println(l.max3());
-        l.deleteThird();
-        l.traverse();
-        l.removeDup();
-        l.writeToFile("src\\output.txt");
+        System.out.println("Third highest rated: " + l.max3());
+        System.out.println(l.nth_max(3));
+//        l.deleteThird();
+//        l.traverse();
+//        l.writeToFile("src\\output.txt");
+//        System.out.println("remove duplicate");
+//        l.removeDup();
+//        l.traverse();
     }
     
     public void removeDup() {
@@ -301,6 +304,32 @@ public class LinkedList {
                 p2 = p2.next;
             }
             p1 = p1.next;
+        }
+    }
+    
+    int max(int upper) {
+        Node p = head;
+        int max = Integer.MIN_VALUE;
+        while(p!=null) {
+            if(p.info.rated > max && p.info.rated < upper) {
+                max = p.info.rated;
+            }
+            p = p.next;
+        }
+        return max;
+    }
+    //max(max) 2
+    //max(max(max) 3
+    int nth_max(int nth) {
+        if(nth == 1) return max(Integer.MAX_VALUE);
+        else if (nth < 1) {
+            return 0;
+        } else {
+            int nmax = max(Integer.MAX_VALUE);
+            for (int i = 0; i < nth - 1; i++) {
+                nmax = max(nmax);        
+            }
+            return nmax;
         }
     }
     
