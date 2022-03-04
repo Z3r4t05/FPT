@@ -153,6 +153,10 @@ class ManageProductAndStorekeeper {
         while (true) {
             try {
                 id = Utility.getNonBlankStr("ID: ");
+                //if new id equals old id then break
+                if(updateTarget.getId().equals(id)) {
+                    break;
+                }
                 //Loop through the list to find duplicated id
                 for (Product product : listProduct) {
                     //throw exception if the id is duplicated
@@ -287,7 +291,7 @@ class ManageProductAndStorekeeper {
             }
             //Throw exception if the input is out of range
             if (num < min || num > max) {
-                throw new Exception("Input out of range [1-5]");
+                throw new Exception("Input out of range [1-6]");
             }
             return num;
         } catch (Exception e) {
