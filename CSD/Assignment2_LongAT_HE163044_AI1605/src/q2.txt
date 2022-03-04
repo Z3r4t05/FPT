@@ -1,0 +1,7 @@
+(A1,Paradise,4.5,3)
+(A3,Colors of the wind,4.0,5)
+(A5,Tomorrow we fight,4.5,3)
+(A6,Mama mia,4.0,1)
+(A7,In a Persian Market,4.5,2)
+(A8,Memories,4.7,4)
+(A9,Sang pour sang,4.8,3)
