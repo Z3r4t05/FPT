@@ -18,9 +18,8 @@ public class Main {
             case 3:
                 calculator.multiplyMatrix();
                 break;
+            case 4:
+                break;
         }
-                
-
     }
-
 }
