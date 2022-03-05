@@ -328,8 +328,7 @@ public class AVL {
         if(root == null) return;
         add2arr(root.left, arr);
         arr.add(root.key);
-        add2arr(root.right,arr);
-        
+        add2arr(root.right,arr);   
     }
     public void preorder(Node p) {
         if (p == null) {

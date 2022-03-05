@@ -1,0 +1,54 @@
+1,asus rog strix,vietnam,1000,23/12/2023,22/07/2020,laptop,putin,27/02/2022
+2,asus rog zephyrus,vietnam,2000,24/12/2025,20/08/2021,laptop,biden,28/02/2022
+3,dell alienware,vietnam,4000,25/12/2026,30/06/2021,laptop,zelensky,03/01/2022
+4,dell vostro,vietnam,1000,25/12/2026,20/08/2021,laptop,putin,27/02/2022
+5,Iphone 12,usa,600,26/06/2024,03/12/2022,smartphone,trump,29/2/2024
+6,minolta srt-101,japan,200,23/12/2023,03/12/2022,camera,trump,03/01/2022
+7,minolta srt-202,japan,200,27/03/2024,23/01/2030,camera,putin,12/03/2030
+
+
+    boolean loadFromFile(String filename, ArrayList<Product> listProduct) {
+        File f = new File(filename);
+        if (!f.exists()) {
+            return false;
+        } else {
+            try (FileReader fr = new FileReader(f); BufferedReader bf = new BufferedReader(fr)) {
+                String line;
+                while ((line = bf.readLine()) != null) {
+                    if (line.length() > 0) {
+                        StringTokenizer stk = new StringTokenizer(line, ",");
+                        String id = Utility.normalizeAndRecapitalize(stk.nextToken().trim());
+                        String name = Utility.normalizeAndRecapitalize(stk.nextToken().trim());
+                        String location = Utility.normalizeAndRecapitalize(stk.nextToken().trim());
+                        BigDecimal price = new BigDecimal(stk.nextToken().trim());
+                        LocalDate exp = Utility.loadDate(stk.nextToken().trim());
+                        LocalDate mnf = Utility.loadDate(stk.nextToken().trim());
+                        String category = Utility.normalizeAndRecapitalize(stk.nextToken().trim());
+                        String storekeeper = Utility.normalizeAndRecapitalize(stk.nextToken().trim());
+                        LocalDate rcp = Utility.loadDate(stk.nextToken().trim());
+                        Product p = new Product(id, name, location,
+                                price, exp, mnf, category, storekeeper, rcp);
+                        listProduct.add(p);
+                    }
+                }
+            } catch (IOException | NumberFormatException e) {
+                System.err.println(e);
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    
+    public static LocalDate loadDate(String date) {
+        String[] dateParts = date.split("/");
+        int day = Integer.parseInt(dateParts[0]);
+        int month = Integer.parseInt(dateParts[1]);
+        int year = Integer.parseInt(dateParts[2]);
+        return LocalDate.of(year,month,day);
+    }
+    
+
+duplicate storekeeper
+duplicate product
