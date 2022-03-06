@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package J1.L;
 
 /**
  *
  * @author ADMIN
  */
-public class P0023 {
+public class Main {
 
     /**
      * @param args the command line arguments
