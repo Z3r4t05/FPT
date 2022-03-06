@@ -22,9 +22,9 @@ public class Matrix {
      *
      * @param number the number of matrix. Example: matrix 1, matrix 2, ...
      */
-    public void inputMatrix(int number) {
-        this.row = inputInteger("Enter Row Matrix " + number + ":");
-        this.col = inputInteger("Enter Column Matrix " + number + ":");
+    public void inputMatrix1(int number) {
+        this.row = inputInteger("Enter Row Matrix " + number + ":", 2);
+        this.col = inputInteger("Enter Column Matrix " + number + ":", 3);
         this.data = new int[row][col];
         //Loop through each row of matrix
         for (int r = 0; r < row; r++) {
@@ -32,7 +32,7 @@ public class Matrix {
             for (int c = 0; c < col; c++) {
                 this.data[r][c] = inputInteger("Enter Matrix" + number
                         + "[" + (r + 1) + "]"
-                        + "[" + (c + 1) + "]:");
+                        + "[" + (c + 1) + "]:", 1);
             }
         }
     }
@@ -44,17 +44,37 @@ public class Matrix {
      * Get input integer from user
      *
      * @param string input must be an integer otherwise will throw exception
+     * @param option 1 for inputting entry value, 2 for row, 3 for column, 
+     * default is inputting entry value
      * @return an integer that user enter
      */
-    private int inputInteger(String string) {
+    private int inputInteger(String string, int option) {
         Scanner sc = new Scanner(System.in);
         try {
             System.out.print(string);
             int input = Integer.parseInt(sc.nextLine());
             return input;
         } catch (NumberFormatException e) {
-            System.out.println("Value of matrix is digit");
-            return inputInteger(string);
+            //print different exception based on option
+            switch(option) {
+                //for inputting matrix
+                case 1:
+                    System.out.println("Value of matrix is digit");
+                    break;
+                //for inputting row 
+                case 2: 
+                    System.out.println("Value of row is digit");
+                    break;
+                //for inputting column
+                case 3: 
+                    System.out.println("value of column is digit");
+                    break;
+                default:
+                    System.out.println("Value of matrix is digit");
+                    break;
+                    
+            }
+            return inputInteger(string, option);
         }
     }
 
@@ -81,12 +101,12 @@ public class Matrix {
      * column
      * @param option 1 for subtraction, otherwise means multiplication
      */
-    public void inputMatrix(int number, Matrix matrix1, int option) {
+    public void inputMatrix2(int number, Matrix matrix1, int option) {
         //Keep asking user if there is an exception
         do {
             try {
-                this.row = inputInteger("Enter Row Matrix " + number + ":");
-                this.col = inputInteger("Enter Column Matrix " + number + ":");
+                this.row = inputInteger("Enter Row Matrix " + number + ":",2);
+                this.col = inputInteger("Enter Column Matrix " + number + ":",3);
                 //If option is 1 then it is subtraction checking
                 if (option == 1) {
                     //throw exception if the dimension of 2 matrixes are different
@@ -114,7 +134,7 @@ public class Matrix {
             for (int c = 0; c < col; c++) {
                 this.data[r][c] = inputInteger("Enter Matrix" + number
                         + "[" + (r + 1) + "]"
-                        + "[" + (c + 1) + "]:");
+                        + "[" + (c + 1) + "]:", 1);
             }
         }
     }

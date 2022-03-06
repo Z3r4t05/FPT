@@ -69,8 +69,8 @@ class Calculator {
         System.out.println("-------- Addition --------");
         Matrix matrix1 = new Matrix();
         Matrix matrix2 = new Matrix();
-        matrix1.inputMatrix(1);
-        matrix2.inputMatrix(2, matrix1, 1);
+        matrix1.inputMatrix1(1);
+        matrix2.inputMatrix2(2, matrix1, 1);
         System.out.println("-------- Result --------");
         matrix1.display();
         System.out.println("+");
@@ -95,8 +95,8 @@ class Calculator {
         System.out.println("-------- Subtraction --------");
         Matrix matrix1 = new Matrix();
         Matrix matrix2 = new Matrix();
-        matrix1.inputMatrix(1);
-        matrix2.inputMatrix(2, matrix1, 1);
+        matrix1.inputMatrix1(1);
+        matrix2.inputMatrix2(2, matrix1, 1);
 
         System.out.println("-------- Result --------");
         matrix1.display();
@@ -118,8 +118,8 @@ class Calculator {
         System.out.println("-------- Multiplication --------");
         Matrix matrix1 = new Matrix();
         Matrix matrix2 = new Matrix();
-        matrix1.inputMatrix(1);
-        matrix2.inputMatrix(2, matrix1, 2);
+        matrix1.inputMatrix1(1);
+        matrix2.inputMatrix2(2, matrix1, 2);
         System.out.println("-------- Result --------");
         matrix1.display();
         System.out.println("*");
