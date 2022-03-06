@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
         Calculator calculator = new Calculator();
         //Return to main menu unless user choose exit
-        do {            
+        do {
             //step 1: display menu
             calculator.displayMenu();
             //step 2: ask users to select an option
