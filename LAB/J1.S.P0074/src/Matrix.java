@@ -53,6 +53,11 @@ public class Matrix {
         try {
             System.out.print(string);
             int input = Integer.parseInt(sc.nextLine());
+            if(option ==2 && input < 1) {
+                throw new IllegalArgumentException("Row must be greater than 0");
+            } else if (option == 3 && input < 1) {
+                throw new IllegalArgumentException("Column must be greater than 0");
+            }
             return input;
         } catch (NumberFormatException e) {
             //print different exception based on option
@@ -71,9 +76,11 @@ public class Matrix {
                     break;
                 default:
                     System.out.println("Value of matrix is digit");
-                    break;
-                    
+                    break;       
             }
+            return inputInteger(string, option);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
             return inputInteger(string, option);
         }
     }
