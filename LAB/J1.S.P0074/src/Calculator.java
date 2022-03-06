@@ -13,7 +13,7 @@ import java.util.Scanner;
  * @author ADMIN
  */
 class Calculator {
-    private int a;
+
     /**
      * Display the menu
      */
