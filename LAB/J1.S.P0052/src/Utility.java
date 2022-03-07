@@ -1,6 +1,5 @@
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
@@ -240,6 +239,9 @@ public class Utility {
     public static void displayTableOfCountries(EastAsiaCountries[] arr) {
         System.out.printf("%-16s%-16s%-16s%-16s\n",
                 "ID", "Name", "Total Area", "Terrain");
+        /**
+         * display all countries from the array of country
+         */
         for (EastAsiaCountries c : arr) {
             c.display();
         }

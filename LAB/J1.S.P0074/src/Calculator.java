@@ -113,7 +113,10 @@ class Calculator {
         }
 
     }
-
+    /**
+     * Add user to enter 2 matrixes. Then multiply matrix 1 with matrix 2
+     * and display the result
+     */
     void multiplyMatrix() {
         System.out.println("-------- Multiplication --------");
         Matrix matrix1 = new Matrix();
