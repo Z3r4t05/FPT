@@ -53,9 +53,12 @@ public class Matrix {
         try {
             System.out.print(string);
             int input = Integer.parseInt(sc.nextLine());
+            //throw exception if row is smaller than 1
             if (option == 2 && input < 1) {
                 throw new IllegalArgumentException("Row must be greater than 0");
-            } else if (option == 3 && input < 1) {
+            } 
+            //throw exception if column is smaller than 1
+            else if (option == 3 && input < 1) {
                 throw new IllegalArgumentException("Column must be greater than 0");
             }
             return input;
