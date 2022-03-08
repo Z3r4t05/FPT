@@ -44,7 +44,7 @@ public class Matrix {
      * Get input integer from user
      *
      * @param string input must be an integer otherwise will throw exception
-     * @param option 1 for inputting entry value, 2 for row, 3 for column, 
+     * @param option 1 for inputting entry value, 2 for row, 3 for column,
      * default is inputting entry value
      * @return an integer that user enter
      */
@@ -53,7 +53,7 @@ public class Matrix {
         try {
             System.out.print(string);
             int input = Integer.parseInt(sc.nextLine());
-            if(option ==2 && input < 1) {
+            if (option == 2 && input < 1) {
                 throw new IllegalArgumentException("Row must be greater than 0");
             } else if (option == 3 && input < 1) {
                 throw new IllegalArgumentException("Column must be greater than 0");
@@ -61,22 +61,22 @@ public class Matrix {
             return input;
         } catch (NumberFormatException e) {
             //print different exception based on option
-            switch(option) {
+            switch (option) {
                 //for inputting matrix
                 case 1:
                     System.out.println("Value of matrix is digit");
                     break;
                 //for inputting row 
-                case 2: 
+                case 2:
                     System.out.println("Value of row is digit");
                     break;
                 //for inputting column
-                case 3: 
+                case 3:
                     System.out.println("value of column is digit");
                     break;
                 default:
                     System.out.println("Value of matrix is digit");
-                    break;       
+                    break;
             }
             return inputInteger(string, option);
         } catch (IllegalArgumentException e) {
@@ -112,8 +112,8 @@ public class Matrix {
         //Keep asking user if there is an exception
         do {
             try {
-                this.row = inputInteger("Enter Row Matrix " + number + ":",2);
-                this.col = inputInteger("Enter Column Matrix " + number + ":",3);
+                this.row = inputInteger("Enter Row Matrix " + number + ":", 2);
+                this.col = inputInteger("Enter Column Matrix " + number + ":", 3);
                 //If option is 1 then it is subtraction checking
                 if (option == 1) {
                     //throw exception if the dimension of 2 matrixes are different
@@ -121,8 +121,7 @@ public class Matrix {
                         throw new Exception("Rows and columns of 2 matrixes must be equal!");
                     }
                     break;
-                } //otherwise, it is multiplication validation
-                else {
+                } else { //otherwise it is multiplication checking
                     //throw exception when row of matrix 2 not equal col of matrix 1
                     if (matrix1.col != this.row) {
                         throw new Exception("Columns of matrix 1 must be equal"
