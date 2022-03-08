@@ -17,12 +17,7 @@ class Calculator {
     /**
      * Display the menu
      */
-    public void displayMenu() {
-        ArrayList<String> listOptions = new ArrayList<>(Arrays.asList(
-                "Addition Matrix",
-                "Subtraction Matrix",
-                "Multiplication Matrix",
-                "Quit"));
+    public void displayMenu(ArrayList<String> listOptions) {
         System.out.println("");
         System.out.println("=======Calculator program======");
         int totalOption = listOptions.size();

@@ -14,15 +14,8 @@ import java.util.Locale;
  */
 class ManageProductAndStorekeeper {
 
-    void displayMenu() {
-        ArrayList<String> listOptions = new ArrayList<>(Arrays.asList(
-                "Add storekeeper",
-                "Add product",
-                "Update product",
-                "Search product",
-                "Sort product",
-                "Exit"
-        ));
+    void displayMenu(ArrayList<String> listOptions) {
+        
         System.out.println("");
         System.out.println("                Menu");
         System.out.println("=======================================");

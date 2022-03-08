@@ -1,7 +1,4 @@
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -10,72 +7,6 @@ import java.util.regex.Pattern;
  * @author An Thanh Long
  */
 public class Main {
-
-    /**
-     * Pattern using to check if the date is existed
-     */
-    private static final Pattern DATE_EXISTED = Pattern.compile(
-        //start of line
-        "^" 
-        //29th February
-        + "((29/(02|2)/" 
-        //leap years that divisible by 400
-        + "((([13579][26]|[2468][048]|0?[48])00)" 
-        //or leap years that are divisible by 4 but not divisible by 100
-        + "|([\\d]{0,2}?([13579][26]|[2468][048]|0?[48]))))"
-                
-        //Day from 1st to 28th
-        + "|((0?[\\d]|1[\\d]|2[0-8])"
-        //February 
-        + "/(02|2)/"
-        //non-leap year from 1 to 9999
-        + "([\\d]{1,4}))"
-                
-        //Day from 1st to 31st
-        + "|((0?[\\d]|[12][\\d]|3[01])/"
-        //Months with 31 days        
-        + "(0?[13578]|1[02])/"
-        //Any year from 1 to 9999       
-        + "([\\d]{1,4}))"
-                
-        //Day from 1st to 30th
-        + "|((0?[\\d]|[12][\\d]|30)/"
-        //Months with 30 days
-        + "(0?[469]|11)/"
-        //Any year from 1 to 9999
-        + "([\\d]{1,4})))"
-        //End of line
-        + "$");
-    
-    /**
-     * Pattern using to check if the year is zero
-     */
-    private static final Pattern YEAR_ZERO = Pattern.compile(
-            //Start of line
-            "^"
-            //Any 1 or 2 digits
-            + "[\\d]{1,2}"
-            //"/" follow by any 1 or 2 digits
-            + "/[\\d]{1,2}"
-            //"/" follow by 1 to 4 ZERO digits        
-            + "/[0]{1,4}"
-            //end of line
-            + "$"); 
-    
-    /**
-     * Pattern using to check if the input is in the correct format
-     */
-    private static final Pattern DATE_FORMAT = Pattern.compile(
-            //Start of line
-            "^"
-            //Any 1 or 2 digits
-            + "[\\d]{1,2}"
-            //"/" follow by any 1 or 2 digits
-            + "/[\\d]{1,2}"
-            //"/" follow by any 1 to 4 digits        
-            + "/[\\d]{1,4}"
-            //end of line
-            + "$"); 
 
     /**
      * @param args the command line arguments
@@ -116,6 +47,67 @@ public class Main {
      * @return true if the input date is valid, false otherwise.
      */
     private static boolean isValid(String input) {
+        //Pattern used to check if date is existed
+        Pattern DATE_EXISTED = Pattern.compile(
+            //start of line
+            "^" 
+            //29th February
+            + "((29/(02|2)/" 
+            //leap years that divisible by 400
+            + "((([13579][26]|[2468][048]|0?[48])00)" 
+            //or leap years that are divisible by 4 but not divisible by 100
+            + "|([\\d]{0,2}?([13579][26]|[2468][048]|0?[48]))))"
+
+            //Day from 1st to 28th
+            + "|((0?[\\d]|1[\\d]|2[0-8])"
+            //February 
+            + "/(02|2)/"
+            //non-leap year from 1 to 9999
+            + "([\\d]{1,4}))"
+
+            //Day from 1st to 31st
+            + "|((0?[\\d]|[12][\\d]|3[01])/"
+            //Months with 31 days        
+            + "(0?[13578]|1[02])/"
+            //Any year from 1 to 9999       
+            + "([\\d]{1,4}))"
+
+            //Day from 1st to 30th
+            + "|((0?[\\d]|[12][\\d]|30)/"
+            //Months with 30 days
+            + "(0?[469]|11)/"
+            //Any year from 1 to 9999
+            + "([\\d]{1,4})))"
+            //End of line
+            + "$");
+        
+        //Pattern to check if the year is zero
+        Pattern YEAR_ZERO = Pattern.compile(
+            //Start of line
+            "^"
+            //Any 1 or 2 digits
+            + "[\\d]{1,2}"
+            //"/" follow by any 1 or 2 digits
+            + "/[\\d]{1,2}"
+            //"/" follow by 1 to 4 ZERO digits        
+            + "/[0]{1,4}"
+            //end of line
+            + "$"); 
+        
+        //Patter to check date format dd/mm/yyyy
+        Pattern DATE_FORMAT = Pattern.compile(
+            //Start of line
+            "^"
+            //Any 1 or 2 digits
+            + "[\\d]{1,2}"
+            //"/" follow by any 1 or 2 digits
+            + "/[\\d]{1,2}"
+            //"/" follow by any 1 to 4 digits        
+            + "/[\\d]{1,4}"
+            //end of line
+            + "$"); 
+        
+        
         boolean correctFormatted = DATE_FORMAT.matcher(input).matches();
         boolean isExisted = DATE_EXISTED.matcher(input).matches();
         boolean isYearZero = YEAR_ZERO.matcher(input).matches();
