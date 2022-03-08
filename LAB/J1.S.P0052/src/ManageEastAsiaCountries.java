@@ -1,7 +1,7 @@
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -32,9 +32,7 @@ public class ManageEastAsiaCountries {
         while (true) {
             try {
                 newCountry.setCountryCode(Utility.findExistedCode(
-                        countryList, Utility.inputCode(
-                                "Enter code of country: ",
-                                Utility.COUNTRY_CODE)));
+                        countryList, Utility.inputCode("Enter code of country: ")));
                 break;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -44,9 +42,7 @@ public class ManageEastAsiaCountries {
         while (true) {
             try {
                 newCountry.setCountryName(Utility.findExistedName(
-                        countryList, Utility.inputName(
-                                "Enter name of country: ",
-                                Utility.COUNTRY_NAME)));
+                        countryList, Utility.inputName("Enter name of country: ")));
                 break;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -63,8 +59,7 @@ public class ManageEastAsiaCountries {
                 if (e instanceof NumberFormatException) {
                     System.out.println("Invalid input. Area must be "
                             + "a positive float or integer!");
-                } //else print error
-                else {
+                } else {
                     System.out.println(e.getMessage());
                 }
             }
@@ -96,8 +91,7 @@ public class ManageEastAsiaCountries {
         } catch (Exception e) {
             //Change the message of the exception
             if (e instanceof IndexOutOfBoundsException) {
-                System.out.println("Index out of range");
-                //else print error    
+                System.out.println("Index out of range");   
             } else {
                 System.out.println(e.getMessage());
             }
@@ -135,6 +129,12 @@ public class ManageEastAsiaCountries {
     public EastAsiaCountries[] searchInformationByName(
             ArrayList<EastAsiaCountries> countryList)
             throws Exception {
+        Pattern COUNTRY_NAME = Pattern.compile(
+            "^" //Start of line
+            + "\\s*" //0 or many space
+            + "([A-Za-z]+\\s?)*" //0 or many word that separate by 0 or 1 space
+            + "\\s*" //0 or many space
+            + "$");              //end of line
         ArrayList<EastAsiaCountries> result = new ArrayList<>();
         //If the data is empty throw new exception
         if (countryList.isEmpty()) {
@@ -144,7 +144,7 @@ public class ManageEastAsiaCountries {
                 .getNonBlankStr("Enter the name you want to search for: ")
                 .toLowerCase();
         //If the input is not valid then throw new exception
-        if (!Utility.isValid(input, Utility.COUNTRY_NAME)) {
+        if (!Utility.isValid(input, COUNTRY_NAME)) {
             throw new Exception("Not a valid name!");
         }
         //Searching for name in data that matches the input ignoring case
@@ -192,16 +192,10 @@ public class ManageEastAsiaCountries {
 
     /**
      * Display the menu to the screen
+     * @param listOptions list of option to display
      */
-    public void displayMenu() {
-        ArrayList<String> listOptions = new ArrayList<>(Arrays.asList(
-                "Input the information of 11 countries in East Asia",
-                "Display the information of country you've just input",
-                "Search the information of country by user-entered name",
-                "Display the information of countries sorted name in ascending "
-                + "order",
-                "Exit"
-        ));
+    public void displayMenu(ArrayList<String> listOptions) {
+        
         System.out.println("");
         System.out.println("                               Menu");
         System.out.println("==================================================="

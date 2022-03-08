@@ -15,37 +15,6 @@ import java.util.regex.Pattern;
  */
 public class Utility {
 
-    public static final Scanner sc = new Scanner(System.in);
-    public static final Pattern COUNTRY_CODE = Pattern.compile(
-            "^" //Start of line
-            + "\\s*" //0 or many space token
-            + "[A-Z]{2,3}" //2 or 3 Uppercase alphabet char
-            + "\\s*" //0 or many space token
-            + "$");        //end of line
-    public static final Pattern COUNTRY_NAME = Pattern.compile(
-            "^" //Start of line
-            + "\\s*" //0 or many space
-            + "([A-Za-z]+\\s?)*" //0 or many word that separate by 0 or 1 space
-            + "\\s*" //0 or many space
-            + "$");              //end of line
-    public static final Pattern TERRAIN = Pattern.compile(
-            "^" //Start of line
-            + "\\s*" //0 or many space
-            + "([A-Za-z]+\\s?)*" //0 or many word that separate by 0 or 1 space
-            + "\\s*" //0 or many space
-            + "$");              //end of line
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_RESET = "\u001B[0m";
-
-    /**
-     * Print string in green
-     *
-     * @param s string input
-     */
-    public static void printGreen(String s) {
-        System.out.println(ANSI_GREEN + s + ANSI_RESET);
-    }
-
     /**
      * Normalize and recapitalize the string
      *
@@ -73,6 +42,7 @@ public class Utility {
      * @return the inputted string (which is re-capitalize)
      */
     public static String getNonBlankStr(String msg) {
+        Scanner sc = new Scanner(System.in);
         String result;
         System.out.println(msg);
         result = normalizeAndRecapitalize(sc.nextLine());
@@ -99,15 +69,21 @@ public class Utility {
      * Take input code of country from user
      *
      * @param message message to user
-     * @param p pattern to check
      * @return the inputted code
      * @throws Exception if the code doesn't match the pattern
      */
-    public static String inputCode(String message, Pattern p) throws Exception {
+    public static String inputCode(String message) throws Exception {
         String code;
         code = getNonBlankStr(message).toUpperCase();
+        Pattern COUNTRY_CODE = Pattern.compile(
+            "^" //Start of line
+            + "\\s*" //0 or many space token
+            + "[A-Z]{2,3}" //2 or 3 Uppercase alphabet char
+            + "\\s*" //0 or many space token
+            + "$");        //end of line
+        
         //throw new exception if the code doesn't match the pattern
-        if (!isValid(code, p)) {
+        if (!isValid(code, COUNTRY_CODE)) {
             throw new Exception("Not a valid code. It must consist of "
                     + "exactly 2 "
                     + "or 3 alphabet characters");
@@ -119,15 +95,20 @@ public class Utility {
      * Take input name of country from user
      *
      * @param msg message to user
-     * @param p pattern to check
      * @return the string user inputted
      * @throws Exception if the name doesn't match the pattern
      */
-    public static String inputName(String msg, Pattern p) throws Exception {
+    public static String inputName(String msg) throws Exception {
         String name;
         name = getNonBlankStr(msg);
+        Pattern COUNTRY_NAME = Pattern.compile(
+            "^" //Start of line
+            + "\\s*" //0 or many space
+            + "([A-Za-z]+\\s?)*" //0 or many word that separate by 0 or 1 space
+            + "\\s*" //0 or many space
+            + "$");              //end of line
         //throw new exception if the name doesn't match the pattern
-        if (!isValid(name, p)) {
+        if (!isValid(name, COUNTRY_NAME)) {
             throw new Exception("Not a valid name!");
         }
         return name;
@@ -210,8 +191,14 @@ public class Utility {
     public static String inputTerrain(String msg) throws Exception {
         String terrain;
         terrain = getNonBlankStr(msg);
+        Pattern TERRAIN = Pattern.compile(
+            "^" //Start of line
+            + "\\s*" //0 or many space
+            + "([A-Za-z]+\\s?)*" //0 or many word that separate by 0 or 1 space
+            + "\\s*" //0 or many space
+            + "$");              //end of line
         //Throw exception if the input doesn't match the terrain pattern
-        if (!Utility.isValid(terrain, Utility.TERRAIN)) {
+        if (!Utility.isValid(terrain, TERRAIN)) {
             throw new Exception("Not a valid terrain");
         }
         return terrain;
