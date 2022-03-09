@@ -133,7 +133,7 @@ public class Utility {
         //Throw new exception if the area is out of range
         if (area <= 0) {
             throw new Exception("Area must be greater than 0");
-        } else if (area >= 17098242) {
+        } else if (area > 17098242) {
             throw new Exception("Largest country in the world is only 17098242"
                     + " km2");
         }
