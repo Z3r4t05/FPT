@@ -5,11 +5,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -81,13 +78,14 @@ public class BSTree {
             }
         }
     }
-/*
+
+    /*
       6
     1   7
    3   5   9
     4    8
     
-    */
+     */
     public void breathth() {
         if (root == null) {
             return;
@@ -99,8 +97,10 @@ public class BSTree {
         while (!q.isEmpty()) {
             try {
                 p = (Song) q.dequeue();
-                if(p != root && p.left != null && p.right != null && this.findHeight(this.root, p.id) < 5)
-                   x = p;
+                if (p != root && p.left != null && p.right != null
+                        && this.findHeight(this.root, p.id) < 5) {
+                    x = p;
+                }
                 if (p.left != null) {
                     q.enqueue(p.left);
                 }
@@ -113,7 +113,8 @@ public class BSTree {
         }
         this.del(x.id);
     }
-public void breathth4() {
+
+    public void breathth4() {
         if (root == null) {
             return;
         }
@@ -125,7 +126,7 @@ public void breathth4() {
             try {
                 p = (Song) q.dequeue();
                 System.out.println("(" + p.id + "," + p.name + "," + p.rating
-                + ")");
+                        + ")");
                 if (p.left != null) {
                     q.enqueue(p.left);
                 }
@@ -137,6 +138,7 @@ public void breathth4() {
             }
         }
     }
+
     public void preorder(Song p) {
         if (p == null) {
             return;
@@ -167,42 +169,42 @@ public void breathth4() {
         postorder(p.right);
         System.out.print(p.id + " ");
     }
-static int findHeightUtil(Song root, String x)
-{
-     
-    // Base Case
-    if (root == null)
-    {
-        return -1;
+
+    static int findHeightUtil(Song root, String x) {
+
+        // Base Case
+        if (root == null) {
+            return -1;
+        }
+        int height;
+        // Store the maximum height of
+        // the left and right subtree
+        int leftHeight = findHeightUtil(root.left, x);
+
+        int rightHeight = findHeightUtil(root.right, x);
+
+        // Update height of the current node
+        int ans = Math.max(leftHeight, rightHeight) + 1;
+
+        // If current node is the required node
+        if (root.id.equals(x)) {
+            height = ans;
+        }
+
+        return ans;
     }
-    int height;
-    // Store the maximum height of
-    // the left and right subtree
-    int leftHeight = findHeightUtil(root.left, x);
- 
-    int rightHeight = findHeightUtil(root.right, x);
- 
-    // Update height of the current node
-    int ans = Math.max(leftHeight, rightHeight) + 1;
- 
-    // If current node is the required node
-    if (root.id.equals(x))
-        height = ans;
- 
-    return ans;
-}
- 
+
 // Function to find the height of
 // a given node in a Binary Tree
- int findHeight(Song root, String x)
-{
-     
-    // Stores height of the Tree
-    int height = findHeightUtil(root, x);
- 
-    // Return the height
-    return height;
-}
+    int findHeight(Song root, String x) {
+
+        // Stores height of the Tree
+        int height = findHeightUtil(root, x);
+
+        // Return the height
+        return height;
+    }
+
     public int count(Song root) {
         if (root == null) {
             return 0;
@@ -242,7 +244,7 @@ static int findHeightUtil(Song root, String x)
     public static void main(String[] args) {
         BSTree tree = new BSTree();
         tree.loadFromFile("src\\song.txt");
-        
+
         System.out.println("");
         tree.q2(tree, "src\\q2.out");
         tree.q3("src\\q3.txt");
@@ -437,53 +439,50 @@ static int findHeightUtil(Song root, String x)
     public void q4() {
         root = this.buildTree(root);
     }
-    
-    void storeBSTNodes(Song root, Vector<Song> nodes)
-    {
+
+    void storeBSTNodes(Song root, Vector<Song> nodes) {
         // Base case
-        if (root == null)
+        if (root == null) {
             return;
- 
+        }
+
         // Store nodes in Inorder (which is sorted
         // order for BST)
         storeBSTNodes(root.left, nodes);
         nodes.add(root);
         storeBSTNodes(root.right, nodes);
     }
- 
+
     /* Recursive function to construct binary tree */
     Song buildTreeUtil(Vector<Song> nodes, int start,
-            int end)
-    {
+            int end) {
         // base case
-        if (start > end)
+        if (start > end) {
             return null;
- 
+        }
+
         /* Get the middle element and make it root */
         int mid = (start + end) / 2;
         Song node = nodes.get(mid);
- 
+
         /* Using index in Inorder traversal, construct
            left and right subtress */
         node.left = buildTreeUtil(nodes, start, mid - 1);
         node.right = buildTreeUtil(nodes, mid + 1, end);
- 
+
         return node;
     }
- 
+
     // This functions converts an unbalanced BST to
     // a balanced BST
-    public Song buildTree(Song root)
-    {
+    public Song buildTree(Song root) {
         // Store nodes of given BST in sorted order
         Vector<Song> nodes = new Vector<Song>();
         storeBSTNodes(root, nodes);
- 
+
         // Constructs BST from nodes[]
         int n = nodes.size();
         return buildTreeUtil(nodes, 0, n - 1);
     }
- 
 
- 
 }
