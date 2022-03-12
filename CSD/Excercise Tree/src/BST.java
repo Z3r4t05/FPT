@@ -313,6 +313,8 @@ public class BST {
     public void delByCopying(Node p) {
         Node rm = p.left;
         Node parentRm = p;
+        System.out.println(rm);
+        System.out.println(parentRm);
         while (rm.right != null) {
             parentRm = rm;
             rm = rm.right;
@@ -329,7 +331,7 @@ public class BST {
             p.left = rm.left;
         } else {
 
-            parentRm.right = null;
+            parentRm.right = rm.left;
         }
         /*
               p=parent  ->         p=rm
