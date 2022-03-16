@@ -1,4 +1,6 @@
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Set;
 
@@ -23,7 +25,23 @@ public class Main {
         ht.put("abcd", "asdfasdf");
 //        System.out.println(ht.get("abcd"));
         System.out.println(ht);
+        
+        
+        FruitShopManagement manager = new FruitShopManagement();
+        ArrayList<Fruit> listFruits = new ArrayList<>();
+        Hashtable<String, ArrayList<Order>> listOrders = new Hashtable<>();
+        int choice;
+        ArrayList<String> listOptions = new ArrayList<>(Arrays.asList(
+                "Create fruit",
+                "View orders",
+                "Shopping (for buyer)",
+                "Exit"));
+        //step 1: Display menu
+        manager.displayMenu(listOptions);
+        //step 2: Ask user to enter input 
+        
     }
+    
     public static void show(Hashtable<String, String> hashtable) {
         Set<String> keySet = hashtable.keySet();
         for (String key : keySet) {
