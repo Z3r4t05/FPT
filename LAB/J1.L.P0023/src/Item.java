@@ -8,7 +8,7 @@
  *
  * @author ADMIN
  */
-public class Order {
+public class Item {
     private Fruit fruit;
     private int quantity;
     private double amount;
@@ -37,7 +37,7 @@ public class Order {
         this.quantity = quantity;
     }
 
-    public Order(Fruit fruit, int quantity) {
+    public Item(Fruit fruit, int quantity) {
         this.fruit = fruit;
         this.quantity = quantity;
         this.amount = fruit.getPrice() * quantity;
