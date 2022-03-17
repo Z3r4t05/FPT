@@ -11,13 +11,13 @@
 public class Item {
     private Fruit fruit;
     private int quantity;
-    private double amount;
+    private int amount;
 
-    public double getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
@@ -41,6 +41,10 @@ public class Item {
         this.fruit = fruit;
         this.quantity = quantity;
         this.amount = fruit.getPrice() * quantity;
+    }
+    
+    public void updateAmount() {
+        this.setAmount(this.getQuantity() * this.getFruit().getPrice());
     }
     
 }

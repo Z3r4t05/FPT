@@ -24,37 +24,39 @@ public class Main {
         FruitShopManagement manager = new FruitShopManagement();
         ArrayList<Fruit> listFruits = new ArrayList<>();
         Hashtable<String, ArrayList<Item>> tableOrders = new Hashtable<>();
-        int choice;
+        int choice = 0;
         ArrayList<String> listOptions = new ArrayList<>(Arrays.asList(
                 "Create fruit",
                 "View orders",
                 "Shopping (for buyer)",
                 "Exit"));
         do {
-            //step 1: Display menu
-            manager.displayMenu(listOptions);
-            //step 2: Ask user to enter input 
-            choice = manager.getOption(1, 4);
-            //step 3: Perform function based on user choice
-            switch (choice) {
-                //create fruit
-                case 1:
-                    manager.createFruit(listFruits);
-                    break;
-                // view orders
-                case 2:
-                    manager.viewOrders(tableOrders);
-                    break;
-                case 3: 
-                    try {
+            try {
+                //step 1: Display menu
+                manager.displayMenu(listOptions);
+                //step 2: Ask user to enter input 
+                choice = manager.getOption(1, 4);
+                //step 3: Perform function based on user choice
+                switch (choice) {
+                    //create fruit
+                    case 1:
+                        manager.createFruit(listFruits);
+                        break;
+                    // view orders
+                    case 2:
+                        manager.viewOrders(tableOrders);
+                        break;
+                    //shopping (for buyer)
+                    case 3:
                         manager.shopping(listFruits, tableOrders);
-                    } catch (Exception ex) {
-                        System.out.println(ex.getMessage());
-                    }
-                
-                break;
+                        break;
+                    case 4:
+                        System.exit(0);
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage() + "\n");
             }
-        } while (choice != 4);
+        } while (true);
     }
 
 }
