@@ -12,6 +12,10 @@ import java.util.ArrayList;
  * @author ADMIN
  */
 class FruitShopManagement {
+    /**
+     * Display the list of option as a menu
+     * @param listOptions an arrayList of option to choose
+     */
     public void displayMenu(ArrayList<String> listOptions) {
         System.out.println("          MENU");
         System.out.println("=========================");
