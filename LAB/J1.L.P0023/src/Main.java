@@ -50,6 +50,7 @@ public class Main {
                     case 3:
                         manager.shopping(listFruits, tableOrders);
                         break;
+                    //Exit
                     case 4:
                         System.exit(0);
                 }

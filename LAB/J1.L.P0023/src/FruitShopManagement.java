@@ -1,6 +1,8 @@
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -140,6 +142,9 @@ class FruitShopManagement {
         int index = 1;
         for (String key : keySet) {
             System.out.println("Customer: " + key);
+            for(Item i : tableOrders.get(key)) {
+                System.out.println(i.getFruit() + " " + i.getQuantity());
+            }
             this.displayListItems(tableOrders.get(key), 0);
             System.out.println("");
         }
@@ -208,12 +213,33 @@ class FruitShopManagement {
         if (listFruits.isEmpty()) {
             throw new Exception("list fruits is empty");
         }
+        boolean outOfStock = true;
+        //Check all fruit in list if there is an fruit that isn't out of stock
+        for (Fruit f : listFruits) {
+            //if the quantity > 0 then change flag to false
+            if (f.getQuantity() > 0) {
+                outOfStock = false;
+                break;
+            }
+        }
+        if (outOfStock == true) {
+            throw new Exception("All of fruits are out of stock.");
+        }
         Fruit fruit = new Fruit();
         ArrayList<Item> listItems = new ArrayList<>();
         int quantity;
         char choice;
         //continuing ordering if user choose N after enter quantity
         do {
+            try {
+                //throw exception when the everything is out of stock
+                if (outOfStock == true) {
+                    throw new Exception("All of fruits are out of stock.");
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return;
+            }
             System.out.println("List of Fruit:");
             this.displayListFruits(listFruits);
             //continue asking user to choose an item from the list if user doesn't enter a valid id
@@ -221,6 +247,10 @@ class FruitShopManagement {
                 try {
                     fruit = selectItem("Choose an item from the list above: ", listFruits);
                     System.out.println("You selected: " + fruit.getName());
+                    //throw exception if the fruit is out of stock
+                    if (fruit.getQuantity() == 0) {
+                        throw new Exception("Out of stock");
+                    }
                     break;
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
@@ -230,17 +260,20 @@ class FruitShopManagement {
             do {
                 try {
                     quantity = this.getQuantity("Please input quantity: ");
+
                     //throw exception if in-stock quantity is not enough. Otherwise, subtract the quantity in stock.
                     if (fruit.getQuantity() < quantity) {
                         //tell user if the fruit is out of stock or the quantity left
-                        if (fruit.getQuantity() == 0) {
-                            throw new Exception("Out of stock");
-                        } else {
-                            throw new Exception("There are only " + fruit.getQuantity()
-                                    + " left.");
-                        }
+                        throw new Exception("There are only " + fruit.getQuantity()
+                                + " left.");
+
                     } else {
-                        fruit.setQuantity(fruit.getQuantity() - quantity);
+//                        fruit.setQuantity(fruit.getQuantity() - quantity);
+                        for (Fruit f : listFruits) {
+                            if (f.getId().equals(fruit.getId())) {
+                                f.setQuantity(f.getQuantity() - quantity);
+                            }
+                        }
                     }
                     break;
                 } catch (Exception e) {
@@ -250,7 +283,20 @@ class FruitShopManagement {
             addItem(listItems, fruit, quantity);
             System.out.println("Item added!!");
             choice = inputChar("Do you want to order now (Y/N): ");
-
+            outOfStock = true;
+            //Check all fruit in list if there is an fruit that isn't out of stock
+            for (Fruit f : listFruits) {
+                //if the quantity > 0 then change flag to false
+                if (f.getQuantity() > 0) {
+                    outOfStock = false;
+                    break;
+                }
+            }
+            //If everything is out of stock, break the loop and finish order
+            if (outOfStock) {
+                System.out.println("All fruits are out of stock");
+                choice = 'Y';
+            }
         } while (choice == 'N' || choice == 'n');
         this.displayListItems(listItems, 1);
         String customerName = this.getNonBlankStr("Input your name: ");
@@ -273,13 +319,15 @@ class FruitShopManagement {
                 totalPrice += i.getAmount();
             }
         } else {
+            int count = 1;
             //Display each item and sum-up the amount
             for (Item i : listItems) {
-                System.out.printf("1. %-7.7s  %3d       %3d$    %4d$\n",
+                System.out.printf(count + ". %-7.7s  %3d       %3d$    %4d$\n",
                         i.getFruit().getName(),
                         i.getQuantity(),
                         i.getFruit().getPrice(),
                         i.getAmount());
+                count++;
                 totalPrice += i.getAmount();
             }
         }
@@ -372,29 +420,87 @@ class FruitShopManagement {
             //if customer's name is duplicated then we merge the list
             if (tableOrders.containsKey(customerName)) {
                 ArrayList<Item> mergeTarget = tableOrders.get(customerName);
-                ArrayList<Item> combinedList = new ArrayList();
-                for (Item i : mergeTarget) {
-                    for (Item j : listItems) {
-                        if (i.getFruit().getId().equals(j.getFruit().getId())) {
-                            combinedList.add(new Item(i.getFruit(),
-                                    i.getQuantity() + j.getQuantity()));
+                ArrayList<Item> toRemove = new ArrayList<>();
+                Set<Item> set = new LinkedHashSet<>(mergeTarget);
+                set.addAll(listItems);
+                ArrayList<Item> list = new ArrayList<>(set);
+                for (int i = 0; i < list.size() - 1; i++) {
+                    for (int j = i+1; j < list.size(); j++) {
+                        if(list.get(i).getFruit().getId().
+                                equals(list.get(j).getFruit().getId())) {
+                            if(list.get(i).getQuantity()<list.get(j).getQuantity()) {
+                                toRemove.add(list.get(i));
+                            }
+                            if(list.get(i).getQuantity()>=list.get(j).getQuantity()) {
+                                toRemove.add(list.get(j));
+                            }
+                        }
+                    }             
+                }
+                Set<Item> removeSet = new LinkedHashSet<>(toRemove);
+                
+                System.out.println("set");
+                for(Item i : list) {
+                    System.out.println(i.getFruit() + " " + i.getQuantity());
+                }
+                System.out.println("toremove");
+                for(Item i : toRemove) {
+                    System.out.println(i.getFruit() + " " + i.getQuantity());
+                }
+                set.removeAll(toRemove);
+                for (Item i : list) {
+                    for (Item j : toRemove) {
+                        if( i.getFruit().getId().equals(j.getFruit().getId())) {
+                            i.setQuantity(i.getQuantity()+j.getQuantity());
+                            i.updateAmount();
                         }
                     }
                 }
-
-//                Set<Item> set = new LinkedHashSet<>(mergeTarget);
-//                set.addAll(listItems);
+                System.out.println("set");
+                for(Item i : set) {
+                    System.out.println(i.getFruit() + " " + i.getQuantity());
+                }
+//                System.out.println("set");
+//                ArrayList<Item> newList = new ArrayList<>(set);
 //                for(Item i : set) {
-//                    System.out.println(i);
+//                    System.out.println(i.getFruit() + " " + i.getQuantity());
 //                }
-                //update amount of items after merging 2 lists.
-//                for (Item i : combinedList) {
-//                    i.updateAmount();
+//                System.out.println("item");
+//                for(Item i : listItems) {
+//                    System.out.println(i.getFruit() + " " + i.getQuantity());
 //                }
-                tableOrders.put(customerName, combinedList);
-                return;
+//                System.out.println("new");
+//                for(Item i:newList) {
+//                    System.out.println(i.getFruit() + " " + i.getQuantity());
+//                }
+//                for (Item i : set) {
+//                    for (Item j : listItems) {
+//                        int temp;
+//                        if (i.getFruit().getId().equals(j.getFruit().getId())) {
+//                            temp = i.getQuantity() + j.getQuantity();
+//                            i.setQuantity(temp);
+//                            i.updateAmount();
+//                        }
+//                    }
+//                }
+//                System.out.println("set");
+//                newList = new ArrayList<>(set);
+//                for(Item i : set) {
+//                    System.out.println(i.getFruit() + " " + i.getQuantity());
+//                }
+//                System.out.println("item");
+//                for(Item i : listItems) {
+//                    System.out.println(i.getFruit() + " " + i.getQuantity());
+//                }
+//                System.out.println("new");
+//                for(Item i:newList) {
+//                    System.out.println(i.getFruit() + " " + i.getQuantity());
+//                }
+                tableOrders.put(customerName, mergeTarget);
+            } else {
+                tableOrders.put(customerName, listItems);
+                
             }
         }
-        tableOrders.put(customerName, listItems);
     }
 }
