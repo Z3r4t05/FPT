@@ -62,7 +62,15 @@ class MyList {
             }
         }
     }
+    /**
+     •	void addLast(String xOwner, int xPrice) - check if xOwner.charAt(0) = 'B' or xPrice>100 then do nothing, otherwise add new car with owner=xOwner, price=xPrice, price=xPrice to the end of the list. (price can get arbitrary value, even negative).
 
+•	void f1() – This method is used to test the addLast methode above. You do not need to edit this function. Output in the file f1.txt must be the following:
+(A,9) (C,7) (D,2) (E,6) (F,4)
+
+
+     * @throws Exception 
+     */
     void f1() throws Exception {/* You do not need to edit this function. Your task is to complete the addLast  function
         above only.
          */
@@ -77,7 +85,13 @@ class MyList {
         ftraverse(f);
         f.close();
     }
+/**
+ * •	•	void f2() – There is a  given objects  x. You should write statements so that x  will be the first element of  the  list. Output in the file f2.txt must be the following:
+(C,9) (D,6) (E,8) (F,2) (I,6) 
+(X,1) (C,9) (D,6) (E,8) (F,2) (I,6)
 
+ * @throws Exception 
+ */
 //==================================================================
     void f2() throws Exception {
         clear();
@@ -109,7 +123,14 @@ class MyList {
         ftraverse(f);
         f.close();
     }
+/**
+ * •	void f3() – Suppose the list contains at least 3 elements. Delete the first node having price=5. Output in the file f3.txt must be the following:
+(C,9) (D,5) (E,3) (F,5) (I,6) 
+(C,9) (E,3) (F,5) (I,6)
 
+
+ * @throws Exception 
+ */
 //==================================================================
     void f3() throws Exception {
         clear();
@@ -131,7 +152,14 @@ class MyList {
         ftraverse(f);
         f.close();
     }
+/**
+ * •	•	void f4() – Sort the list ascendingly by price. Output in the file f4.txt must be the following:
+(C,9) (D,6) (E,5) (F,13) (I,2) (J,1) 
+(J,1) (I,2) (E,5) (D,6) (C,9) (F,13)
 
+
+ * @throws Exception 
+ */
 //==================================================================
     void f4() throws Exception {
         clear();

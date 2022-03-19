@@ -187,7 +187,13 @@ class Graph {
 //===========================================================================
 //(2)===YOU CAN EDIT OR EVEN ADD NEW FUNCTIONS IN THE FOLLOWING PART========
 //===========================================================================
+/**
+ * 	void f1() - Perfom depth-first traversal (to the file f1.xt) from the vertex  i=1 (the vertex B) but display vertices with their deegrees in bracket. Hint: copy depth(...) to depth2(...) and modify the latter one. Content of  the output file f1.txt must be:
+B G A E F I C H D
+B(1) G(2) A(4) E(3) F(3) I(3) C(1) H(2) D(1)
 
+ * @throws Exception 
+ */
     void f1() throws Exception {
         loadData(1);
         String fname = "f1.txt";
@@ -209,7 +215,14 @@ class Graph {
         f.close();
     }
 //===========================================================================
+/**
+ * 	void f2() – Apply the Dijkstra’s shortest path algorithm to find the shortest path from the vertex 0 (A) to the vertex 4 (E). (Note that in the weighted matrix, the value 999 is considered as infinity). Write 2 lines into the file f6.txt. The first line contains the list of vertices in the shortest path. The second lines contains shortest distances to the vertices in the first line. Content of  the output file f2.txt must be:
+A   C   F   E
+0   9   11   20
 
+
+ * @throws Exception 
+ */
     void f2() throws Exception {
         loadData(12);
         String fname = "f2.txt";

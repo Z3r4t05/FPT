@@ -444,59 +444,25 @@ class FruitShopManagement {
                     System.out.println(i.getFruit() + " " + i.getQuantity());
                 }
                 System.out.println("toremove");
-                for(Item i : toRemove) {
+                for(Item i : removeSet) {
                     System.out.println(i.getFruit() + " " + i.getQuantity());
                 }
-                set.removeAll(toRemove);
+                list.removeAll(toRemove);
                 for (Item i : list) {
-                    for (Item j : toRemove) {
+                    for (Item j : removeSet) {
                         if( i.getFruit().getId().equals(j.getFruit().getId())) {
                             i.setQuantity(i.getQuantity()+j.getQuantity());
+                            removeSet.remove(j);
                             i.updateAmount();
                         }
                     }
                 }
                 System.out.println("set");
-                for(Item i : set) {
+                for(Item i : list) {
                     System.out.println(i.getFruit() + " " + i.getQuantity());
                 }
-//                System.out.println("set");
-//                ArrayList<Item> newList = new ArrayList<>(set);
-//                for(Item i : set) {
-//                    System.out.println(i.getFruit() + " " + i.getQuantity());
-//                }
-//                System.out.println("item");
-//                for(Item i : listItems) {
-//                    System.out.println(i.getFruit() + " " + i.getQuantity());
-//                }
-//                System.out.println("new");
-//                for(Item i:newList) {
-//                    System.out.println(i.getFruit() + " " + i.getQuantity());
-//                }
-//                for (Item i : set) {
-//                    for (Item j : listItems) {
-//                        int temp;
-//                        if (i.getFruit().getId().equals(j.getFruit().getId())) {
-//                            temp = i.getQuantity() + j.getQuantity();
-//                            i.setQuantity(temp);
-//                            i.updateAmount();
-//                        }
-//                    }
-//                }
-//                System.out.println("set");
-//                newList = new ArrayList<>(set);
-//                for(Item i : set) {
-//                    System.out.println(i.getFruit() + " " + i.getQuantity());
-//                }
-//                System.out.println("item");
-//                for(Item i : listItems) {
-//                    System.out.println(i.getFruit() + " " + i.getQuantity());
-//                }
-//                System.out.println("new");
-//                for(Item i:newList) {
-//                    System.out.println(i.getFruit() + " " + i.getQuantity());
-//                }
-                tableOrders.put(customerName, mergeTarget);
+
+                tableOrders.put(customerName, list);
             } else {
                 tableOrders.put(customerName, listItems);
                 

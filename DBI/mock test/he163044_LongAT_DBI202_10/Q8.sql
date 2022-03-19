@@ -14,10 +14,8 @@ begin
 end
 
 
-/*
+
 declare @t float
-exec TotalAmount = 'CA=2014_100006', @t output  
+
+exec TotalAmount 'CA-2014-100678', @t output
 print @t
-exec TotalAmount = 'CA=2014_100678', @t output
-print @t
-*/
