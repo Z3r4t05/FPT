@@ -1,0 +1,521 @@
+run:
+FRUIT SHOP SYSTEM
+        1.  Create fruit
+        2.  View orders
+        3.  Shopping (for buyer)
+        4.  Exit
+
+(Please choose 1 to create product, 2 to view order, 3 for shopping, 4 to Exit program).
+2
+There are no orders.
+
+FRUIT SHOP SYSTEM
+        1.  Create fruit
+        2.  View orders
+        3.  Shopping (for buyer)
+        4.  Exit
+
+(Please choose 1 to create product, 2 to view order, 3 for shopping, 4 to Exit program).
+3
+list fruits is empty
+
+FRUIT SHOP SYSTEM
+        1.  Create fruit
+        2.  View orders
+        3.  Shopping (for buyer)
+        4.  Exit
+
+(Please choose 1 to create product, 2 to view order, 3 for shopping, 4 to Exit program).
+1
+Enter fruit's name: 
+coconut
+Enter price: 
+2
+Enter quantity: 
+40
+Enter origin: 
+vietnam
+Do you want to continue (Y/N)? 
+y
+Enter fruit's name: 
+orange
+Enter price: 
+3
+Enter quantity: 
+50
+Enter origin: 
+vietnam
+Do you want to continue (Y/N)? 
+y
+Enter fruit's name: 
+apple
+Enter price: 
+4
+Enter quantity: 
+30
+Enter origin: 
+thailand
+Do you want to continue (Y/N)? 
+y
+Enter fruit's name: 
+grape
+Enter price: 
+6
+Enter quantity: 
+france
+For input string: "france"
+Enter quantity: 
+50
+Enter origin: 
+france
+Do you want to continue (Y/N)? 
+y
+Enter fruit's name: 
+jackfruit
+Enter price: 
+9
+Enter quantity: 
+30
+Enter origin: 
+vietnam
+Do you want to continue (Y/N)? 
+y
+Enter fruit's name: 
+mango
+Enter price: 
+2
+Enter quantity: 
+20
+Enter origin: 
+thailand
+Do you want to continue (Y/N)? 
+n
+| ++ Item ++ | ++ Fruits ++ | ++ Origin ++ | ++ Price ++ |
+       1        Coconut        Vietnam           2$
+       2        Orange         Vietnam           3$
+       3        Apple          Thailand          4$
+       4        Grape          France            6$
+       5        Jackfruit      Vietnam           9$
+       6        Mango          Thailand          2$
+FRUIT SHOP SYSTEM
+        1.  Create fruit
+        2.  View orders
+        3.  Shopping (for buyer)
+        4.  Exit
+
+(Please choose 1 to create product, 2 to view order, 3 for shopping, 4 to Exit program).
+3
+List of Fruit:
+| ++ Item ++ | ++ Fruits ++ | ++ Origin ++ | ++ Price ++ |
+       1        Coconut        Vietnam           2$
+       2        Orange         Vietnam           3$
+       3        Apple          Thailand          4$
+       4        Grape          France            6$
+       5        Jackfruit      Vietnam           9$
+       6        Mango          Thailand          2$
+Choose an item from the list above: 
+1
+You selected: Coconut
+Please input quantity: 
+12
+Item added!!
+Do you want to order now (Y/N): 
+n
+List of Fruit:
+| ++ Item ++ | ++ Fruits ++ | ++ Origin ++ | ++ Price ++ |
+       1        Coconut        Vietnam           2$
+       2        Orange         Vietnam           3$
+       3        Apple          Thailand          4$
+       4        Grape          France            6$
+       5        Jackfruit      Vietnam           9$
+       6        Mango          Thailand          2$
+Choose an item from the list above: 
+1
+You selected: Coconut
+Please input quantity: 
+11
+Item added!!
+Do you want to order now (Y/N): 
+n
+List of Fruit:
+| ++ Item ++ | ++ Fruits ++ | ++ Origin ++ | ++ Price ++ |
+       1        Coconut        Vietnam           2$
+       2        Orange         Vietnam           3$
+       3        Apple          Thailand          4$
+       4        Grape          France            6$
+       5        Jackfruit      Vietnam           9$
+       6        Mango          Thailand          2$
+Choose an item from the list above: 
+2
+You selected: Orange
+Please input quantity: 
+13
+Item added!!
+Do you want to order now (Y/N): 
+n
+List of Fruit:
+| ++ Item ++ | ++ Fruits ++ | ++ Origin ++ | ++ Price ++ |
+       1        Coconut        Vietnam           2$
+       2        Orange         Vietnam           3$
+       3        Apple          Thailand          4$
+       4        Grape          France            6$
+       5        Jackfruit      Vietnam           9$
+       6        Mango          Thailand          2$
+Choose an item from the list above: 
+6
+You selected: Mango
+Please input quantity: 
+17
+Item added!!
+Do you want to order now (Y/N): 
+y
+Product | Quantity | Price | Amount
+Coconut   23          2$      46$
+Orange    13          3$      39$
+Mango     17          2$      34$
+Total: 119$
+Input your name: 
+marry carie
+Shopping Completed!
+FRUIT SHOP SYSTEM
+        1.  Create fruit
+        2.  View orders
+        3.  Shopping (for buyer)
+        4.  Exit
+
+(Please choose 1 to create product, 2 to view order, 3 for shopping, 4 to Exit program).
+2
+Customer: Marry Carie
+Fruit{id=1, name=Coconut, price=2, quantity=17, origin=Vietnam} 23
+Fruit{id=2, name=Orange, price=3, quantity=37, origin=Vietnam} 13
+Fruit{id=6, name=Mango, price=2, quantity=3, origin=Thailand} 17
+Product | Quantity | Price | Amount
+1. Coconut   23         2$      46$
+2. Orange    13         3$      39$
+3. Mango     17         2$      34$
+Total: 119$
+
+FRUIT SHOP SYSTEM
+        1.  Create fruit
+        2.  View orders
+        3.  Shopping (for buyer)
+        4.  Exit
+
+(Please choose 1 to create product, 2 to view order, 3 for shopping, 4 to Exit program).
+3
+List of Fruit:
+| ++ Item ++ | ++ Fruits ++ | ++ Origin ++ | ++ Price ++ |
+       1        Coconut        Vietnam           2$
+       2        Orange         Vietnam           3$
+       3        Apple          Thailand          4$
+       4        Grape          France            6$
+       5        Jackfruit      Vietnam           9$
+       6        Mango          Thailand          2$
+Choose an item from the list above: 
+3
+You selected: Apple
+Please input quantity: 
+16
+Item added!!
+Do you want to order now (Y/N): 
+n
+List of Fruit:
+| ++ Item ++ | ++ Fruits ++ | ++ Origin ++ | ++ Price ++ |
+       1        Coconut        Vietnam           2$
+       2        Orange         Vietnam           3$
+       3        Apple          Thailand          4$
+       4        Grape          France            6$
+       5        Jackfruit      Vietnam           9$
+       6        Mango          Thailand          2$
+Choose an item from the list above: 
+5
+You selected: Jackfruit
+Please input quantity: 
+14
+Item added!!
+Do you want to order now (Y/N): 
+6
+Please enter Y or N
+Do you want to order now (Y/N): 
+8
+Please enter Y or N
+Do you want to order now (Y/N): 
+n
+List of Fruit:
+| ++ Item ++ | ++ Fruits ++ | ++ Origin ++ | ++ Price ++ |
+       1        Coconut        Vietnam           2$
+       2        Orange         Vietnam           3$
+       3        Apple          Thailand          4$
+       4        Grape          France            6$
+       5        Jackfruit      Vietnam           9$
+       6        Mango          Thailand          2$
+Choose an item from the list above: 
+6
+You selected: Mango
+Please input quantity: 
+10
+There are only 3 left.
+Please input quantity: 
+3
+Item added!!
+Do you want to order now (Y/N): 
+y
+Product | Quantity | Price | Amount
+Apple     16          4$      64$
+Jackfru   14          9$     126$
+Mango      3          2$       6$
+Total: 196$
+Input your name: 
+6
+Shopping Completed!
+FRUIT SHOP SYSTEM
+        1.  Create fruit
+        2.  View orders
+        3.  Shopping (for buyer)
+        4.  Exit
+
+(Please choose 1 to create product, 2 to view order, 3 for shopping, 4 to Exit program).
+2
+Customer: 6
+Fruit{id=3, name=Apple, price=4, quantity=14, origin=Thailand} 16
+Fruit{id=5, name=Jackfruit, price=9, quantity=16, origin=Vietnam} 14
+Fruit{id=6, name=Mango, price=2, quantity=0, origin=Thailand} 3
+Product | Quantity | Price | Amount
+1. Apple     16         4$      64$
+2. Jackfru   14         9$     126$
+3. Mango      3         2$       6$
+Total: 196$
+
+Customer: Marry Carie
+Fruit{id=1, name=Coconut, price=2, quantity=17, origin=Vietnam} 23
+Fruit{id=2, name=Orange, price=3, quantity=37, origin=Vietnam} 13
+Fruit{id=6, name=Mango, price=2, quantity=0, origin=Thailand} 17
+Product | Quantity | Price | Amount
+1. Coconut   23         2$      46$
+2. Orange    13         3$      39$
+3. Mango     17         2$      34$
+Total: 119$
+
+FRUIT SHOP SYSTEM
+        1.  Create fruit
+        2.  View orders
+        3.  Shopping (for buyer)
+        4.  Exit
+
+(Please choose 1 to create product, 2 to view order, 3 for shopping, 4 to Exit program).
+3
+List of Fruit:
+| ++ Item ++ | ++ Fruits ++ | ++ Origin ++ | ++ Price ++ |
+       1        Coconut        Vietnam           2$
+       2        Orange         Vietnam           3$
+       3        Apple          Thailand          4$
+       4        Grape          France            6$
+       5        Jackfruit      Vietnam           9$
+       6        Mango          Thailand          2$
+Choose an item from the list above: 
+1
+You selected: Coconut
+Please input quantity: 
+1
+Item added!!
+Do you want to order now (Y/N): 
+n
+List of Fruit:
+| ++ Item ++ | ++ Fruits ++ | ++ Origin ++ | ++ Price ++ |
+       1        Coconut        Vietnam           2$
+       2        Orange         Vietnam           3$
+       3        Apple          Thailand          4$
+       4        Grape          France            6$
+       5        Jackfruit      Vietnam           9$
+       6        Mango          Thailand          2$
+Choose an item from the list above: 
+2
+You selected: Orange
+Please input quantity: 
+11
+Item added!!
+Do you want to order now (Y/N): 
+n
+List of Fruit:
+| ++ Item ++ | ++ Fruits ++ | ++ Origin ++ | ++ Price ++ |
+       1        Coconut        Vietnam           2$
+       2        Orange         Vietnam           3$
+       3        Apple          Thailand          4$
+       4        Grape          France            6$
+       5        Jackfruit      Vietnam           9$
+       6        Mango          Thailand          2$
+Choose an item from the list above: 
+6
+You selected: Mango
+Out of stock
+Choose an item from the list above: 
+5
+You selected: Jackfruit
+Please input quantity: 
+12
+Item added!!
+Do you want to order now (Y/N): 
+y
+Product | Quantity | Price | Amount
+Coconut    1          2$       2$
+Orange    11          3$      33$
+Jackfru   12          9$     108$
+Total: 143$
+Input your name: 
+marry carie
+set
+Fruit{id=1, name=Coconut, price=2, quantity=16, origin=Vietnam} 23
+Fruit{id=2, name=Orange, price=3, quantity=26, origin=Vietnam} 13
+Fruit{id=6, name=Mango, price=2, quantity=0, origin=Thailand} 17
+Fruit{id=1, name=Coconut, price=2, quantity=16, origin=Vietnam} 1
+Fruit{id=2, name=Orange, price=3, quantity=26, origin=Vietnam} 11
+Fruit{id=5, name=Jackfruit, price=9, quantity=4, origin=Vietnam} 12
+toremove
+Fruit{id=1, name=Coconut, price=2, quantity=16, origin=Vietnam} 1
+Fruit{id=2, name=Orange, price=3, quantity=26, origin=Vietnam} 11
+set after remove
+Fruit{id=1, name=Coconut, price=2, quantity=16, origin=Vietnam} 23
+Fruit{id=2, name=Orange, price=3, quantity=26, origin=Vietnam} 13
+Fruit{id=6, name=Mango, price=2, quantity=0, origin=Thailand} 17
+Fruit{id=5, name=Jackfruit, price=9, quantity=4, origin=Vietnam} 12
+updating
+set
+Fruit{id=1, name=Coconut, price=2, quantity=16, origin=Vietnam} 24
+Fruit{id=2, name=Orange, price=3, quantity=26, origin=Vietnam} 24
+Fruit{id=6, name=Mango, price=2, quantity=0, origin=Thailand} 17
+Fruit{id=5, name=Jackfruit, price=9, quantity=4, origin=Vietnam} 12
+Shopping Completed!
+FRUIT SHOP SYSTEM
+        1.  Create fruit
+        2.  View orders
+        3.  Shopping (for buyer)
+        4.  Exit
+
+(Please choose 1 to create product, 2 to view order, 3 for shopping, 4 to Exit program).
+2
+Customer: 6
+Fruit{id=3, name=Apple, price=4, quantity=14, origin=Thailand} 16
+Fruit{id=5, name=Jackfruit, price=9, quantity=4, origin=Vietnam} 14
+Fruit{id=6, name=Mango, price=2, quantity=0, origin=Thailand} 3
+Product | Quantity | Price | Amount
+1. Apple     16         4$      64$
+2. Jackfru   14         9$     126$
+3. Mango      3         2$       6$
+Total: 196$
+
+Customer: Marry Carie
+Fruit{id=1, name=Coconut, price=2, quantity=16, origin=Vietnam} 24
+Fruit{id=2, name=Orange, price=3, quantity=26, origin=Vietnam} 24
+Fruit{id=6, name=Mango, price=2, quantity=0, origin=Thailand} 17
+Fruit{id=5, name=Jackfruit, price=9, quantity=4, origin=Vietnam} 12
+Product | Quantity | Price | Amount
+1. Coconut   24         2$      48$
+2. Orange    24         3$      72$
+3. Mango     17         2$      34$
+4. Jackfru   12         9$     108$
+Total: 262$
+
+FRUIT SHOP SYSTEM
+        1.  Create fruit
+        2.  View orders
+        3.  Shopping (for buyer)
+        4.  Exit
+
+(Please choose 1 to create product, 2 to view order, 3 for shopping, 4 to Exit program).
+3
+List of Fruit:
+| ++ Item ++ | ++ Fruits ++ | ++ Origin ++ | ++ Price ++ |
+       1        Coconut        Vietnam           2$
+       2        Orange         Vietnam           3$
+       3        Apple          Thailand          4$
+       4        Grape          France            6$
+       5        Jackfruit      Vietnam           9$
+       6        Mango          Thailand          2$
+Choose an item from the list above: 
+6
+You selected: Mango
+Out of stock
+Choose an item from the list above: 
+1
+You selected: Coconut
+Please input quantity: 
+19
+There are only 16 left.
+Please input quantity: 
+16
+Item added!!
+Do you want to order now (Y/N): 
+2
+Please enter Y or N
+Do you want to order now (Y/N): 
+n
+List of Fruit:
+| ++ Item ++ | ++ Fruits ++ | ++ Origin ++ | ++ Price ++ |
+       1        Coconut        Vietnam           2$
+       2        Orange         Vietnam           3$
+       3        Apple          Thailand          4$
+       4        Grape          France            6$
+       5        Jackfruit      Vietnam           9$
+       6        Mango          Thailand          2$
+Choose an item from the list above: 
+2
+You selected: Orange
+Please input quantity: 
+12
+Item added!!
+Do you want to order now (Y/N): 
+y
+Product | Quantity | Price | Amount
+Coconut   16          2$      32$
+Orange    12          3$      36$
+Total: 68$
+Input your name: 
+long
+Shopping Completed!
+FRUIT SHOP SYSTEM
+        1.  Create fruit
+        2.  View orders
+        3.  Shopping (for buyer)
+        4.  Exit
+
+(Please choose 1 to create product, 2 to view order, 3 for shopping, 4 to Exit program).
+2
+Customer: 6
+Fruit{id=3, name=Apple, price=4, quantity=14, origin=Thailand} 16
+Fruit{id=5, name=Jackfruit, price=9, quantity=4, origin=Vietnam} 14
+Fruit{id=6, name=Mango, price=2, quantity=0, origin=Thailand} 3
+Product | Quantity | Price | Amount
+1. Apple     16         4$      64$
+2. Jackfru   14         9$     126$
+3. Mango      3         2$       6$
+Total: 196$
+
+Customer: Marry Carie
+Fruit{id=1, name=Coconut, price=2, quantity=0, origin=Vietnam} 24
+Fruit{id=2, name=Orange, price=3, quantity=14, origin=Vietnam} 24
+Fruit{id=6, name=Mango, price=2, quantity=0, origin=Thailand} 17
+Fruit{id=5, name=Jackfruit, price=9, quantity=4, origin=Vietnam} 12
+Product | Quantity | Price | Amount
+1. Coconut   24         2$      48$
+2. Orange    24         3$      72$
+3. Mango     17         2$      34$
+4. Jackfru   12         9$     108$
+Total: 262$
+
+Customer: Long
+Fruit{id=1, name=Coconut, price=2, quantity=0, origin=Vietnam} 16
+Fruit{id=2, name=Orange, price=3, quantity=14, origin=Vietnam} 12
+Product | Quantity | Price | Amount
+1. Coconut   16         2$      32$
+2. Orange    12         3$      36$
+Total: 68$
+
+FRUIT SHOP SYSTEM
+        1.  Create fruit
+        2.  View orders
+        3.  Shopping (for buyer)
+        4.  Exit
+
+(Please choose 1 to create product, 2 to view order, 3 for shopping, 4 to Exit program).
+4
+BUILD SUCCESSFUL (total time: 62 minutes 12 seconds)
