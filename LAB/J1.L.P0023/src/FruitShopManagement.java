@@ -448,12 +448,18 @@ class FruitShopManagement {
                     System.out.println(i.getFruit() + " " + i.getQuantity());
                 }
                 list.removeAll(toRemove);
+                System.out.println("set after remove");
+                for(Item i : list) {
+                    System.out.println(i.getFruit() + " " + i.getQuantity());
+                }
+                System.out.println("updating");
                 for (Item i : list) {
                     for (Item j : removeSet) {
                         if( i.getFruit().getId().equals(j.getFruit().getId())) {
                             i.setQuantity(i.getQuantity()+j.getQuantity());
                             removeSet.remove(j);
                             i.updateAmount();
+                            break;
                         }
                     }
                 }
