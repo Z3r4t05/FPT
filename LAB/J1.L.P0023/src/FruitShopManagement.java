@@ -222,6 +222,7 @@ class FruitShopManagement {
                 break;
             }
         }
+        //throw excpetion if all fruit are out of stock
         if (outOfStock == true) {
             throw new Exception("All of fruits are out of stock.");
         }
@@ -231,15 +232,15 @@ class FruitShopManagement {
         char choice;
         //continuing ordering if user choose N after enter quantity
         do {
-            try {
-                //throw exception when the everything is out of stock
-                if (outOfStock == true) {
-                    throw new Exception("All of fruits are out of stock.");
-                }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                return;
-            }
+//            try {
+//                //throw exception when the everything is out of stock
+//                if (outOfStock == true) {
+//                    throw new Exception("All of fruits are out of stock.");
+//                }
+//            } catch (Exception e) {
+//                System.out.println(e.getMessage());
+//                return;
+//            }
             System.out.println("List of Fruit:");
             this.displayListFruits(listFruits);
             //continue asking user to choose an item from the list if user doesn't enter a valid id
@@ -268,8 +269,9 @@ class FruitShopManagement {
                                 + " left.");
 
                     } else {
-//                        fruit.setQuantity(fruit.getQuantity() - quantity);
+                        //Find the fruit in the list and update its quantity
                         for (Fruit f : listFruits) {
+                            //update the quantity of the fruit in arraylist
                             if (f.getId().equals(fruit.getId())) {
                                 f.setQuantity(f.getQuantity() - quantity);
                             }
@@ -303,7 +305,11 @@ class FruitShopManagement {
         addOrder(tableOrders, listItems, customerName);
         System.out.println("Shopping Completed!");
     }
-
+    /**
+     * Display list of items that user bought. 
+     * @param listItems list of items that user bought
+     * @param option 1 for viewing orders, otherwise for shopping
+     */
     public void displayListItems(ArrayList<Item> listItems, int option) {
         System.out.println("Product | Quantity | Price | Amount");
         int totalPrice = 0;
@@ -424,13 +430,18 @@ class FruitShopManagement {
                 Set<Item> set = new LinkedHashSet<>(mergeTarget);
                 set.addAll(listItems);
                 ArrayList<Item> list = new ArrayList<>(set);
+                //loop though the list of customer to find all items that has the same fruit's id
                 for (int i = 0; i < list.size() - 1; i++) {
+                    //loop through all items after item i in list to find duplicate fruit's id
                     for (int j = i+1; j < list.size(); j++) {
+                        //if 2 item has the same fruit then add one of them to set toRemove
                         if(list.get(i).getFruit().getId().
                                 equals(list.get(j).getFruit().getId())) {
+                            //remove the one which has smaller quantity
                             if(list.get(i).getQuantity()<list.get(j).getQuantity()) {
                                 toRemove.add(list.get(i));
                             }
+                            //otherwise remove the other one
                             if(list.get(i).getQuantity()>=list.get(j).getQuantity()) {
                                 toRemove.add(list.get(j));
                             }
@@ -439,22 +450,26 @@ class FruitShopManagement {
                 }
                 Set<Item> removeSet = new LinkedHashSet<>(toRemove);
                 
-                System.out.println("set");
-                for(Item i : list) {
-                    System.out.println(i.getFruit() + " " + i.getQuantity());
-                }
-                System.out.println("toremove");
-                for(Item i : removeSet) {
-                    System.out.println(i.getFruit() + " " + i.getQuantity());
-                }
-                list.removeAll(toRemove);
-                System.out.println("set after remove");
-                for(Item i : list) {
-                    System.out.println(i.getFruit() + " " + i.getQuantity());
-                }
-                System.out.println("updating");
+//                System.out.println("set");
+//                for(Item i : list) {
+//                    System.out.println(i.getFruit() + " " + i.getQuantity());
+//                }
+//                System.out.println("toremove");
+//                for(Item i : removeSet) {
+//                    System.out.println(i.getFruit() + " " + i.getQuantity());
+//                }
+//                list.removeAll(toRemove);
+//                System.out.println("set after remove");
+//                for(Item i : list) {
+//                    System.out.println(i.getFruit() + " " + i.getQuantity());
+//                }
+//                System.out.println("updating");
+
+                //compare each item in the list with the item in the remove set to add quantity
                 for (Item i : list) {
+                    //loop though all item in the remove set to find the item that has the same id as item i
                     for (Item j : removeSet) {
+                        //if 2 item has the same fruit's id then sum-up the quantity and remove item j from remove set and update amount
                         if( i.getFruit().getId().equals(j.getFruit().getId())) {
                             i.setQuantity(i.getQuantity()+j.getQuantity());
                             removeSet.remove(j);
@@ -463,15 +478,13 @@ class FruitShopManagement {
                         }
                     }
                 }
-                System.out.println("set");
-                for(Item i : list) {
-                    System.out.println(i.getFruit() + " " + i.getQuantity());
-                }
-
+//                System.out.println("set");
+//                for(Item i : list) {
+//                    System.out.println(i.getFruit() + " " + i.getQuantity());
+//                }
                 tableOrders.put(customerName, list);
             } else {
-                tableOrders.put(customerName, listItems);
-                
+                tableOrders.put(customerName, listItems);              
             }
         }
     }
