@@ -371,6 +371,168 @@ select count(MaSV) from dmsv where phai = N'nữ'
 group by MaKhoa
 )
 --56 cho biet mon nao co nhieu sinh vien rot lan 1 nhieu nhat
+select mamh
+from ketqua 
+where lanthi=1 and diem<5
+group by mamh
+having count(diem)>=all (select count(diem)
+							from ketqua
+							where lanthi=1 and diem<5
+							group by mamh)
+--57. Cho biết sinh viên không học khoa anh văn có điểm thi môn phạm lớn hơn điểm thi văn 
+--phạm của sinh viên học khoa anh văn. 
+select distinct  kq.masv
+from ketqua kq, dmsv sv
+where sv.masv=kq.masv and mamh='05' and makhoa not like 'av' and diem>(
+select diem
+from ketqua kq, dmsv sv
+where sv.masv=kq.masv and mamh='05' and makhoa='av'
+)
+--58. Cho biết sinh viên có nơi sinh cùng với Hải. 
+select masv,hosv+' '+tensv
+from dmsv
+where noisinh=( select noisinh
+				from dmsv
+				where tensv=N'hải')
+--59. Cho biết những sinh viên nào có học bổng lớn hơn tất cả học bổng của sinh viên thuộc khoa anh văn 
+select masv
+from dmsv
+where hocbong>=all (select hocbong from dmsv where makhoa='av')
+--60. Cho biết những sinh viên có học bổng lớn hơn bất kỳ học bổng của sinh viên học khóa anh văn 
+select masv,hocbong
+from dmsv
+where hocbong>=any (select hocbong from dmsv where makhoa='av')
+--61. Cho biết sinh viên nào có điểm thi môn cơ sở dữ liệu lần 2 lớn hơn tất cả điểm thi lần 1 
+--môn cơ sở dữ liệu của những sinh viên khác. 
+select masv
+from ketqua
+where mamh='01' and lanthi=2 and diem>=all(select diem from ketqua where mamh='01' and lanthi=1)
+--62. Cho biết những sinh viên đạt điểm cao nhất trong từng môn. 
+select  masv,ketqua.mamh,diem
+from ketqua, (select mamh, max(diem) as maxdiem
+	from ketqua
+	group by mamh)a
+where ketqua.mamh=a.mamh and diem=a.maxdiem
+--63. Cho biết những khoa không có sinh viên học. 	
+select *
+from dmkhoa
+where  not exists (select distinct makhoa
+from ketqua,dmsv where ketqua.masv=dmsv.masv and makhoa=dmkhoa.makhoa)
+--64. Cho biết sinh viên chưa thi môn cơ sở dữ liệu. 
+select *
+from dmsv
+where not exists
+(select  distinct*
+from ketqua
+where mamh = '01' and masv=dmsv.masv)
+--65. Cho biết sinh viên nào không thi lần 1 mà có dự thi lần 2. 
+select masv
+from ketqua kq
+where lanthi=2 and not exists
+(select *
+from ketqua
+where lanthi=1 and masv=kq.masv)
+--66. Cho biết môn nào không có sinh viên khoa anh văn học. 
+select tenmh
+from dmmh
+where
+not exists
+(select mamh
+from ketqua kq,dmsv sv 
+where sv.masv=kq.masv and sv.makhoa='av' and dmmh.mamh=mamh)
+--67. Cho biết những sinh viên khoa anh văn chưa học môn văn phạm. 
+Select MaSV
+From DMSv dmsv
+Where   MaKhoa='AV' And Not Exists (Select *
+From KetQua
+Where MaMH='05' And MaSV=dmsv.MaSV	)	
+--68. Cho biết những sinh viên không rớt môn nào. 
+Select MaSV
+From DMSV dmsv
+Where Not Exists (Select *
+From KetQua
+Where Diem<=5 And MaSV=dmsv.MaSV				
+)
+--69. Cho biết những sinh viên học khoa anh văn có học bổng và những sinh viên chưa bao 
+--giờ rớt.
+Select MaSV,MaKhoa,HocBong
+From DMSv dmsv
+Where MaKhoa='AV' And HocBong>0 And Not Exists (Select *
+From KetQua
+Where Diem<5 And MaSV=dmsv.MaSV													
+)
+--70. Cho biết khoa nào có đông sinh viên nhận học bổng nhất và khoa nào khoa nào có ít 
+--sinh viên nhận học bổng nhất. 
+Select MaKhoa,count(MaSV)'So Luong SV'
+From DMSV
+Where HocBong>0
+Group By MaKhoa
+Having count(MaSV)>=All (Select count(MaSV)
+From DMSv
+where hocbong>0
+Group By MaKhoa
+)
+UNION
+Select MaKhoa,count(MaSV)'So Luong SV'
+From DMSV
+Where HocBong>0
+Group By MaKhoa
+Having count(MaSV)<=All (Select count(MaSV)
+From DMSV
+where hocbong>0
+Group By MaKhoa
+)
+--71. Cho biết 3 sinh viên có học nhiều môn nhất. 
+ 
+Select top 3 MaSV,Count(Distinct MaMH)'Số môn học'
+From KetQua
+Group By MaSV
+Having Count(Distinct MaMH)>=All(Select count( distinct MaMH)
+From KetQua										
+Group By MaSV
+)
+--72. Cho biết những môn được tất cả các sinh viên theo học. 
+Select MaMH
+From KetQua
+Group By MaMH
+Having count(distinct MaSV)=(Select count(MaSV)
+From DMSv
+)
+--73. Cho biết những sinh viên học những môn giống sinh viên có mã số A02 học. 
+Select distinct MaSV
+From KetQua kq
+Where Exists(Select distinct MaMH
+From KetQua									
+Where MaSV='A02' and MaMH=kq.MaMH
+)
+--74.Cho biết những sinh viên học những môn bằng đúng những môn mà sinh viên A02 học.
+Select TenSV
+From KetQua kq,DMSv dmsv,(Select MaSV,MaMH,count(distinct MaMH)SoMon
+From KetQua									
+Where MaSV='A02'
+Group By MaSV,MaMH)a
+Where kq.MaSV=dmsv.MaSV and kq.MaMH=a.MaMH and kq.MaSV <>a .MaSV
+Group By TenSV
+Having count(distinct kq.MaMH)=(Select count(distinct MaMH)
+					From KetQua									
+					Where MaSV='A02')
+
+
+
+
+
+Select dmsv.MaSV
+From KetQua kq, DMSv dmsv
+Where kq.MaSV=dmsv.MaSV and MaMH=(Select distinct MaMH
+From KetQua									
+Where MaSV='A02' and MaMH=kq.MaMH) and dmsv.MaSV Not Like 'A02'
+Group By dmsv.MaSV
+Having count(distinct MaMH)=(Select count(distinct MaMH)
+From KetQua									
+Where MaSV='A02')
+
+
+
 /*
 Create Table SinhVien_KetQua
 (
