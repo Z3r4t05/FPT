@@ -87,6 +87,7 @@ class FruitShopManagement {
 
     void createFruit(ArrayList<Fruit> listFruits) {
         char choice;
+        //keep working until user choose n
         do {
             String name = getNonBlankStr("Enter fruit's name: ");
             int price = getPrice("Enter price: ");
@@ -135,16 +136,18 @@ class FruitShopManagement {
     }
 
     void viewOrders(Hashtable<String, ArrayList<Item>> tableOrders) throws Exception {
+        //throw exception if the orders are empty
         if (tableOrders.isEmpty()) {
             throw new Exception("There are no orders.");
         }
         Set<String> keySet = tableOrders.keySet();
         int index = 1;
+        //leep through key set and display all item in each orders in hashtable
         for (String key : keySet) {
             System.out.println("Customer: " + key);
-            for(Item i : tableOrders.get(key)) {
-                System.out.println(i.getFruit() + " " + i.getQuantity());
-            }
+//            for(Item i : tableOrders.get(key)) {
+//                System.out.println(i.getFruit() + " " + i.getQuantity());
+//            }
             this.displayListItems(tableOrders.get(key), 0);
             System.out.println("");
         }
@@ -153,10 +156,12 @@ class FruitShopManagement {
     private int getPrice(String msg) {
         Scanner sc = new Scanner(System.in);
         int price;
+        //stop when there are no expetion caught
         do {
             try {
                 System.out.println(msg);
                 price = Integer.parseInt(sc.nextLine());
+                //throw exception if the price is negative
                 if (price < 0) {
                     throw new Exception("Price must be positive");
                 }
@@ -171,10 +176,12 @@ class FruitShopManagement {
     private int getQuantity(String msg) {
         Scanner sc = new Scanner(System.in);
         int quantity;
+        //stop when there are no exception
         do {
             try {
                 System.out.println(msg);
                 quantity = Integer.parseInt(sc.nextLine());
+                //throw exception if quantity is negative
                 if (quantity < 0) {
                     throw new Exception("Quantity must be positive");
                 }
@@ -196,20 +203,9 @@ class FruitShopManagement {
         }
     }
 
-    public static void main(String[] args) {
-//        System.out.println("| ++ Item ++ | ++ Fruits ++ |"
-//                + " ++ Origin ++ | ++ Price ++ |");
-//        //Display all fruit inside the list of fruits
-//
-//        System.out.printf("  %6.6s        %-10.10s     %-10.10s     %4d$\n", 1,
-//                "coconut", "12345678900-", 1);
-        System.out.println("Product | Quantity | Price | Amount");
-        System.out.printf("1. %-7.7s  %3d       %3d$    %4d$\n", "123456789", 10, 100, 1000);
-
-    }
-
     void shopping(ArrayList<Fruit> listFruits,
             Hashtable<String, ArrayList<Item>> tableOrders) throws Exception {
+        //throw exception when list of fruit is empty
         if (listFruits.isEmpty()) {
             throw new Exception("list fruits is empty");
         }
@@ -261,7 +257,6 @@ class FruitShopManagement {
             do {
                 try {
                     quantity = this.getQuantity("Please input quantity: ");
-
                     //throw exception if in-stock quantity is not enough. Otherwise, subtract the quantity in stock.
                     if (fruit.getQuantity() < quantity) {
                         //tell user if the fruit is out of stock or the quantity left
@@ -450,20 +445,20 @@ class FruitShopManagement {
                 }
                 Set<Item> removeSet = new LinkedHashSet<>(toRemove);
                 
-//                System.out.println("set");
-//                for(Item i : list) {
-//                    System.out.println(i.getFruit() + " " + i.getQuantity());
-//                }
-//                System.out.println("toremove");
-//                for(Item i : removeSet) {
-//                    System.out.println(i.getFruit() + " " + i.getQuantity());
-//                }
-//                list.removeAll(toRemove);
-//                System.out.println("set after remove");
-//                for(Item i : list) {
-//                    System.out.println(i.getFruit() + " " + i.getQuantity());
-//                }
-//                System.out.println("updating");
+                System.out.println("set");
+                for(Item i : list) {
+                    System.out.println(i.getFruit() + " " + i.getQuantity());
+                }
+                System.out.println("toremove");
+                for(Item i : removeSet) {
+                    System.out.println(i.getFruit() + " " + i.getQuantity());
+                }
+                list.removeAll(toRemove);
+                System.out.println("set after remove");
+                for(Item i : list) {
+                    System.out.println(i.getFruit() + " " + i.getQuantity());
+                }
+                System.out.println("updating");
 
                 //compare each item in the list with the item in the remove set to add quantity
                 for (Item i : list) {
@@ -478,10 +473,10 @@ class FruitShopManagement {
                         }
                     }
                 }
-//                System.out.println("set");
-//                for(Item i : list) {
-//                    System.out.println(i.getFruit() + " " + i.getQuantity());
-//                }
+                System.out.println("set");
+                for(Item i : list) {
+                    System.out.println(i.getFruit() + " " + i.getQuantity());
+                }
                 tableOrders.put(customerName, list);
             } else {
                 tableOrders.put(customerName, listItems);              

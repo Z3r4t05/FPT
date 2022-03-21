@@ -25,6 +25,7 @@ public class Converter {
                         result = convertBinToHex(input);
                         break;
                 }
+                break;
             case 10:
                 switch (baseOut) {
                     case 2:
@@ -34,6 +35,7 @@ public class Converter {
                         result = convertDecToHex(input);
                         break;
                 }
+                break;
             case 16:
                 switch (baseOut) {
                     case 2:
@@ -43,6 +45,7 @@ public class Converter {
                         result = convertHexToDec(input);
                         break;
                 }
+                break;
         }
         return result;
     }
@@ -52,7 +55,7 @@ public class Converter {
         BigInteger valueOutput = new BigInteger("0");
         BigInteger binBase = new BigInteger("2");
         BigInteger decBase = new BigInteger("10");
-        //for each digit: output += digit*2^()
+        //for each digit: output += digit*2^(reverse index)
         for (int i = 0; i < input.length(); i++) {
             BigInteger digit = new BigInteger(Character.toString(input.charAt(i)));
             valueOutput = valueOutput.add(digit.multiply(binBase.pow(input.length() - 1 - i)));
@@ -80,10 +83,12 @@ public class Converter {
         valueMap.put("1101", "D");
         valueMap.put("1110", "E");
         valueMap.put("1111", "F");
+        //add 0 digit to the left to make the number of digits divisible by 16
         while (input.length() % 4 != 0) {
             input = "0" + input;
         }
         String result = "";
+        //group each 4 digits and map them with the value in the map
         for (int i = 0; i < input.length(); i += 4) {
             result += valueMap.get(input.substring(i, i + 4));
         }
@@ -96,9 +101,11 @@ public class Converter {
         BigInteger zero = new BigInteger("0");
         String binDigits = "01";
         StringBuilder result = new StringBuilder();
+        //add remainder to the result until the division yield 0
         do {
             BigInteger remain = valueInput.remainder(binBase);
             char binDigit = binDigits.charAt(remain.intValue());
+            //if the division has result different than 0, add the remainder to the right of result and divide the input
             if (!valueInput.equals(zero)) {
                 result.append(binDigit);
                 valueInput = valueInput.divide(binBase);
@@ -116,16 +123,17 @@ public class Converter {
         BigInteger zero = new BigInteger("0");
         String hexDigits = "0123456789ABCDEF";
         StringBuilder result = new StringBuilder();
+        //add remainder to the result until the division yield 0
         do {
             BigInteger remain = valueInput.remainder(hexBase);
             char hexDigit = hexDigits.charAt(remain.intValue());
+            //if the division has result different than 0, add the remainder to the right of result and divide the input
             if (!valueInput.equals(zero)) {
                 result.append(hexDigit);
                 valueInput = valueInput.divide(hexBase);
             } else {
                 break;
             }
-
         } while (true);
         return result.reverse().toString();
     }
@@ -149,6 +157,7 @@ public class Converter {
         valueMap.put("E", "1110");
         valueMap.put("F", "1111");
         String result = "";
+        //map each hexadecimal digits to binary value from left to right
         for (int i = 0; i < input.length(); i++) {
             result += valueMap.get(Character.toString(input.charAt(i)));    
         }
@@ -158,9 +167,9 @@ public class Converter {
     private String convertHexToDec(String input) {
         BigInteger hexBase = new BigInteger("16");
         BigInteger decBase = new BigInteger("10");
-        BigInteger valueInput = new BigInteger(input);
         BigInteger valueOutput = new BigInteger("0");
         String hexDigits = "0123456789ABCDEF";
+        //for each digit in input: output add digit*16^(reversed index)
         for (int i = 0; i < input.length(); i++) {
             BigInteger digit = new BigInteger(Integer.toString(
                     hexDigits.indexOf(Character.toString(input.charAt(i)))));

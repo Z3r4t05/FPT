@@ -83,32 +83,40 @@ public class Inputter {
     }
 
     public String getInputValue(String message, int baseIn) {
+        //String that consists of 1 or many 0 or 1 digits
         Pattern BIN_DIGITS = Pattern.compile("^[0-1]+$");
+        //String that consists of 1 or many digits from 0 to 9
         Pattern DEC_DIGITS = Pattern.compile("^[0-9]+$");
+        //String that consists of 1 or mnay characters from a to f, A to F and digits.
         Pattern HEX_DIGITS = Pattern.compile("^[a-fA-F0-9]+$");
         String input;
         Scanner sc = new Scanner(System.in);
+        //stop when user enter a valid input
         do {
             try {
                 System.out.println(message);
                 input = sc.nextLine();
+                //throw exception if the input is empty
                 if (input.isEmpty()) {
                     throw new Exception("Empty input");
                 }
                 switch (baseIn) {
                     case 2:
+                        //throw exception if input doesn't match the binary format
                         if (BIN_DIGITS.matcher(input).matches()) {
                             return input;
                         } else {
                             throw new Exception("Wrong binary format");
                         }
                     case 10:
+                        //throw exception if input doesn't match decimal format
                         if (DEC_DIGITS.matcher(input).matches()) {
                             return input;
                         } else {
                             throw new Exception("Wrong decimal format");
                         }
                     case 16:
+                        //throw exception if the input doesn't match hexadecimal format
                         if (HEX_DIGITS.matcher(input).matches()) {
                             return input.toUpperCase();
                         } else {
