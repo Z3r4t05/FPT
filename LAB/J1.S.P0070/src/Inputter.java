@@ -38,7 +38,7 @@ public class Inputter {
     public String getString(String msg) {
         Scanner sc = new Scanner(System.in);
         String input;
-        System.out.print(msg);
+        System.out.println(msg);
         input = sc.nextLine();
         if(input.isEmpty()) {
             System.err.println("Empty input");

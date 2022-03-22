@@ -106,17 +106,39 @@ public class Ebank {
         }
     }
 
-    void login(Inputter inputter, ResourceBundle bundle) {
-        String accountNumber, password, capcha;
+    void login() {
+        Inputter inputter = new Inputter();
+        String accountNumber, password;
         ArrayList<Account> accountList = AccountDatabase.database();
-        do {            
-            accountNumber = inputter.getString(bundle.getString("accountNumber"));   
-            System.out.println(checkAccountNumber(accountNumber));
-        } while (checkAccountNumber(accountNumber) != null);
-        do {            
+        String numberMsg, passwordMsg, captchaMsg;
+        do {
+            accountNumber = inputter.getString(bundle.getString("accountNumber"));
+            numberMsg = checkAccountNumber(accountNumber);
+            System.out.println(numberMsg);
+        } while (numberMsg != null);
+
+        do {
             password = inputter.getString(bundle.getString("Password"));
-            System.out.println(checkPar);
-        } while (true);
+            passwordMsg = checkPassword(password);
+            System.out.println(passwordMsg);
+        } while (passwordMsg != null);
+
+        do {
+            String captchaGenerated = this.generateCaptcha();
+            String captchaInput = inputter.getString(bundle.getString("Capcha"));
+            captchaMsg = this.checkCaptcha(captchaGenerated, captchaInput);
+            System.out.println(captchaMsg);
+        } while (captchaMsg != null);
+
+        boolean validAccountNumber = this.checkAccount(accountNumber, accountList);
+        boolean validPassword = this.checkPassword(accountNumber, password, accountList);
+        if (validAccountNumber && validPassword) {
+            System.out.println(bundle.getString("loginSuccess"));
+        } else {
+            System.out.println(bundle.getString("loginFail"));
+            System.out.println("");
+            this.login();
+        }
     }
 
     private boolean checkAccount(String accountNumber, ArrayList<Account> accountList) {
@@ -126,13 +148,13 @@ public class Ebank {
             return accountList.stream().anyMatch((account) -> (account.getNumber().equals(accountNumber)));
         }
     }
-    
+
     private boolean checkPassword(String accountNumber, String password, ArrayList<Account> accountList) {
-        if(accountList.isEmpty()) {
+        if (accountList.isEmpty()) {
             return false;
         } else {
-            return accountList.stream().anyMatch((account) -> (account.getNumber().equals(accountNumber) &&
-                    account.getPassword().equals(password)));
+            return accountList.stream().anyMatch((account) -> (account.getNumber().equals(accountNumber)
+                    && account.getPassword().equals(password)));
         }
     }
 }
