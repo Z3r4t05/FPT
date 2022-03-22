@@ -34,4 +34,16 @@ public class Inputter {
             return getOption(message, min, max);
         }
     }
+    
+    public String getString(String msg) {
+        Scanner sc = new Scanner(System.in);
+        String input;
+        System.out.print(msg);
+        input = sc.nextLine();
+        if(input.isEmpty()) {
+            System.err.println("Empty input");
+            return getString(msg);
+        }
+        return input;
+    }     
 }
