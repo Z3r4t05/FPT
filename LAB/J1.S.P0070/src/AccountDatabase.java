@@ -13,6 +13,10 @@ import java.util.Arrays;
  * @author ADMIN
  */
 public class AccountDatabase {
+    /**
+     * Generate arrayList of Account
+     * @return arrayList of Account
+     */
     public static ArrayList database() {
         return  new ArrayList<>(Arrays.asList(
                 new Account("0123456789", "123456ab"),

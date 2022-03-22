@@ -12,7 +12,13 @@ import java.util.regex.Pattern;
  * @author ADMIN
  */
 public class Inputter {
-
+    /**
+     * take input option and validate it
+     * @param message message to user
+     * @param min min value of input
+     * @param max max value of input
+     * @return the integer that user inputted
+     */
     public int getOption(String message, int min, int max) {
         int input;
         Scanner sc = new Scanner(System.in);
@@ -34,12 +40,17 @@ public class Inputter {
             return getOption(message, min, max);
         }
     }
-    
+    /**
+     * Take a string from user
+     * @param msg message to user
+     * @return the non-empty string that user inputted
+     */
     public String getString(String msg) {
         Scanner sc = new Scanner(System.in);
         String input;
-        System.out.println(msg);
+        System.out.print(msg);
         input = sc.nextLine();
+        //if input is empty then print error and ask user again
         if(input.isEmpty()) {
             System.err.println("Empty input");
             return getString(msg);

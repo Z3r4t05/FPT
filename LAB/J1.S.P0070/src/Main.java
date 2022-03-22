@@ -25,26 +25,23 @@ public class Main {
         Ebank eBank = new Ebank();
         ArrayList<String> listOptions = new ArrayList(Arrays.asList(
                 "Vietnamese", "English", "Exit")); 
-//        ResourceBundle b = ResourceBundle.getBundle("language", new Locale("vi"));
-//        Enumeration k = b.getKeys();
-//        while(k.hasMoreElements()) {
-//            String key = (String)k.nextElement();
-//            String val = b.getString(key);
-//            System.out.println(key + " " + val);
-//        }
         int choice;
+        //Loop until user choose exit
         do {            
             eBank.displayMenu(listOptions);
-            choice = inputter.getOption("Please choice one option", 1, 3);
+            choice = inputter.getOption("Please choice one option:  ", 1, 3);
             switch (choice) {
+                //set vietnamese language
                 case 1:
                     eBank.setLocale(new Locale("vi", "VN"));
                     eBank.login();
                     break;
+                //set english language
                 case 2:
                     eBank.setLocale(new Locale("en", "US"));
                     eBank.login();
                     break;
+                //Exit
                 case 3:
                     System.exit(0);
             }
