@@ -20,6 +20,7 @@ public class Main {
         Inputter inputter = new Inputter();
         Converter converter = new Converter();
         int choice = 0;
+        //loop until user choose exit
         do {            
             //1. display menu
             MenuInterface.displayMenu(choice);
@@ -29,7 +30,7 @@ public class Main {
             int baseOut = inputter.getBaseOut(baseIn);
             //4. prompt user to enter input value
             String inputNum = inputter.getInputValue("Enter number input: ", baseIn);
-            //5. process converting base and display the result
+            //5. convert base and display the result
             MenuInterface.displayResult(converter.convert(inputNum, baseIn, baseOut));
         } while (true);
     }

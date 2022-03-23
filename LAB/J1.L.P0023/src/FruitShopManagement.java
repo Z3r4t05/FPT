@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -135,7 +136,7 @@ class FruitShopManagement {
         }
     }
 
-    void viewOrders(Hashtable<String, ArrayList<Item>> tableOrders) throws Exception {
+    void viewOrders(Hashtable<String, ArrayList<ArrayList<Item>>> tableOrders) throws Exception {
         //throw exception if the orders are empty
         if (tableOrders.isEmpty()) {
             throw new Exception("There are no orders.");
@@ -145,10 +146,7 @@ class FruitShopManagement {
         //leep through key set and display all item in each orders in hashtable
         for (String key : keySet) {
             System.out.println("Customer: " + key);
-//            for(Item i : tableOrders.get(key)) {
-//                System.out.println(i.getFruit() + " " + i.getQuantity());
-//            }
-            this.displayListItems(tableOrders.get(key), 0);
+            this.displayAllOrders(tableOrders.get(key));
             System.out.println("");
         }
     }
@@ -204,7 +202,7 @@ class FruitShopManagement {
     }
 
     void shopping(ArrayList<Fruit> listFruits,
-            Hashtable<String, ArrayList<Item>> tableOrders) throws Exception {
+            Hashtable<String, ArrayList<ArrayList<Item>>> tableOrders) throws Exception {
         //throw exception when list of fruit is empty
         if (listFruits.isEmpty()) {
             throw new Exception("list fruits is empty");
@@ -228,15 +226,6 @@ class FruitShopManagement {
         char choice;
         //continuing ordering if user choose N after enter quantity
         do {
-//            try {
-//                //throw exception when the everything is out of stock
-//                if (outOfStock == true) {
-//                    throw new Exception("All of fruits are out of stock.");
-//                }
-//            } catch (Exception e) {
-//                System.out.println(e.getMessage());
-//                return;
-//            }
             System.out.println("List of Fruit:");
             this.displayListFruits(listFruits);
             //continue asking user to choose an item from the list if user doesn't enter a valid id
@@ -300,8 +289,32 @@ class FruitShopManagement {
         addOrder(tableOrders, listItems, customerName);
         System.out.println("Shopping Completed!");
     }
+
+    public void displayAllOrders(ArrayList<ArrayList<Item>> listOrders) {
+        System.out.println("Product | Quantity | Price | Amount");
+        //loop through all orders of a customer to print out each order
+        for (ArrayList<Item> arr : listOrders) {
+            int count = 1;
+            int totalPrice = 0;
+            //loop to display each item in order and count the total
+            for (Item i : arr) {
+                System.out.printf(count + ". %-7.7s  %3d       %3d$    %4d$\n",
+                        i.getFruit().getName(),
+                        i.getQuantity(),
+                        i.getFruit().getPrice(),
+                        i.getAmount());
+                count++;
+                totalPrice += i.getAmount();
+            }
+            System.out.println("Total: " + totalPrice + "$");
+            System.out.println("---------------------------------------");
+        }
+        //display all each item in itemlist and sum up the total price
+    }
+
     /**
-     * Display list of items that user bought. 
+     * Display list of items that user bought.
+     *
      * @param listItems list of items that user bought
      * @param option 1 for viewing orders, otherwise for shopping
      */
@@ -403,84 +416,100 @@ class FruitShopManagement {
         listItems.add(item);
     }
 
-    /**
-     * add new order to the hashTable. if the customer is duplicate then merge
-     * the list of order into one
-     *
-     * @param tableOrders hashTable of orders
-     * @param listItems list of items in the order
-     * @param customerName name of customer
-     */
-    private void addOrder(Hashtable<String, ArrayList<Item>> tableOrders,
+    private void addOrder(Hashtable<String, ArrayList<ArrayList<Item>>> tableOrders,
             ArrayList<Item> listItems, String customerName) {
-        //if the list is empty then we simply add a new order
+        //if there is no customer name then add the list to arraylist of key customerName
         if (tableOrders.isEmpty()) {
-            tableOrders.put(customerName, listItems);
+            tableOrders.put(customerName, new ArrayList(Arrays.asList(listItems)));
         } else {
-            Set<String> keySet = tableOrders.keySet();
-            //if customer's name is duplicated then we merge the list
+            //if there exists a customerName in the list, then add the order to the list of order and update
             if (tableOrders.containsKey(customerName)) {
-                ArrayList<Item> mergeTarget = tableOrders.get(customerName);
-                ArrayList<Item> toRemove = new ArrayList<>();
-                Set<Item> set = new LinkedHashSet<>(mergeTarget);
-                set.addAll(listItems);
-                ArrayList<Item> list = new ArrayList<>(set);
-                //loop though the list of customer to find all items that has the same fruit's id
-                for (int i = 0; i < list.size() - 1; i++) {
-                    //loop through all items after item i in list to find duplicate fruit's id
-                    for (int j = i+1; j < list.size(); j++) {
-                        //if 2 item has the same fruit then add one of them to set toRemove
-                        if(list.get(i).getFruit().getId().
-                                equals(list.get(j).getFruit().getId())) {
-                            //remove the one which has smaller quantity
-                            if(list.get(i).getQuantity()<list.get(j).getQuantity()) {
-                                toRemove.add(list.get(i));
-                            }
-                            //otherwise remove the other one
-                            if(list.get(i).getQuantity()>=list.get(j).getQuantity()) {
-                                toRemove.add(list.get(j));
-                            }
-                        }
-                    }             
-                }
-                Set<Item> removeSet = new LinkedHashSet<>(toRemove);
-                
-                System.out.println("set");
-                for(Item i : list) {
-                    System.out.println(i.getFruit() + " " + i.getQuantity());
-                }
-                System.out.println("toremove");
-                for(Item i : removeSet) {
-                    System.out.println(i.getFruit() + " " + i.getQuantity());
-                }
-                list.removeAll(toRemove);
-                System.out.println("set after remove");
-                for(Item i : list) {
-                    System.out.println(i.getFruit() + " " + i.getQuantity());
-                }
-                System.out.println("updating");
-
-                //compare each item in the list with the item in the remove set to add quantity
-                for (Item i : list) {
-                    //loop though all item in the remove set to find the item that has the same id as item i
-                    for (Item j : removeSet) {
-                        //if 2 item has the same fruit's id then sum-up the quantity and remove item j from remove set and update amount
-                        if( i.getFruit().getId().equals(j.getFruit().getId())) {
-                            i.setQuantity(i.getQuantity()+j.getQuantity());
-                            removeSet.remove(j);
-                            i.updateAmount();
-                            break;
-                        }
-                    }
-                }
-                System.out.println("set");
-                for(Item i : list) {
-                    System.out.println(i.getFruit() + " " + i.getQuantity());
-                }
-                tableOrders.put(customerName, list);
+                ArrayList<ArrayList<Item>> newListOrders = tableOrders.get(customerName);
+                newListOrders.add(listItems);
+                tableOrders.put(customerName, newListOrders);
             } else {
-                tableOrders.put(customerName, listItems);              
+                tableOrders.put(customerName, new ArrayList(Arrays.asList(listItems)));
             }
         }
     }
+//    /**
+//     * add new order to the hashTable. if the customer is duplicate then merge
+//     * the list of order into one
+//     *
+//     * @param tableOrders hashTable of orders
+//     * @param listItems list of items in the order
+//     * @param customerName name of customer
+//     */
+//    private void addOrder(Hashtable<String, ArrayList<ArrayList<Item>>> tableOrders,
+//            ArrayList<Item> listItems, String customerName) {
+//        //if the list is empty then we simply add a new order
+//        if (tableOrders.isEmpty()) {
+//            tableOrders.put(customerName, listItems);
+//        } else {
+//            Set<String> keySet = tableOrders.keySet();
+//            //if customer's name is duplicated then we merge the list
+//            if (tableOrders.containsKey(customerName)) {
+//                ArrayList<Item> mergeTarget = tableOrders.get(customerName);
+//                ArrayList<Item> toRemove = new ArrayList<>();
+//                Set<Item> set = new LinkedHashSet<>(mergeTarget);
+//                set.addAll(listItems);
+//                ArrayList<Item> list = new ArrayList<>(set);
+//                //loop though the list of customer to find all items that has the same fruit's id
+//                for (int i = 0; i < list.size() - 1; i++) {
+//                    //loop through all items after item i in list to find duplicate fruit's id
+//                    for (int j = i+1; j < list.size(); j++) {
+//                        //if 2 item has the same fruit then add one of them to set toRemove
+//                        if(list.get(i).getFruit().getId().
+//                                equals(list.get(j).getFruit().getId())) {
+//                            //remove the one which has smaller quantity
+//                            if(list.get(i).getQuantity()<list.get(j).getQuantity()) {
+//                                toRemove.add(list.get(i));
+//                            }
+//                            //otherwise remove the other one
+//                            if(list.get(i).getQuantity()>=list.get(j).getQuantity()) {
+//                                toRemove.add(list.get(j));
+//                            }
+//                        }
+//                    }             
+//                }
+//                Set<Item> removeSet = new LinkedHashSet<>(toRemove);
+//                
+//                System.out.println("set");
+//                for(Item i : list) {
+//                    System.out.println(i.getFruit() + " " + i.getQuantity());
+//                }
+//                System.out.println("toremove");
+//                for(Item i : removeSet) {
+//                    System.out.println(i.getFruit() + " " + i.getQuantity());
+//                }
+//                list.removeAll(toRemove);
+//                System.out.println("set after remove");
+//                for(Item i : list) {
+//                    System.out.println(i.getFruit() + " " + i.getQuantity());
+//                }
+//                System.out.println("updating");
+//
+//                //compare each item in the list with the item in the remove set to add quantity
+//                for (Item i : list) {
+//                    //loop though all item in the remove set to find the item that has the same id as item i
+//                    for (Item j : removeSet) {
+//                        //if 2 item has the same fruit's id then sum-up the quantity and remove item j from remove set and update amount
+//                        if( i.getFruit().getId().equals(j.getFruit().getId())) {
+//                            i.setQuantity(i.getQuantity()+j.getQuantity());
+//                            removeSet.remove(j);
+//                            i.updateAmount();
+//                            break;
+//                        }
+//                    }
+//                }
+//                System.out.println("set");
+//                for(Item i : list) {
+//                    System.out.println(i.getFruit() + " " + i.getQuantity());
+//                }
+//                tableOrders.put(customerName, list);
+//            } else {
+//                tableOrders.put(customerName, listItems);              
+//            }
+//        }
+//    }
 }

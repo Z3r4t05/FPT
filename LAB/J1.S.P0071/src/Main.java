@@ -28,20 +28,28 @@ public class Main {
                 "exit"));
         int choice;
         int id = 0;
+        //Loop until user choose exit
         do {
+            //1, display menu
             manager.displayMenu(listOptions);
+            //2. get option from user
             choice = Inputter.getOption("Your choice: ", 1, 4);
             try {
+                //3. perform function based on user choice
                 switch (choice) {
+                    //add task
                     case 1:
                         id = manager.addTask(taskList, id + 1);
                         break;
+                    //delete task
                     case 2:
                         manager.deleteTask(taskList, id);
                         break;
+                    //display task
                     case 3:
                         manager.displayTask(taskList);
                         break;
+                    //exit
                     default:
                         System.exit(0);
                 }             

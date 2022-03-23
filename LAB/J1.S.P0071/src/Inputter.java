@@ -37,14 +37,17 @@ public class Inputter {
     public int getInt(String msg, String errorMsg, int min, int max) {
         String input;
         Scanner sc = new Scanner(System.in);
+        //loop until user enter a valid integer
         do {
             try {
                 System.out.print(msg);
                 input = sc.nextLine();
+                //throw exception if the input is empty
                 if (input.isEmpty()) {
                     throw new Exception("Empty input");
                 }
                 int result = Integer.parseInt(input);
+                //throw exception if input is out of range
                 if (result < min || result > max) {
                     throw new Exception(errorMsg);
                 }
@@ -58,13 +61,16 @@ public class Inputter {
     public String getString(String msg, String errorMsg, String regex) {
         String input;
         Scanner sc = new Scanner(System.in);
+        //loop until user enter a valid string
         do {
             try {
                 System.out.print(msg);
                 input = sc.nextLine();
+                //throw exception if input is empty
                 if (input.isEmpty()) {
                     throw new Exception("Empty input");
                 }
+                //return input if regex is not empty and input matches regex
                 if (regex.isEmpty() || input.matches(regex)) {
                     return input;
                 } else {
@@ -80,21 +86,34 @@ public class Inputter {
         String input;
         Date date;
         Scanner sc = new Scanner(System.in);
+        //loop until user enter a valid date
         do {
             try {
                 System.out.print(msg);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                 dateFormat.setLenient(false);
                 input = sc.nextLine();
+                //throw exception if the input is empty
                 if (input.isEmpty()) {
                     throw new Exception("Empty input");
-                } else if (!input.matches("\\d{1,2}[-]\\d{1,2}[-]\\d{4}")) {
+                } 
+                /* REGEX that match the following:
+                ^: start of line
+                d{1,2}: 1 or 2 digits
+                [-]: symbol "-"
+                d{1,2}: 1 or 2 digits
+                [-]: symbol "-"
+                d{4}: 4 digits
+                $: endofline
+                */
+                else if (!input.matches("^\\d{1,2}[-]\\d{1,2}[-]\\d{4}$")) {
                     throw new Exception("Wrong format dd--MM-yyyy");
                 }
                 date = dateFormat.parse(input);
-//                if (date.before(new Date())) {
-//                    throw new Exception("This date is in the past!");
-//                }
+                //throw exception if this date is in the past
+                if (date.before(new Date())) {
+                    throw new Exception("This date is in the past!");
+                }
                 return date;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -118,11 +137,13 @@ public class Inputter {
     public double getDouble(String msg, String errorMsg, double min, double max) {
         double result;
         String input;
+        //loop until user enter a valid double
         do {            
             try {
                 input = getString(msg, "Only accept multiples of 0.5 as input", 
                         "(^[\\d]+\\.[05]$)|(^[\\d]+$)");
                 result = Double.parseDouble(input);
+                //throw exception if result out of range
                 if(result < min || result > max) {
                     throw new Exception(errorMsg);
                 }

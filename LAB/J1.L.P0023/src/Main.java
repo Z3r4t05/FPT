@@ -2,8 +2,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,13 +21,14 @@ public class Main {
 
         FruitShopManagement manager = new FruitShopManagement();
         ArrayList<Fruit> listFruits = new ArrayList<>();
-        Hashtable<String, ArrayList<Item>> tableOrders = new Hashtable<>();
-        int choice = 0;
+        Hashtable<String, ArrayList<ArrayList<Item>>> tableOrders = new Hashtable<>();
+        int choice;
         ArrayList<String> listOptions = new ArrayList<>(Arrays.asList(
                 "Create fruit",
                 "View orders",
                 "Shopping (for buyer)",
                 "Exit"));
+        //Loop until user choose a exit
         do {
             try {
                 //step 1: Display menu

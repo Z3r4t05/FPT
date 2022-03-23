@@ -13,14 +13,9 @@ import java.util.Scanner;
  */
 public class MenuInterface {
     public static void displayMenu(int option) {
+        
         switch(option) {
-            case 0:
-                System.out.println("Choose input base");
-                System.out.println("1. Binary");
-                System.out.println("2. Decimal");
-                System.out.println("3. Hexadecimal");
-                System.out.println("4. Exit");
-                break;
+            
             case 2:
                 System.out.println("Choose output base");
                 System.out.println("1. Decimal");
@@ -35,6 +30,13 @@ public class MenuInterface {
                 System.out.println("Choose output base");
                 System.out.println("1. Binary");
                 System.out.println("2. Decimal");
+                break;
+            default:
+                System.out.println("Choose input base");
+                System.out.println("1. Binary");
+                System.out.println("2. Decimal");
+                System.out.println("3. Hexadecimal");
+                System.out.println("4. Exit");
                 break;
         }
     }

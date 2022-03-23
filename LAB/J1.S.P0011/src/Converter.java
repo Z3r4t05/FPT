@@ -15,8 +15,10 @@ public class Converter {
 
     String convert(String input, int baseIn, int baseOut) {
         String result = "";
+        //perform function based on basein and baseout
         switch (baseIn) {
             case 2:
+                //choose between decimal and hexadecimal
                 switch (baseOut) {
                     case 10:
                         result = convertBinToDec(input);
@@ -27,6 +29,7 @@ public class Converter {
                 }
                 break;
             case 10:
+                //choose between binary and hexadecimal
                 switch (baseOut) {
                     case 2:
                         result = convertDecToBin(input);
@@ -37,6 +40,7 @@ public class Converter {
                 }
                 break;
             case 16:
+                //choose between binary and decimal
                 switch (baseOut) {
                     case 2:
                         result = convertHexToBin(input);
