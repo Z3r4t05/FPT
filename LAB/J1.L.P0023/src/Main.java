@@ -21,13 +21,14 @@ public class Main {
 
         FruitShopManagement manager = new FruitShopManagement();
         ArrayList<Fruit> listFruits = new ArrayList<>();
-        Hashtable<String, ArrayList<ArrayList<Item>>> tableOrders = new Hashtable<>();
-        int choice;
+        Hashtable<Integer, Order> tableOrders = new Hashtable<>();
         ArrayList<String> listOptions = new ArrayList<>(Arrays.asList(
                 "Create fruit",
                 "View orders",
                 "Shopping (for buyer)",
                 "Exit"));
+        int fruitID = 0;
+        int choice;
         //Loop until user choose a exit
         do {
             try {
@@ -39,7 +40,7 @@ public class Main {
                 switch (choice) {
                     //create fruit
                     case 1:
-                        manager.createFruit(listFruits);
+                        fruitID = manager.createFruit(listFruits, fruitID + 1);
                         break;
                     // view orders
                     case 2:

@@ -9,7 +9,7 @@
  * @author ADMIN
  */
 public class Fruit {
-    private String id;
+    private int id;
     private String name;
     private int price;
     private int quantity;
@@ -18,7 +18,7 @@ public class Fruit {
     public Fruit() {
     }
 
-    public Fruit(String id, String name, int price, int quantity, String origin) {
+    public Fruit(int id, String name, int price, int quantity, String origin) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -26,11 +26,11 @@ public class Fruit {
         this.origin = origin;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

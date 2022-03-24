@@ -53,21 +53,21 @@ public class TaskManager {
     
     
     private boolean checkTaskAvailable(Date date, String assignee, double planFrom, double planTo, ArrayList<Task> TaskList) {
-        boolean isExist = false;
+        boolean isNotAvailable = false;
         //loop use to access each element of arraylist from begining to the end
         for (Task task : TaskList) {
             //compare date in list with date input and assignee in list and assignee input
             if (date.compareTo(task.getDate()) == 0 && assignee.equals(task.getAssignee())) {    
                 //if there is collison in plan then continue to check the next task in the list. Otherwise return false
                 if ((planTo < task.getPlanFrom()) || (planFrom > task.getPlanTo())) {
-                    isExist = false;
+                    isNotAvailable = false;
                 } else {
-                    isExist = true;
+                    isNotAvailable = true;
                     break;
                 }
             }
         }
-        return isExist;
+        return isNotAvailable;
     }
 
     void deleteTask(ArrayList<Task> taskList, int lastID) throws Exception {

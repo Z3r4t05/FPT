@@ -86,7 +86,7 @@ class FruitShopManagement {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
-    void createFruit(ArrayList<Fruit> listFruits) {
+    int createFruit(ArrayList<Fruit> listFruits, int id) {
         char choice;
         //keep working until user choose n
         do {
@@ -94,13 +94,15 @@ class FruitShopManagement {
             int price = getPrice("Enter price: ");
             int quantity = getQuantity("Enter quantity: ");
             String origin = getNonBlankStr("Enter origin: ");
-            listFruits.add(new Fruit(Integer.toString(listFruits.size() + 1),
-                    name, price, quantity, origin));
+            listFruits.add(new Fruit(id, name, price, quantity, origin));
             choice = inputChar("Do you want to continue (Y/N)? ");
+            //increase id by 1 if user continue adding fruit
+            if (choice == 'Y') {
+                id++;
+            }
         } while (choice == 'Y');
-
         displayListFruits(listFruits);
-
+        return id;
     }
 
     /**
@@ -136,18 +138,16 @@ class FruitShopManagement {
         }
     }
 
-    void viewOrders(Hashtable<String, ArrayList<ArrayList<Item>>> tableOrders) throws Exception {
+    void viewOrders(Hashtable<Integer, Order> tableOrders) throws Exception {
         //throw exception if the orders are empty
         if (tableOrders.isEmpty()) {
             throw new Exception("There are no orders.");
         }
-        Set<String> keySet = tableOrders.keySet();
+        Set<Integer> keySet = tableOrders.keySet();
         int index = 1;
-        //leep through key set and display all item in each orders in hashtable
-        for (String key : keySet) {
-            System.out.println("Customer: " + key);
-            this.displayAllOrders(tableOrders.get(key));
-            System.out.println("");
+        //loop though each key in keySet and display the order corresponding to that key in hashtable
+        for (Integer key : keySet) {
+            tableOrders.get(key).display();
         }
     }
 
@@ -192,6 +192,7 @@ class FruitShopManagement {
     }
 
     private void displayListFruits(ArrayList<Fruit> listFruits) {
+        System.out.println("List of Fruit:");
         System.out.println("| ++ Item ++ | ++ Fruits ++ |"
                 + " ++ Origin ++ | ++ Price ++ |");
         //Display all fruit inside the list of fruits
@@ -202,42 +203,43 @@ class FruitShopManagement {
     }
 
     void shopping(ArrayList<Fruit> listFruits,
-            Hashtable<String, ArrayList<ArrayList<Item>>> tableOrders) throws Exception {
+            Hashtable<Integer, Order> tableOrders) throws Exception {
         //throw exception when list of fruit is empty
         if (listFruits.isEmpty()) {
-            throw new Exception("list fruits is empty");
+            throw new Exception("List of fruits is empty");
         }
-        boolean outOfStock = true;
-        //Check all fruit in list if there is an fruit that isn't out of stock
-        for (Fruit f : listFruits) {
-            //if the quantity > 0 then change flag to false
-            if (f.getQuantity() > 0) {
-                outOfStock = false;
-                break;
-            }
-        }
+//        boolean outOfStock = true;
+//        //Check all fruit in list if there is an fruit that isn't out of stock
+//        for (Fruit f : listFruits) {
+//            //if the quantity > 0 then change flag to false
+//            if (f.getQuantity() > 0) {
+//                outOfStock = false;
+//                break;
+//            }
+//        }
         //throw excpetion if all fruit are out of stock
-        if (outOfStock == true) {
-            throw new Exception("All of fruits are out of stock.");
-        }
+//        if (outOfStock == true) {
+//            throw new Exception("All of fruits are out of stock.");
+//        }
         Fruit fruit = new Fruit();
-        ArrayList<Item> listItems = new ArrayList<>();
+        ArrayList<Fruit> listItems = new ArrayList<>();
         int quantity;
         char choice;
-        //continuing ordering if user choose N after enter quantity
+        //continuing ordering if user choose N. 
         do {
-            System.out.println("List of Fruit:");
             this.displayListFruits(listFruits);
             //continue asking user to choose an item from the list if user doesn't enter a valid id
             do {
                 try {
-                    fruit = selectItem("Choose an item from the list above: ", listFruits);
+                    fruit = selectFruit("Choose an item from the list above: ", listFruits);
                     System.out.println("You selected: " + fruit.getName());
-                    //throw exception if the fruit is out of stock
-                    if (fruit.getQuantity() == 0) {
-                        throw new Exception("Out of stock");
-                    }
+//                    //throw exception if the fruit is out of stock
+//                    if (fruit.getQuantity() == 0) {
+//                        throw new Exception("Out of stock");
+//                    }
                     break;
+                } catch (NullPointerException e) {
+                    System.out.println("Not found! Please choose another fruit");
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
@@ -245,19 +247,24 @@ class FruitShopManagement {
             //check if the input quantity exceeds the in-stock quantity. 
             do {
                 try {
-                    quantity = this.getQuantity("Please input quantity: ");
+                    quantity = getQuantity("Please input quantity: ");
                     //throw exception if in-stock quantity is not enough. Otherwise, subtract the quantity in stock.
                     if (fruit.getQuantity() < quantity) {
                         //tell user if the fruit is out of stock or the quantity left
                         throw new Exception("There are only " + fruit.getQuantity()
                                 + " left.");
-
                     } else {
+                        fruit.setQuantity(quantity);
                         //Find the fruit in the list and update its quantity
-                        for (Fruit f : listFruits) {
+                        for (Fruit fruitInStock : listFruits) {
                             //update the quantity of the fruit in arraylist
-                            if (f.getId().equals(fruit.getId())) {
-                                f.setQuantity(f.getQuantity() - quantity);
+                            if (fruitInStock.getId() == fruit.getId()) {
+                                fruitInStock.setQuantity(fruitInStock.getQuantity() - quantity);
+                                //delete fruit in the list of fruit if it is out of stock
+                                if (fruitInStock.getQuantity() == 0) {
+                                    listFruits.remove(fruitInStock);
+                                }
+                                break;
                             }
                         }
                     }
@@ -268,8 +275,7 @@ class FruitShopManagement {
             } while (true);
             addItem(listItems, fruit, quantity);
             System.out.println("Item added!!");
-            choice = inputChar("Do you want to order now (Y/N): ");
-            outOfStock = true;
+            boolean outOfStock = true;
             //Check all fruit in list if there is an fruit that isn't out of stock
             for (Fruit f : listFruits) {
                 //if the quantity > 0 then change flag to false
@@ -280,73 +286,71 @@ class FruitShopManagement {
             }
             //If everything is out of stock, break the loop and finish order
             if (outOfStock) {
-                System.out.println("All fruits are out of stock");
-                choice = 'Y';
+                System.out.println("All fruits are out of stock. Finish ordering.");
+                break;
             }
+            choice = inputChar("Do you want to order now (Y/N): ");
         } while (choice == 'N' || choice == 'n');
-        this.displayListItems(listItems, 1);
+        this.displayListItems(listItems);
         String customerName = this.getNonBlankStr("Input your name: ");
-        addOrder(tableOrders, listItems, customerName);
+        Order order = new Order(customerName, listItems);
+        tableOrders.put(tableOrders.size() + 1, order);
         System.out.println("Shopping Completed!");
     }
 
-    public void displayAllOrders(ArrayList<ArrayList<Item>> listOrders) {
-        System.out.println("Product | Quantity | Price | Amount");
-        //loop through all orders of a customer to print out each order
-        for (ArrayList<Item> arr : listOrders) {
-            int count = 1;
-            int totalPrice = 0;
-            //loop to display each item in order and count the total
-            for (Item i : arr) {
-                System.out.printf(count + ". %-7.7s  %3d       %3d$    %4d$\n",
-                        i.getFruit().getName(),
-                        i.getQuantity(),
-                        i.getFruit().getPrice(),
-                        i.getAmount());
-                count++;
-                totalPrice += i.getAmount();
-            }
-            System.out.println("Total: " + totalPrice + "$");
-            System.out.println("---------------------------------------");
-        }
-        //display all each item in itemlist and sum up the total price
-    }
-
+//    public void displayAllOrders(ArrayList<ArrayList<Item>> listOrders) {
+//        System.out.println("Product | Quantity | Price | Amount");
+//        //loop through all orders of a customer to print out each order
+//        for (ArrayList<Item> arr : listOrders) {
+//            int count = 1;
+//            int totalPrice = 0;
+//            //loop to display each item in order and count the total
+//            for (Item i : arr) {
+//                System.out.printf(count + ". %-7.7s  %3d       %3d$    %4d$\n",
+//                        i.getFruit().getName(),
+//                        i.getQuantity(),
+//                        i.getFruit().getPrice(),
+//                        i.getAmount());
+//                count++;
+//                totalPrice += i.getAmount();
+//            }
+//            System.out.println("Total: " + totalPrice + "$");
+//            System.out.println("---------------------------------------");
+//        }
+//        //display all each item in itemlist and sum up the total price
+//    }
     /**
      * Display list of items that user bought.
      *
      * @param listItems list of items that user bought
      * @param option 1 for viewing orders, otherwise for shopping
      */
-    public void displayListItems(ArrayList<Item> listItems, int option) {
+    public void displayListItems(ArrayList<Fruit> listItems) {
         System.out.println("Product | Quantity | Price | Amount");
         int totalPrice = 0;
-        //option 1 means displaying the list order. otherwise it is for display shopping
-        if (option == 1) {
-            //Display each item and sum-up the amount
-            for (Item i : listItems) {
-                System.out.printf("%-7.7s  %3d        %3d$    %4d$\n",
-                        i.getFruit().getName(),
-                        i.getQuantity(),
-                        i.getFruit().getPrice(),
-                        i.getAmount());
-                totalPrice += i.getAmount();
-            }
-        } else {
-            int count = 1;
-            //Display each item and sum-up the amount
-            for (Item i : listItems) {
-                System.out.printf(count + ". %-7.7s  %3d       %3d$    %4d$\n",
-                        i.getFruit().getName(),
-                        i.getQuantity(),
-                        i.getFruit().getPrice(),
-                        i.getAmount());
-                count++;
-                totalPrice += i.getAmount();
-            }
+//        //option 1 means displaying the list order. otherwise it is for display shopping
+//        if (option == 1) {
+//            //Display each item and sum-up the amount
+//            for (Item i : listItems) {
+//                System.out.printf("%-7.7s  %3d        %3d$    %4d$\n",
+//                        i.getFruit().getName(),
+//                        i.getQuantity(),
+//                        i.getFruit().getPrice(),
+//                        i.getAmount());
+//                totalPrice += i.getAmount();
+//            }
+//        } else {
+        System.out.println("Product | Quantity | Price | Amount");
+        //Display each fruit in list of item and sum-up total price
+        for (int i = 0; i < listItems.size(); i++) {
+            System.out.printf(i + ". %-7.7s  %3d       %3d$    %4d$\n",
+                    listItems.get(i).getName(),
+                    listItems.get(i).getQuantity(),
+                    listItems.get(i).getPrice(),
+                    listItems.get(i).getPrice() * listItems.get(i).getQuantity());
         }
-        //display all each item in itemlist and sum up the total price
         System.out.println("Total: " + totalPrice + "$");
+        System.out.println("");
     }
 
     /**
@@ -357,16 +361,26 @@ class FruitShopManagement {
      * @return the fruit that user choose
      * @throws Exception if user doesn't enter an existed id
      */
-    private Fruit selectItem(String msg, ArrayList<Fruit> listFruits) throws Exception {
-        String id = getNonBlankStr(msg);
-        //Loop through the list of fruits to search the id
-        for (Fruit fruit : listFruits) {
-            //if the id is found then return the fruit
-            if (fruit.getId().equals(id)) {
-                return fruit;
+    private Fruit selectFruit(String msg, ArrayList<Fruit> listFruits) throws Exception {
+        int id;
+        //loop until there are no exception caught
+        do {
+            try {
+                String input = getNonBlankStr(msg);
+                id = Integer.parseInt(msg);
+                //Loop through the list of fruits to search the id
+                for (Fruit fruit : listFruits) {
+                    //if the id is found then return the fruit
+                    if (fruit.getId() == id) {
+                        return fruit;
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("Please enter an integer");
             }
-        }
-        throw new Exception("please choose an id from the list");
+            break;
+        } while (true);
+        return null;
     }
 
     /**
@@ -402,114 +416,15 @@ class FruitShopManagement {
      * @param fruit fruit to buy
      * @param quantity quantity to buy
      */
-    private void addItem(ArrayList<Item> listItems, Fruit fruit, int quantity) {
+    private void addItem(ArrayList<Fruit> listItems, Fruit fruit, int quantity) {
         //If user enter the same fruit again then sum up the quantity
-        for (Item i : listItems) {
-            //set the item quantity to be the sum of the current quantity with the ordering quantity
-            if (i.getFruit().equals(fruit)) {
-                Item updateItem = new Item(fruit, i.getQuantity() + quantity);
-                listItems.set(listItems.indexOf(i), updateItem);
+        for (Fruit fruitInList : listItems) {
+            //set the item quantity to be the sum of the current quantity with the new ordering quantity
+            if (fruitInList.getId() == fruit.getId()) {
+                fruitInList.setQuantity(fruitInList.getQuantity() + fruit.getQuantity());
                 return;
             }
         }
-        Item item = new Item(fruit, quantity);
-        listItems.add(item);
+        listItems.add(fruit);
     }
-
-    private void addOrder(Hashtable<String, ArrayList<ArrayList<Item>>> tableOrders,
-            ArrayList<Item> listItems, String customerName) {
-        //if there is no customer name then add the list to arraylist of key customerName
-        if (tableOrders.isEmpty()) {
-            tableOrders.put(customerName, new ArrayList(Arrays.asList(listItems)));
-        } else {
-            //if there exists a customerName in the list, then add the order to the list of order and update
-            if (tableOrders.containsKey(customerName)) {
-                ArrayList<ArrayList<Item>> newListOrders = tableOrders.get(customerName);
-                newListOrders.add(listItems);
-                tableOrders.put(customerName, newListOrders);
-            } else {
-                tableOrders.put(customerName, new ArrayList(Arrays.asList(listItems)));
-            }
-        }
-    }
-//    /**
-//     * add new order to the hashTable. if the customer is duplicate then merge
-//     * the list of order into one
-//     *
-//     * @param tableOrders hashTable of orders
-//     * @param listItems list of items in the order
-//     * @param customerName name of customer
-//     */
-//    private void addOrder(Hashtable<String, ArrayList<ArrayList<Item>>> tableOrders,
-//            ArrayList<Item> listItems, String customerName) {
-//        //if the list is empty then we simply add a new order
-//        if (tableOrders.isEmpty()) {
-//            tableOrders.put(customerName, listItems);
-//        } else {
-//            Set<String> keySet = tableOrders.keySet();
-//            //if customer's name is duplicated then we merge the list
-//            if (tableOrders.containsKey(customerName)) {
-//                ArrayList<Item> mergeTarget = tableOrders.get(customerName);
-//                ArrayList<Item> toRemove = new ArrayList<>();
-//                Set<Item> set = new LinkedHashSet<>(mergeTarget);
-//                set.addAll(listItems);
-//                ArrayList<Item> list = new ArrayList<>(set);
-//                //loop though the list of customer to find all items that has the same fruit's id
-//                for (int i = 0; i < list.size() - 1; i++) {
-//                    //loop through all items after item i in list to find duplicate fruit's id
-//                    for (int j = i+1; j < list.size(); j++) {
-//                        //if 2 item has the same fruit then add one of them to set toRemove
-//                        if(list.get(i).getFruit().getId().
-//                                equals(list.get(j).getFruit().getId())) {
-//                            //remove the one which has smaller quantity
-//                            if(list.get(i).getQuantity()<list.get(j).getQuantity()) {
-//                                toRemove.add(list.get(i));
-//                            }
-//                            //otherwise remove the other one
-//                            if(list.get(i).getQuantity()>=list.get(j).getQuantity()) {
-//                                toRemove.add(list.get(j));
-//                            }
-//                        }
-//                    }             
-//                }
-//                Set<Item> removeSet = new LinkedHashSet<>(toRemove);
-//                
-//                System.out.println("set");
-//                for(Item i : list) {
-//                    System.out.println(i.getFruit() + " " + i.getQuantity());
-//                }
-//                System.out.println("toremove");
-//                for(Item i : removeSet) {
-//                    System.out.println(i.getFruit() + " " + i.getQuantity());
-//                }
-//                list.removeAll(toRemove);
-//                System.out.println("set after remove");
-//                for(Item i : list) {
-//                    System.out.println(i.getFruit() + " " + i.getQuantity());
-//                }
-//                System.out.println("updating");
-//
-//                //compare each item in the list with the item in the remove set to add quantity
-//                for (Item i : list) {
-//                    //loop though all item in the remove set to find the item that has the same id as item i
-//                    for (Item j : removeSet) {
-//                        //if 2 item has the same fruit's id then sum-up the quantity and remove item j from remove set and update amount
-//                        if( i.getFruit().getId().equals(j.getFruit().getId())) {
-//                            i.setQuantity(i.getQuantity()+j.getQuantity());
-//                            removeSet.remove(j);
-//                            i.updateAmount();
-//                            break;
-//                        }
-//                    }
-//                }
-//                System.out.println("set");
-//                for(Item i : list) {
-//                    System.out.println(i.getFruit() + " " + i.getQuantity());
-//                }
-//                tableOrders.put(customerName, list);
-//            } else {
-//                tableOrders.put(customerName, listItems);              
-//            }
-//        }
-//    }
 }
