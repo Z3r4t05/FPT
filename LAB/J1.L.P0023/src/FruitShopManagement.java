@@ -254,7 +254,6 @@ class FruitShopManagement {
                         throw new Exception("There are only " + fruit.getQuantity()
                                 + " left.");
                     } else {
-                        fruit.setQuantity(quantity);
                         //Find the fruit in the list and update its quantity
                         for (Fruit fruitInStock : listFruits) {
                             //update the quantity of the fruit in arraylist
@@ -266,6 +265,7 @@ class FruitShopManagement {
                                 }
                                 break;
                             }
+                        fruit.setQuantity(quantity);
                         }
                     }
                     break;
@@ -362,12 +362,11 @@ class FruitShopManagement {
      * @throws Exception if user doesn't enter an existed id
      */
     private Fruit selectFruit(String msg, ArrayList<Fruit> listFruits) throws Exception {
-        int id;
         //loop until there are no exception caught
         do {
             try {
                 String input = getNonBlankStr(msg);
-                id = Integer.parseInt(msg);
+                int id = Integer.parseInt(input);
                 //Loop through the list of fruits to search the id
                 for (Fruit fruit : listFruits) {
                     //if the id is found then return the fruit
@@ -375,10 +374,10 @@ class FruitShopManagement {
                         return fruit;
                     }
                 }
-            } catch (Exception e) {
+                break;
+            } catch (NumberFormatException e) {
                 System.out.println("Please enter an integer");
             }
-            break;
         } while (true);
         return null;
     }
