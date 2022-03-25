@@ -144,7 +144,6 @@ class FruitShopManagement {
             throw new Exception("There are no orders.");
         }
         Set<Integer> keySet = tableOrders.keySet();
-        int index = 1;
         //loop though each key in keySet and display the order corresponding to that key in hashtable
         for (Integer key : keySet) {
             tableOrders.get(key).display();
