@@ -178,8 +178,8 @@ public class Ebank {
         //Loop ubtil user enter a valid CAPTCHA
         do {
             String captchaGenerated = this.generateCaptcha();
-            System.out.println(bundle.getString("Capcha") + " " + captchaGenerated);
-            String captchaInput = inputter.getString(bundle.getString("inputCapcha") + " ");
+            System.out.println(bundle.getString("Capcha") + captchaGenerated);
+            String captchaInput = inputter.getString(bundle.getString("inputCapcha"));
             captchaMsg = this.checkCaptcha(captchaGenerated, captchaInput);
             //print out the message error if the captchaMsg is not null
             if (captchaMsg != null) {
