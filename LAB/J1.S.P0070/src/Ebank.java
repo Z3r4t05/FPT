@@ -1,9 +1,11 @@
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 /*
@@ -29,7 +31,7 @@ public class Ebank {
     }
 
     /**
-     * check if account number has exactly 10 digits 
+     * check if account number has exactly 10 digits
      *
      * @param accountNumber input accountNumber
      * @return null if the account number is valid. Otherwise return the error.
@@ -45,8 +47,10 @@ public class Ebank {
             return null;
         }
     }
+
     /**
      * Check if password has exactly 8 to 31 alphanumeric characters
+     *
      * @param password input password
      * @return null if password is valid. Otherwise return the error
      */
@@ -57,31 +61,34 @@ public class Ebank {
                 + "(?=.*\\d)" //positive lookahead to find a digit character presentes in the string
                 + "[A-Za-z\\d]{8,31}" //8 to 31 characters or digits
                 + "$"); //end of line
-         //if the input matches the pattern then return the message to user
+        //if the input matches the pattern then return the message to user
         if (!PASSWORD_FORMAT.matcher(password).matches()) {
             return bundle.getString("inputPasswordError");
         }
         return null;
     }
+
     /**
      * Generate and print out a CAPTCHA of length 5 that contains at least an
      * uppercase character, a lowercase character and a digit.
+     *
      * @return the CAPTCHA generated
      */
     public String generateCaptcha() {
-        String data = "";
+        ArrayList<Character> possibleCharacterList = new ArrayList<>();
         //add all lowercase chars to the string data
         for (char c = 'a'; c <= 'z'; c++) {
-            data += c;
+            possibleCharacterList.add(c);
         }
         //add all uppercase chars to the string data
         for (char c = 'A'; c <= 'Z'; c++) {
-            data += c;
+            possibleCharacterList.add(c);
         }
         //aa all digits to the string data
         for (char c = '0'; c <= '9'; c++) {
-            data += c;
+            possibleCharacterList.add(c);
         }
+
         //loop until the capcha generated has both uppercase, lowercase and digit character
         do {
             String captcha = "";
@@ -91,30 +98,32 @@ public class Ebank {
             //loop to create 5 character capcha
             for (int i = 0; i < 5; i++) {
                 Random random = new Random();
-                char newChar = data.charAt(random.nextInt(data.length()));
+                char randomChar = possibleCharacterList.get(random.nextInt(possibleCharacterList.size()));
                 //Change the flag hasLowerChar, hasUpperChar or hasDigits based on the newChar added to CAPTCHA
-                if (newChar >= 'a' && newChar <= 'z') {
+                if (randomChar >= 'a' && randomChar <= 'z') {
                     hasLowerChar = true;
-                } else if (newChar >= 'A' && newChar <= 'Z') {
+                } else if (randomChar >= 'A' && randomChar <= 'Z') {
                     hasUpperChar = true;
                 } else {
                     hasDigits = true;
                 }
-                captcha += newChar;
+                captcha += randomChar;
             }
-            //If the CAPTCHA is valid then print it out and return the CAPTCHA
+            //If the CAPTCHA is valid then return the CAPTCHA
             if (hasLowerChar && hasUpperChar && hasDigits) {
-                System.out.println(bundle.getString("Capcha") + " " + captcha);
                 return captcha;
             }
         } while (true);
     }
-/**
- * Check if the input CAPTCHA is the same as the CAPTCHA generated
- * @param captchaInput the input from user
- * @param captchaGenerate the generated CAPTCHA
- * @return null if the input is the same as the CAPTCHA generated. Otherwise return the error message
- */
+
+    /**
+     * Check if the input CAPTCHA is the same as the CAPTCHA generated
+     *
+     * @param captchaInput the input from user
+     * @param captchaGenerate the generated CAPTCHA
+     * @return null if the input is the same as the CAPTCHA generated. Otherwise
+     * return the error message
+     */
     public String checkCaptcha(String captchaInput, String captchaGenerate) {
         //return null if the input is the same as the CAPTCHA generated. Otherwise return the error message
         if (captchaInput.equals(captchaGenerate)) {
@@ -123,8 +132,10 @@ public class Ebank {
             return bundle.getString("CapchaError");
         }
     }
+
     /**
      * Display the menu with the option in the arrayList input
+     *
      * @param listOptions the list of option
      */
     public void displayMenu(ArrayList<String> listOptions) {
@@ -135,9 +146,11 @@ public class Ebank {
             System.out.println((i + 1) + ".  " + listOptions.get(i));
         }
     }
+
     /**
-     * Perform login function. Prompt user to enter valid account number, then password 
-     * and a random CAPTCHA. Then check if the account exists in the database.
+     * Perform login function. Prompt user to enter valid account number, then
+     * password and a random CAPTCHA. Then check if the account exists in the
+     * database.
      */
     public void login() {
         Inputter inputter = new Inputter();
@@ -165,7 +178,8 @@ public class Ebank {
         //Loop ubtil user enter a valid CAPTCHA
         do {
             String captchaGenerated = this.generateCaptcha();
-            String captchaInput = inputter.getString(bundle.getString("Capcha") + " ");
+            System.out.println(bundle.getString("Capcha") + " " + captchaGenerated);
+            String captchaInput = inputter.getString(bundle.getString("inputCapcha") + " ");
             captchaMsg = this.checkCaptcha(captchaGenerated, captchaInput);
             //print out the message error if the captchaMsg is not null
             if (captchaMsg != null) {
@@ -182,11 +196,14 @@ public class Ebank {
             System.out.println(bundle.getString("loginFail"));
         }
     }
+
     /**
      * Check if the account number exists in database
+     *
      * @param accountNumber input account number
      * @param accountList the arrayList of account in database
-     * @return false if the list is empty or not found account. Otherwise return true
+     * @return false if the list is empty or not found account. Otherwise return
+     * true
      */
     private boolean checkAccount(String accountNumber, ArrayList<Account> accountList) {
         //Return false if the list is empty. Otherwise true or false based on the result of searching account number in the list
@@ -196,12 +213,15 @@ public class Ebank {
             return accountList.stream().anyMatch((account) -> (account.getNumber().equals(accountNumber)));
         }
     }
+
     /**
-     * Check if password of  input account is correct.
+     * Check if password of input account is correct.
+     *
      * @param accountNumber account number to check password
      * @param password input password
      * @param accountList the list account in database
-     * @return false if the list is empty or password is incorrect. Otherwise true
+     * @return false if the list is empty or password is incorrect. Otherwise
+     * true
      */
     private boolean checkPassword(String accountNumber, String password, ArrayList<Account> accountList) {
         //Return false if the list is empty. Otherwise return true or false based on the result of comparing input with a account in the list

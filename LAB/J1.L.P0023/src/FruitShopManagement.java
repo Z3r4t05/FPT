@@ -208,19 +208,6 @@ class FruitShopManagement {
         if (listFruits.isEmpty()) {
             throw new Exception("List of fruits is empty");
         }
-//        boolean outOfStock = true;
-//        //Check all fruit in list if there is an fruit that isn't out of stock
-//        for (Fruit f : listFruits) {
-//            //if the quantity > 0 then change flag to false
-//            if (f.getQuantity() > 0) {
-//                outOfStock = false;
-//                break;
-//            }
-//        }
-        //throw excpetion if all fruit are out of stock
-//        if (outOfStock == true) {
-//            throw new Exception("All of fruits are out of stock.");
-//        }
         Fruit fruit = new Fruit();
         ArrayList<Fruit> listItems = new ArrayList<>();
         int quantity;
@@ -233,10 +220,6 @@ class FruitShopManagement {
                 try {
                     fruit = selectFruit("Choose an item from the list above: ", listFruits);
                     System.out.println("You selected: " + fruit.getName());
-//                    //throw exception if the fruit is out of stock
-//                    if (fruit.getQuantity() == 0) {
-//                        throw new Exception("Out of stock");
-//                    }
                     break;
                 } catch (NullPointerException e) {
                     System.out.println("Not found! Please choose another fruit");
@@ -250,7 +233,6 @@ class FruitShopManagement {
                     quantity = getQuantity("Please input quantity: ");
                     //throw exception if in-stock quantity is not enough. Otherwise, subtract the quantity in stock.
                     if (fruit.getQuantity() < quantity) {
-                        //tell user if the fruit is out of stock or the quantity left
                         throw new Exception("There are only " + fruit.getQuantity()
                                 + " left.");
                     } else {
@@ -259,13 +241,15 @@ class FruitShopManagement {
                             //update the quantity of the fruit in arraylist
                             if (fruitInStock.getId() == fruit.getId()) {
                                 fruitInStock.setQuantity(fruitInStock.getQuantity() - quantity);
+                                fruit = new Fruit(fruitInStock.getId(),
+                                        fruitInStock.getName(), fruitInStock.getPrice(),
+                                        quantity, fruitInStock.getOrigin());
                                 //delete fruit in the list of fruit if it is out of stock
                                 if (fruitInStock.getQuantity() == 0) {
                                     listFruits.remove(fruitInStock);
                                 }
                                 break;
                             }
-                        fruit.setQuantity(quantity);
                         }
                     }
                     break;
@@ -293,32 +277,11 @@ class FruitShopManagement {
         } while (choice == 'N' || choice == 'n');
         this.displayListItems(listItems);
         String customerName = this.getNonBlankStr("Input your name: ");
-        Order order = new Order(customerName, listItems);
-        tableOrders.put(tableOrders.size() + 1, order);
+        Order order = new Order(tableOrders.size() + 1, customerName, listItems);
+        tableOrders.put(order.getId(), order);
         System.out.println("Shopping Completed!");
     }
 
-//    public void displayAllOrders(ArrayList<ArrayList<Item>> listOrders) {
-//        System.out.println("Product | Quantity | Price | Amount");
-//        //loop through all orders of a customer to print out each order
-//        for (ArrayList<Item> arr : listOrders) {
-//            int count = 1;
-//            int totalPrice = 0;
-//            //loop to display each item in order and count the total
-//            for (Item i : arr) {
-//                System.out.printf(count + ". %-7.7s  %3d       %3d$    %4d$\n",
-//                        i.getFruit().getName(),
-//                        i.getQuantity(),
-//                        i.getFruit().getPrice(),
-//                        i.getAmount());
-//                count++;
-//                totalPrice += i.getAmount();
-//            }
-//            System.out.println("Total: " + totalPrice + "$");
-//            System.out.println("---------------------------------------");
-//        }
-//        //display all each item in itemlist and sum up the total price
-//    }
     /**
      * Display list of items that user bought.
      *
@@ -326,28 +289,17 @@ class FruitShopManagement {
      * @param option 1 for viewing orders, otherwise for shopping
      */
     public void displayListItems(ArrayList<Fruit> listItems) {
-        System.out.println("Product | Quantity | Price | Amount");
         int totalPrice = 0;
-//        //option 1 means displaying the list order. otherwise it is for display shopping
-//        if (option == 1) {
-//            //Display each item and sum-up the amount
-//            for (Item i : listItems) {
-//                System.out.printf("%-7.7s  %3d        %3d$    %4d$\n",
-//                        i.getFruit().getName(),
-//                        i.getQuantity(),
-//                        i.getFruit().getPrice(),
-//                        i.getAmount());
-//                totalPrice += i.getAmount();
-//            }
-//        } else {
         System.out.println("Product | Quantity | Price | Amount");
         //Display each fruit in list of item and sum-up total price
         for (int i = 0; i < listItems.size(); i++) {
-            System.out.printf(i + ". %-7.7s  %3d       %3d$    %4d$\n",
+            int amount = listItems.get(i).getPrice() * listItems.get(i).getQuantity();
+            System.out.printf((i + 1) + ". %-9.9s%-3d     %3d$    %4d$\n",
                     listItems.get(i).getName(),
                     listItems.get(i).getQuantity(),
                     listItems.get(i).getPrice(),
-                    listItems.get(i).getPrice() * listItems.get(i).getQuantity());
+                    amount);
+            totalPrice += amount;
         }
         System.out.println("Total: " + totalPrice + "$");
         System.out.println("");

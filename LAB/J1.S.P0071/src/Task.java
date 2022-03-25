@@ -8,12 +8,12 @@ import java.util.Date;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author ADMIN
  */
 public class Task {
+
     private int TaskID;
     private String TaskTypeID;
     private String RequirementName;
@@ -97,15 +97,21 @@ public class Task {
     public void setReviewer(String Reviewer) {
         this.Reviewer = Reviewer;
     }
-    
+
     @Override
     public String toString() {
         double time = planTo - planFrom;
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String stringDate = dateFormat.format(date);
         String planTime = String.format("%.1f", time);
-        String result = String.format("%-7d%-20s%-12s%-15s%-7s%-15s%-15s", TaskID, RequirementName, TaskTypeID, stringDate, planTime, Assignee, Reviewer );
+        String result = String.format("%-6d%-20s%-13s%-13s%-14s%-13s%-15s", TaskID, RequirementName, TaskTypeID, stringDate, planTime, Assignee, Reviewer);
         return result;
     }
-    
+
+    public static void main(String[] args) {
+        System.out.println("----------------------------------------- Task ----------------------------------------");
+        System.out.format("%-6s%-20s%-13s%-13s%-14s%-13s%-15s\n", "ID", "Name", "Task Type", "Date", "Time", "Assignee", "Reviewer");
+        System.out.format("%-6d%-20s%-13s%-13s%-14s%-13s%-15s\n", 1, "Dev Program", "Code", "28-08-2015", "8.0", "Dev", "Lead");
+    }
+
 }

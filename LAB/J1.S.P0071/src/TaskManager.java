@@ -24,7 +24,7 @@ public class TaskManager {
 
     int addTask(ArrayList<Task> taskList, int id) {
         //loop until there are no exceptions
-        do {                  
+        do {
             try {
                 Inputter inputter = new Inputter();
                 System.out.println("------------Add Task---------------");
@@ -36,7 +36,7 @@ public class TaskManager {
                 String assignee = inputter.getString("Assignee: ", "", "");
                 //throw exception if the task slot is avaiable to add new task. otherwise add the task
                 if (checkTaskAvailable(date, assignee, planFrom, planTo, taskList)) {
-                    throw new Exception("There are other tasks that exist in the same time");
+                    throw new Exception("Cannot add this task!. Try different time or assignee.");
                 } else {
                     String reviewer = inputter.getString("Reviewer: ", "", "");
                     Task newTask = new Task(id, taskType, requireName, date, planFrom,
@@ -50,17 +50,16 @@ public class TaskManager {
             }
         } while (true);
     }
-    
-    
+
     private boolean checkTaskAvailable(Date date, String assignee, double planFrom, double planTo, ArrayList<Task> TaskList) {
         boolean isNotAvailable = false;
         //loop use to access each element of arraylist from begining to the end
         for (Task task : TaskList) {
-            //compare date in list with date input and assignee in list and assignee input
-            if (date.compareTo(task.getDate()) == 0 && assignee.equals(task.getAssignee())) {    
-                //if there is collison in plan then continue to check the next task in the list. Otherwise return false
+            //compare date in list with date input and assignee in list with assignee input
+            if (date.compareTo(task.getDate()) == 0 && assignee.equals(task.getAssignee())) {
+                //compare planto and planfrom of input task with every task in list. if planTo is before planFrom of task in list or planFrom is after planTo of task in list then continue. Otherwise, return true
                 if ((planTo < task.getPlanFrom()) || (planFrom > task.getPlanTo())) {
-                    isNotAvailable = false;
+                    continue;
                 } else {
                     isNotAvailable = true;
                     break;
@@ -73,7 +72,7 @@ public class TaskManager {
     void deleteTask(ArrayList<Task> taskList, int lastID) throws Exception {
         Inputter inputter = new Inputter();
         //throw exception if the task list is empty. Otherwise perform delete
-        if(taskList.isEmpty()) {
+        if (taskList.isEmpty()) {
             throw new Exception("Empty taskList");
         } else {
             System.out.println("--------- Del Task --------");
@@ -82,27 +81,27 @@ public class TaskManager {
             //loop through task list to find the task that user want to delete
             for (Task task : taskList) {
                 //if task id equals input id the get the index of the task
-                if(taskId == task.getTaskID()) {
+                if (taskId == task.getTaskID()) {
                     index = taskList.indexOf(task);
                 }
             }
             //if index not equal -1 then remove it
-            if(index != -1) {
+            if (index != -1) {
                 taskList.remove(index);
                 System.out.println("Remove successfully");
             } else {
                 throw new Exception("ID doesn't exist");
             }
-        } 
+        }
     }
 
     void displayTask(ArrayList<Task> taskList) throws Exception {
         //throw exception if the tasklist is empty
         if (taskList.isEmpty()) {
             throw new Exception("List task is empty!");
-        } else{
-            System.out.println("----------------------------------------- Task -------------------------------------");
-            System.out.format("%-7s%-20s%-12s%-15s%-7s%-15s%-15s\n", "Id", "Name", "Task Type", "Date", "Time", "Assignee", "Reviewer");
+        } else {
+            System.out.println("----------------------------------------- Task ----------------------------------------");
+            System.out.format("%-6s%-20s%-13s%-13s%-14s%-13s%-15s\n", "ID", "Name", "Task Type", "Date", "Time", "Assignee", "Reviewer");
             //loop use to access each element of arraylist from begining to the end
             for (Task task : taskList) {
                 System.out.println(task);
