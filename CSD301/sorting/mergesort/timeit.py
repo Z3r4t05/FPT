@@ -12,6 +12,7 @@ def timeit(func):
         print(f'Function {func.__name__} {args} {kwargs} took {total_time}')
         return result
     return timeit_wrapper
+
 @timeit
 def mergesort0(xs, key=lambda x: x, reverse=False):
     if len(xs) <= 1:
@@ -81,6 +82,7 @@ def mergesort1(xs, key=lambda x: x, reverse=False):
                 ys[i + li + ri: i + li + rn] = yrs[ri:]
 
         step *= 2
+    print(xs)
 
 @timeit
 def mergesort2(xs, key=lambda x: x, reverse=False):
@@ -114,6 +116,7 @@ def mergesort2(xs, key=lambda x: x, reverse=False):
                 xs[i + li + j - step] = yaux[j]
 
         step *= 2
+    print(xs)
 
 @timeit
 def mergesort3(xs, key=lambda x: x, reverse=False):
@@ -149,11 +152,11 @@ def mergesort3(xs, key=lambda x: x, reverse=False):
                 ys[i + li + ri: i + li + rn] = yrs[ri:]
 
         step *= 2
+    
         
 if __name__ == '__main__':
     import numpy as np
-    array = np.random.randint(2, size=10)
-    mergesort0(array)
-    mergesort1(array)  
-    mergesort2(array)
+    array = [111,111,11,23,23,4234,23,23,45,45,6,6,6,6,6,9,9,9]
+    print(f"array = {array}")
     mergesort3(array)
+    print(f"array = {array}")
