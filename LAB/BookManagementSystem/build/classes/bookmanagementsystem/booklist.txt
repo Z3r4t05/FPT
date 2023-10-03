@@ -1,0 +1,7 @@
+8, malaysia, 5, 10.0
+1, indonesia, 4, 9.0
+4, vietnam, 3, 7.0
+3, laos, 2, 7.0
+6, myanmar, 9, 10.0
+14, thailand, 12, 12
+9, philippines, 1,3
